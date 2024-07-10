@@ -1,6 +1,6 @@
 # Musée 4
 
-This is the starter for the Flask React project.
+This is the starter for a Flask React project.
 
 ## Getting started
 
