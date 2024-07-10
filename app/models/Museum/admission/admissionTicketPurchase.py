@@ -11,6 +11,7 @@ class admissionTicketPurchase(db.Model):
     admission_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admissionTickets.id')), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
+    ticket_quantity = db.Column(db.Integer, nullable=True)
     member_discount = db.Column(db.Float, nullable=False)
     purchased_on = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
