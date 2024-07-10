@@ -9,7 +9,7 @@ class EventTicketType(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     event_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('events.id')), nullable=False)
-    type = db.Column(db.String(40), nullable=False), 
+    type = db.Column(db.String(40), nullable=False)
     description = db.Column(db.String(50), nullable=True)
     price = db.Column(db.Float, nullable=False)
 
