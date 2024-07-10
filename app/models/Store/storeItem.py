@@ -1,7 +1,7 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class storeItem(db.Model):
+class StoreItem(db.Model):
     __tablename__ = 'storeItems'
 
     if environment == "production":
@@ -12,13 +12,13 @@ class storeItem(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     price = db.Column(db.Float, nullable=False)
     avg_rating = db.Column(db.Float, nullable = True)
-    stock = db.Collumn(db.Integer, nullable=False)
+    stock = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    cartItems = db.relationship('cartItem', cascade = "all, delete")
-    itemCategories = db.relationship('itemCategory', cascade= "all, delete")
-    orderedItems = db.relationship('orderedItem', cascade="all, delete")
+    cartItems = db.relationship('CartItem', cascade = "all, delete")
+    itemCategories = db.relationship('ItemCategory', cascade= "all, delete")
+    orderedItems = db.relationship('OrderedItem', cascade="all, delete")
 
     def to_dict(self):
         return {
