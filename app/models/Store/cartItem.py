@@ -1,7 +1,7 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class cartItem(db.Model):
+class CartItem(db.Model):
     __tablename__ = 'cartItems'
 
     if environment == "production":
@@ -14,7 +14,7 @@ class cartItem(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    storeItems = db.relationship('storeItem', cascade = "all, delete")
+    storeItems = db.relationship('StoreItem', cascade = "all, delete")
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 

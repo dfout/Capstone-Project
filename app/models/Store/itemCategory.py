@@ -1,7 +1,7 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class itemCategory(db.Model):
+class ItemCategory(db.Model):
     __tablename__ = 'itemCategories'
 
     if environment == "production":
@@ -16,8 +16,8 @@ class itemCategory(db.Model):
 
 
 
-    storeItems = db.relationship('storeItem', cascade = "all, delete")
-    storeCategories = db.relationship('storeCategory', cascade= "all, delete")
+    storeItems = db.relationship('StoreItem', cascade = "all, delete")
+    storeCategories = db.relationship('StoreCategory', cascade= "all, delete")
 
 
     def to_dict(self):

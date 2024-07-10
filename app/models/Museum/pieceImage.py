@@ -1,7 +1,7 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class pieceImage(db.Model):
+class PieceImage(db.Model):
     __tablename__ = 'pieceImages'
 
     if environment == "production":
@@ -16,7 +16,7 @@ class pieceImage(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    pieces = db.relationship('piece', cascade = "all, delete")
+    pieces = db.relationship('Piece', cascade = "all, delete")
 
 
     def to_dict(self):

@@ -1,7 +1,7 @@
 from ...db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class eventTicketTypePurchased(db.Model):
+class EventTicketTypePurchased(db.Model):
     __tablename__ = 'eventTicketTypesPurchased'
 
     if environment == "production":
@@ -13,8 +13,8 @@ class eventTicketTypePurchased(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
 
 
-    eventTicketTypes = db.relationship('eventTicketType', cascade='all, delete')
-    eventTicketPurchases = db.relationship('eventTicketPurchase', cascade='all,delete')
+    eventTicketTypes = db.relationship('EventTicketType', cascade='all, delete')
+    eventTicketPurchases = db.relationship('EventTicketPurchase', cascade='all,delete')
 
     def to_dict(self):
         return {

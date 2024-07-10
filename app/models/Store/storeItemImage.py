@@ -1,7 +1,7 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class storeItemImage(db.Model):
+class StoreItemImage(db.Model):
     __tablename__ = 'storeItemImages'
 
     if environment == "production":
@@ -11,7 +11,7 @@ class storeItemImage(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('storeItems.id')), nullable=False)
     url= db.Column(db.String(300), nullable=False)
 
-    storeItems = db.relationship('storeItem', cascade = "all, delete")
+    storeItems = db.relationship('StoreItem', cascade = "all, delete")
 
    
 

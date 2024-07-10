@@ -1,7 +1,7 @@
 from ...db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class ticketTypePurchased(db.Model):
+class TicketTypePurchased(db.Model):
     __tablename__ = 'ticketTypesPurchased'
 
     if environment == "production":
@@ -13,8 +13,8 @@ class ticketTypePurchased(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
 
 
-    admissionTicketTypes = db.relationship('admissionTicketType', cascade='all, delete')
-    admissionTicketPurchases = db.relationship('admissionTicketPurchase', cascade='all,delete')
+    admissionTicketTypes = db.relationship('AdmissionTicketType', cascade='all, delete')
+    admissionTicketPurchases = db.relationship('AdmissionTicketPurchase', cascade='all,delete')
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 

@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class member(db.Model):
+class Member(db.Model):
     __tablename__ = 'members'
 
     if environment == "production":
@@ -17,8 +17,8 @@ class member(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    users = db.relationship('user', cascade = "all, delete")
-    membershipTypes = db.relationship('membershipType', cascade='all, delete')
+    users = db.relationship('User', cascade = "all, delete")
+    membershipTypes = db.relationship('MembershipType', cascade='all, delete')
 
 
     def to_dict(self):

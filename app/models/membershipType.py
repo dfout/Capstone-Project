@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class membershipType(db.Model):
+class MembershipType(db.Model):
     __tablename__ = 'membershipTypes'
 
     if environment == "production":

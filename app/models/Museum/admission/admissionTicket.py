@@ -1,7 +1,7 @@
 from ...db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class admissionTicket(db.Model):
+class AdmissionTicket(db.Model):
     __tablename__ = 'admissionTickets'
 
     if environment == "production":

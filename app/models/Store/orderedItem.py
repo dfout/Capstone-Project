@@ -1,7 +1,7 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class orderedItem(db.Model):
+class OrderedItem(db.Model):
     __tablename__ = 'orderedItems'
 
     if environment == "production":
@@ -12,7 +12,7 @@ class orderedItem(db.Model):
     item_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('storeItems.id')), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     
-    storeOrders = db.relationship('storeOrder', cascade='all, delete')
+    storeOrders = db.relationship('StoreOrder', cascade='all, delete')
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 

@@ -1,7 +1,7 @@
 from ...db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
-class eventTicketPurchase(db.Model):
+class EventTicketPurchase(db.Model):
     __tablename__ = 'eventTicketPurchases'
 
     if environment == "production":
@@ -17,8 +17,8 @@ class eventTicketPurchase(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
 
-    admissionTickets = db.relationship('admissionTicket', cascade='all, delete')
-    users = db.relationship('user', cascade='all,delete')
+    events = db.relationship('Event', cascade='all, delete')
+    users = db.relationship('User', cascade='all,delete')
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 
