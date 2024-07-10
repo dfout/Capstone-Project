@@ -27,5 +27,5 @@ class Review(db.Model):
             'itemId': self.item_id,
             'ownerId':self.user_id,
             'createdAt':self.created_at,
-            'updatedAt':self.updatedAt
+            'updatedAt':self.updated_at
         }
