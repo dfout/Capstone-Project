@@ -1,5 +1,6 @@
 from app.models import db, environment, SCHEMA, Artist
 from datetime import datetime
+from sqlalchemy.sql import text
 
 def seed_artists():
     artists = [
@@ -63,6 +64,6 @@ def undo_artists():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.artists RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute("DELETE FROM artists")
+        db.session.execute(text("DELETE FROM artists"))
         
     db.session.commit()
