@@ -17,7 +17,7 @@ class admissionTicketPurchase(db.Model):
 
 
     admissionTickets = db.relationship('admissionTicket', cascade='all, delete')
-    users = db.relationship('users', cascade='all,delete')
+    users = db.relationship('user', cascade='all,delete')
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 
