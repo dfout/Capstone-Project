@@ -12,7 +12,7 @@ class StoreItem(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     price = db.Column(db.Float, nullable=False)
     avg_rating = db.Column(db.Float, nullable = True)
-    stock = db.Collumn(db.Integer, nullable=False)
+    stock = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 

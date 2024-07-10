@@ -12,7 +12,7 @@ class Event(db.Model):
     location = db.Column(db.String(400), nullable = True)
     gallery_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('galleries.id')), nullable=False)
     max_participants = db.Column(db.Integer, nullable=True)
-    date= db.Column(db.Datetime(timezone=True), server_default=db.func.now())
+    date= db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     is_free = db.Column(db.Boolean, nullable=False)
     is_free_with_admission = db.Column(db.Boolean, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())

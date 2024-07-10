@@ -8,8 +8,8 @@ class AdmissionTicket(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    day = db.Column(db.Datetime(timezone=True), nullable=False)
-    max_admissions = db.Column(db.Integer, server_default= 500)
+    day = db.Column(db.DateTime(timezone=True), nullable=False)
+    max_admissions = db.Column(db.Integer, default= 500)
 
 
     # tags = db.relationship('Topic', cascade= "all, delete")

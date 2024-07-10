@@ -12,8 +12,8 @@ class Member(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     membership_type_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('membershipTypes.id')), nullable=False)
     curr_card_holders = db.Column(db.Integer, nullable=False)
-    last_charged = db.Column(db.Datetime(timezone=True), nullable=False)
-    next_payment = db.Column(db.Datetime(timezone=True), nullable=False)
+    last_charged = db.Column(db.DateTime(timezone=True), nullable=False)
+    next_payment = db.Column(db.DateTime(timezone=True), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
