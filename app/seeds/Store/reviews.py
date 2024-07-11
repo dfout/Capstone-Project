@@ -55,7 +55,6 @@ def seed_reviews():
         {"review": "Great post-impressionist book.", "rating": 4.0, "item_id": 47, "user_id": 3},
         {"review": "Love the modern tote bag.", "rating": 4.5, "item_id": 48, "user_id": 3},
         {"review": "Beautiful geometric earrings.", "rating": 5.0, "item_id": 49, "user_id": 3},
-        {"review": "High quality ring.", "rating": 4.5, "item_id": 50, "user_id": 3}
     ]
 
     for review in reviews:
