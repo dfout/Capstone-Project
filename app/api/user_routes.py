@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Review, db, StoreItem
+from app.models import User, Review, db, StoreItem, MembershipType, Member
 from app.forms.review_form import ReviewForm
 
 user_routes = Blueprint('users', __name__, url_prefix='session')
@@ -78,3 +78,23 @@ def update_review(review_id):
         return {"Review": reviewObj}
     if form.errors:
         return {"message":"Bad Request", "errors": form.errors}, 400
+    
+
+
+@user_routes.route('/membership')
+@login_required
+def get_membership_details():
+    '''A logged-in user with a membership can see their membership purchase records, next payments, payment details, membership details, and perks from their account page'''
+    user_id = current_user.id
+    member_info = Member.query.filter_by(user_id=user_id).first()
+
+    if(member_info == None):
+        return {"message": "User is not a member"}
+
+    return {"Member": member_info}
+
+
+
+
+
+
