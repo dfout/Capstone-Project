@@ -10,7 +10,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     review = db.Column(db.String(200), nullable=False)
     rating = db.Column(db.Float, nullable=False)
-    item_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("storeItems.id")), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("store_items.id")), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())

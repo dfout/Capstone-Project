@@ -10,7 +10,7 @@ class Member(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
-    membership_type_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("membershipTypes.id")), nullable=False)
+    membership_type_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("membership_types.id")), nullable=False)
     curr_card_holders = db.Column(db.Integer, nullable=False)
     last_charged = db.Column(db.DateTime(timezone=True), nullable=False)
     next_payment = db.Column(db.DateTime(timezone=True), nullable=False)

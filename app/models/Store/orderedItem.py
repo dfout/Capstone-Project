@@ -2,14 +2,14 @@ from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class OrderedItem(db.Model):
-    __tablename__ = "orderedItems"
+    __tablename__ = "ordered_items"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("storeOrders.id")), nullable=False)
-    item_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("storeItems.id")), nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("store_orders.id")), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("store_items.id")), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     
     storeOrders = db.relationship("StoreOrder", cascade='all, delete')

@@ -2,13 +2,13 @@ from ...db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class AdmissionTicketPurchase(db.Model):
-    __tablename__ = "admissionTicketPurchases"
+    __tablename__ = "admission_ticket_purchases"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    admission_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admissionTickets.id')), nullable=False)
+    admission_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admission_tickets.id')), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     ticket_quantity = db.Column(db.Integer, nullable=True)

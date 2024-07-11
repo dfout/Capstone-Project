@@ -265,8 +265,8 @@ def seed_store_items():
 
 def undo_store_items():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.storeItems RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.store_items RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM storeItems"))
+        db.session.execute(text("DELETE FROM store_items"))
 
     db.session.commit()

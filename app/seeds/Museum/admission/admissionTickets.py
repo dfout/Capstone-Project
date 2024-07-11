@@ -34,8 +34,8 @@ def seed_admission_tickets():
 
 def undo_admission_tickets():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.admissionTickets RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.admission_tickets RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM admissionTickets"))
+        db.session.execute(text("DELETE FROM admission_tickets"))
         
     db.session.commit()
