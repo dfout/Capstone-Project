@@ -8,6 +8,10 @@ Create Date: 2024-07-10 17:18:51.857146
 from alembic import op
 import sqlalchemy as sa
 
+import os
+environment = os.getenv("FLASK_ENV")
+SCHEMA = os.environ.get("SCHEMA")
+
 
 # revision identifiers, used by Alembic.
 revision = '5e0252d8042c'
@@ -24,6 +28,8 @@ def upgrade():
     sa.Column('max_admissions', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE admissionTickets SET SCHEMA {SCHEMA};")
     op.create_table('artists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=30), nullable=True),
@@ -32,12 +38,16 @@ def upgrade():
     sa.Column('died', sa.DateTime(timezone=True), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE artists SET SCHEMA {SCHEMA};")
     op.create_table('galleries',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=30), nullable=False),
     sa.Column('floor', sa.String(length=30), nullable=False),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE galleries SET SCHEMA {SCHEMA};")
     op.create_table('membershipTypes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=30), nullable=False),
@@ -46,13 +56,17 @@ def upgrade():
     sa.Column('price_per_cycle', sa.Float(), nullable=False),
     sa.Column('cardholders', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE membershipTypes SET SCHEMA {SCHEMA};")
     op.create_table('storeCategories',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
     sa.Column('description', sa.String(length=25), nullable=False),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE storeCategories SET SCHEMA {SCHEMA};")
     op.create_table('storeItems',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
@@ -64,6 +78,8 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE storeItems SET SCHEMA {SCHEMA};")
     op.create_table('admissionTicketPurchases',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('admission_id', sa.Integer(), nullable=False),
@@ -76,7 +92,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['admission_id'], ['admissionTickets.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE admissionTicketPurchases SET SCHEMA {SCHEMA};")
     op.create_table('admissionTicketTypes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('admission_id', sa.Integer(), nullable=False),
@@ -85,6 +103,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['admission_id'], ['admissionTickets.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE admissionTicketTypes SET SCHEMA {SCHEMA};")
     op.create_table('cartItems',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
@@ -96,6 +116,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE cartItems SET SCHEMA {SCHEMA};")
     op.create_table('events',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
@@ -110,6 +132,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['gallery_id'], ['galleries.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE events SET SCHEMA {SCHEMA};")
     op.create_table('expositions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
@@ -119,7 +143,9 @@ def upgrade():
     sa.Column('showing_end_date', sa.DateTime(timezone=True), nullable=True),
     sa.ForeignKeyConstraint(['gallery_id'], ['galleries.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE expositions SET SCHEMA {SCHEMA};")
     op.create_table('itemCategories',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('category_id', sa.Integer(), nullable=False),
@@ -127,7 +153,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['category_id'], ['storeCategories.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['storeItems.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE itemCategories SET SCHEMA {SCHEMA};")
     op.create_table('members',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
@@ -141,6 +169,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE members SET SCHEMA {SCHEMA};")
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('review', sa.String(length=200), nullable=False),
@@ -153,6 +183,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE reviews SET SCHEMA {SCHEMA};")
     op.create_table('storeItemImages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
@@ -160,6 +192,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['item_id'], ['storeItems.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE storeItemImages SET SCHEMA {SCHEMA};")
     op.create_table('storeOrders',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('purchaser_id', sa.Integer(), nullable=False),
@@ -169,6 +203,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['purchaser_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE storeOrders SET SCHEMA {SCHEMA};")
     op.create_table('eventImages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
@@ -179,6 +215,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['event_id'], ['events.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE eventImages SET SCHEMA {SCHEMA};")
     op.create_table('eventTicketPurchases',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('event_id', sa.Integer(), nullable=False),
@@ -192,6 +230,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE eventTicketPurchases SET SCHEMA {SCHEMA};")
     op.create_table('eventTicketTypes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('event_id', sa.Integer(), nullable=False),
@@ -200,6 +240,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['event_id'], ['events.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE eventTicketTypes SET SCHEMA {SCHEMA};")
     op.create_table('orderedItems',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('order_id', sa.Integer(), nullable=False),
@@ -209,6 +251,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['order_id'], ['storeOrders.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE orderedItems SET SCHEMA {SCHEMA};")
     op.create_table('pieces',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
@@ -223,7 +267,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['exposition_id'], ['expositions.id'], ),
     sa.ForeignKeyConstraint(['gallery_id'], ['galleries.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE pieces SET SCHEMA {SCHEMA};")
     op.create_table('ticketTypesPurchased',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('type_id', sa.Integer(), nullable=False),
@@ -232,7 +278,9 @@ def upgrade():
     sa.ForeignKeyConstraint(['purchase_id'], ['admissionTicketPurchases.id'], ),
     sa.ForeignKeyConstraint(['type_id'], ['admissionTicketTypes.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
+    ) 
+    if environment == "production":
+        op.execute(f"ALTER TABLE ticketTypesPurchased SET SCHEMA {SCHEMA};")
     op.create_table('eventTicketTypesPurchased',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('type_id', sa.Integer(), nullable=False),
@@ -242,6 +290,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['type_id'], ['eventTicketTypes.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE eventTicketTypesPurchased SET SCHEMA {SCHEMA};")
     op.create_table('expositionImages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
@@ -254,6 +304,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['piece_id'], ['pieces.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE expositionImages SET SCHEMA {SCHEMA};")
     op.create_table('pieceImages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
@@ -264,6 +316,8 @@ def upgrade():
     sa.ForeignKeyConstraint(['piece_id'], ['pieces.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    if environment == "production":
+        op.execute(f"ALTER TABLE pieceImages SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
