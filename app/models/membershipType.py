@@ -2,7 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class MembershipType(db.Model):
-    __tablename__ = 'membershipTypes'
+    __tablename__ = "membershipTypes"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}

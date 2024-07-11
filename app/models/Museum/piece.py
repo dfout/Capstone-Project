@@ -2,7 +2,7 @@ from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class Piece(db.Model):
-    __tablename__ = 'pieces'
+    __tablename__ = "pieces"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -17,9 +17,9 @@ class Piece(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    artists = db.relationship('Artist', cascade = "all, delete")
-    expositions = db.relationship('Exposition', cascade = "all, delete")
-    galleries = db.relationship('Gallery', cascade = "all, delete")
+    artists = db.relationship("Artist", cascade = "all, delete")
+    expositions = db.relationship("Exposition", cascade = "all, delete")
+    galleries = db.relationship("Gallery", cascade = "all, delete")
 
     def to_dict(self):
         return {

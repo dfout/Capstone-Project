@@ -2,7 +2,7 @@ from ...db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class Event(db.Model):
-    __tablename__ = 'events'
+    __tablename__ = "events"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -22,7 +22,7 @@ class Event(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
 
-    galleries = db.relationship('Gallery', cascade = "all, delete")
+    galleries = db.relationship("Gallery", cascade = "all, delete")
 
 
     def to_dict(self):

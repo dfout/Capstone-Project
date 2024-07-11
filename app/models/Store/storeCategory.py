@@ -2,7 +2,7 @@ from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class StoreCategory(db.Model):
-    __tablename__ = 'storeCategories'
+    __tablename__ = "storeCategories"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -11,7 +11,7 @@ class StoreCategory(db.Model):
     name = db.Column(db.String(200), nullable=False)
     description = db.Column(db.String(25), nullable=False)
 
-    itemCategories = db.relationship('ItemCategory', cascade= "all, delete")
+    itemCategories = db.relationship("ItemCategory", cascade= "all, delete")
 
     def to_dict(self):
         return {

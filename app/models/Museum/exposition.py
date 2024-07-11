@@ -2,7 +2,7 @@ from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 class Exposition(db.Model):
-    __tablename__ = 'expositions'
+    __tablename__ = "expositions"
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
@@ -14,7 +14,7 @@ class Exposition(db.Model):
     showing_start_date = db.Column(db.DateTime(timezone=True), nullable = True)
     showing_end_date = db.Column(db.DateTime(timezone=True), nullable = True)
 
-    galleries = db.relationship('Gallery', cascade = "all, delete")
+    galleries = db.relationship("Gallery", cascade = "all, delete")
 
 
     def to_dict(self):
