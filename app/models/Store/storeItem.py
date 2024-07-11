@@ -1,8 +1,9 @@
 from ..db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from sqlalchemy.sql import quoted_name
 
 class StoreItem(db.Model):
-    __tablename__ = "storeItems"
+    __tablename__ = quoted_name("storeItems", quote=True)
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
