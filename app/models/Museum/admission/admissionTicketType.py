@@ -9,8 +9,8 @@ class AdmissionTicketType(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     admission_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admission_tickets.id')), nullable=False)
-    type = db.Column(db.String(40), nullable=False)
-    description = db.Column(db.String(50), nullable=True)
+    type = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=True)
     price = db.Column(db.Float, nullable=False)
 
 

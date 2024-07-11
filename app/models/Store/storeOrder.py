@@ -9,7 +9,7 @@ class StoreOrder(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     purchaser_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
-    status= db.Column(db.String(50), nullable=True)
+    status= db.Column(db.String(255), nullable=True)
     purchased_on = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 

@@ -8,7 +8,7 @@ class Artist(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), nullable = True)
+    name = db.Column(db.String(1000), nullable = True)
     about = db.Column(db.String(1000), nullable = False)
     born = db.Column(db.DateTime(timezone=True), nullable=True)
     died = db.Column(db.DateTime(timezone=True), nullable=True)

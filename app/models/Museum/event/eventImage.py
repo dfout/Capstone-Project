@@ -11,7 +11,7 @@ class EventImage(db.Model):
     name = db.Column(db.String(200), nullable=False)
 
     event_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('events.id')), nullable=False)
-    url = db.Column(db.String(60), nullable=False)
+    url = db.Column(db.String(255), nullable=False)
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())

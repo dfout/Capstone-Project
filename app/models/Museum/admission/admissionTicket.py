@@ -10,7 +10,7 @@ class AdmissionTicket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     day = db.Column(db.DateTime(timezone=True), nullable=False)
     max_admissions = db.Column(db.Integer, default= 500)
-    day_of_week = db.Column(db.String(10), nullable=False)
+    day_of_week = db.Column(db.String(255), nullable=False)
 
 
     # tags = db.relationship('Topic', cascade= "all, delete")

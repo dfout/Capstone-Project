@@ -8,7 +8,7 @@ class Event(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(30), nullable=False)
+    title = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     location = db.Column(db.String(400), nullable = True)
     gallery_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('galleries.id')), nullable=False)
