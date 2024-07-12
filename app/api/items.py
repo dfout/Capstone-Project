@@ -1,9 +1,9 @@
 from flask_login import current_user, login_required
 from flask import Blueprint, request
-from app.models import Review, User, StoreItem, db
+from app.models import Review, User, StoreItem, db, CartItem
 from app.forms.review_form import ReviewForm
 
-item_routes = Blueprint('item', __name__, url_prefix='/store')
+item_routes = Blueprint('item', __name__, url_prefix='store')
 
 @item_routes.route('/items')
 def all_items():
@@ -19,19 +19,47 @@ def all_items():
 
 
 
-@item_routes.route('/items/<int:id>')
-def get_item(id):
+@item_routes.route('/items/<int:item_id>')
+def get_item(item_id):
     '''
     Get one item from the store when clicking on the item, searching by it's id
     '''
-    item_id = id
-    item = StoreItem.query.filter_by(id=id).first()
+  
+    item = StoreItem.query.filter_by(item_id=item_id).first()
     if item == None:
         return {"message": "Item could not be found"}, 404
     itemObj = item.to_dict()
     itemObj["Reviews"] = [x.to_dict() for x in Review.query.filter_by(item_id=item_id).all()]
 
     return {"Item": itemObj}
+
+@item_routes.route('/items/<int:item_id>', methods=['POST'])
+def add_to_cart(item_id):
+    '''A user can add an item to their cart'''
+
+
+    item = StoreItem.query.filter_by(item_id=item_id).first()
+
+    user_id = ''
+    if current_user:
+        user_id = current_user.id
+    else:
+        user_id = None
+
+    if (item != None):
+        new_cart_item = CartItem(
+            item_id= item_id,
+            user_id= user_id
+
+        )
+        db.session.add(new_cart_item)
+        db.session.commit()
+        cartItemObj = new_cart_item.to_dict()
+        return {"CartItem": cartItemObj}
+    else:
+        return {"message": "Item could not be found"}, 404
+
+
 
 
 @item_routes.route('/items/<int:item_id>')
@@ -72,3 +100,5 @@ def post_review(item_id):
         print(form.errors)
         return{"message": "Bad Request", "errors": form.errors}, 400
     
+
+
