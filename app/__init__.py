@@ -11,6 +11,7 @@ from .api.cart_routes import cart_routes
 from .api.item_routes import item_routes
 from .api.event_routes import event_routes
 from .api.admission_ticket_routes import admission_ticket_routes
+from .api.exposition_routes import exposition_routes
 from .seeds import seed_commands
 from .config import Config
 

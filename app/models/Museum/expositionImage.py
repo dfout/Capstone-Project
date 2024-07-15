@@ -10,7 +10,7 @@ class ExpositionImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
     exposition_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("expositions.id")), nullable=False)
-    piece_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pieces.id")), nullable=False)
+    piece_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("pieces.id")), nullable=True)
     url = db.Column(db.String(255), nullable=False)
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
