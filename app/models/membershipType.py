@@ -1,6 +1,9 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
+
+## add the perk information. 
+
 class MembershipType(db.Model):
     __tablename__ = "membership_types"
 
