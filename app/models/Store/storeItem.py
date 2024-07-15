@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy.sql import quoted_name
 
 class StoreItem(db.Model):
-    __tablename__ = quoted_name("store_items", quote=True)
+    __tablename__ = 'store_items'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}

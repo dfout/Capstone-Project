@@ -3,12 +3,29 @@ from flask import Blueprint, request
 from app.models import Review, User, StoreItem, db, CartItem
 from app.forms.review_form import ReviewForm
 
-item_routes = Blueprint('item', __name__, url_prefix='store')
+item_routes = Blueprint('items', __name__)
 
-@item_routes.route('/items')
+## Works on backend
+@item_routes.route('/')
 def all_items():
+
     '''Get all items on the store page'''
+    # try:
+    #     items = [x.to_dict() for x in StoreItem.query.all()]
+    #     if not items:
+    #         print("No items found.")
+    #     else:
+    #         print(f"Found {len(items)} items.")
+    #     for item in items:
+    #         print(item)
+    #     return {"StoreItems": items}
+    # except Exception as e:
+    #     print(f"Error fetching items: {e}")
+    # return {"error": str(e)}, 500
+    # '''Get all items on the store page'''
     items = [x.to_dict() for x in StoreItem.query.all()]
+    print(items)
+
     # for item in items:
     #     ## If I wanted to join categories onto the data
     #     # item['Categories'] = [x.to_dict() for x in ]
@@ -19,7 +36,7 @@ def all_items():
 
 
 
-@item_routes.route('/items/<int:item_id>')
+@item_routes.route('/<int:item_id>')
 def get_item(item_id):
     '''
     Get one item from the store when clicking on the item, searching by it's id
@@ -33,7 +50,7 @@ def get_item(item_id):
 
     return {"Item": itemObj}
 
-@item_routes.route('/items/<int:item_id>', methods=['POST'])
+@item_routes.route('/<int:item_id>', methods=['POST'])
 def add_to_cart(item_id):
     '''A user can add an item to their cart'''
 
@@ -62,7 +79,7 @@ def add_to_cart(item_id):
 
 
 
-@item_routes.route('/items/<int:item_id>')
+@item_routes.route('/<int:item_id>')
 def get_reviews(item_id):
     '''Get all reviews for an item on the item's detail page'''
     user_id = current_user.id
@@ -74,7 +91,7 @@ def get_reviews(item_id):
 
 ## NEED AN AUTH ROUTE TO MAKE SURE THEY HAVE PURCHASED THE ITEM THEY WISH TO REVIEW -HANDLE IN THE FRONT END AND CAN HANDLE IN BACK     
 
-@item_routes.route('/items/<int:item_id>', methods=['POST'])
+@item_routes.route('/<int:item_id>', methods=['POST'])
 @login_required
 def post_review(item_id):
     '''If logged in, and user has purchased an item, Post a review on an item'''

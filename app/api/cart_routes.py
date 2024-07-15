@@ -3,11 +3,14 @@ from flask import Blueprint, request
 from app.models import Review, User, StoreItem, db, CartItem
 from app.forms.review_form import ReviewForm
 
-cart_routes = Blueprint('cart', __name__, url_prefix='store/cart')
+cart_routes = Blueprint('cart', __name__ )
 
 
 ##!likely need to have log-in required. So it can better keep track and find the right instances to delete
 ## want to figure a better way to let a guest add things to the cart, then upon checkout, they can create an account if they wish. But they can also checkout as a guest. LATER
+
+
+## POST route is on the items.py routes for adding an item to the cart. 
 
 @cart_routes.route('/')
 @login_required
