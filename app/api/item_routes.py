@@ -39,7 +39,7 @@ def all_items():
 @item_routes.route('/<int:id>')
 def get_item(id):
     '''
-    Get one item from the store when clicking on the item, searching by it's id
+    Get one item from the store when clicking on the item, searching by it's id. All the item's reviews will be on this call. 
     '''
   
     item = StoreItem.query.filter_by(id=id).first()
