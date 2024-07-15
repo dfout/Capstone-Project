@@ -4,7 +4,7 @@ from app.models import User, Review, db, StoreItem, MembershipType, Member, Tick
 from app.forms.review_form import ReviewForm
 from datetime import datetime
 
-user_routes = Blueprint('users', __name__ )
+user_routes = Blueprint('users', __name__)
 
 
 @user_routes.route('/')

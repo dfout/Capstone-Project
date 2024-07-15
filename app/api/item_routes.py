@@ -34,28 +34,28 @@ def all_items():
     return {"StoreItems": items}
 
 
+## Works on backend too
 
-
-@item_routes.route('/<int:item_id>')
-def get_item(item_id):
+@item_routes.route('/<int:id>')
+def get_item(id):
     '''
     Get one item from the store when clicking on the item, searching by it's id
     '''
   
-    item = StoreItem.query.filter_by(item_id=item_id).first()
+    item = StoreItem.query.filter_by(id=id).first()
     if item == None:
         return {"message": "Item could not be found"}, 404
     itemObj = item.to_dict()
-    itemObj["Reviews"] = [x.to_dict() for x in Review.query.filter_by(item_id=item_id).all()]
+    itemObj["Reviews"] = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
 
     return {"Item": itemObj}
 
-@item_routes.route('/<int:item_id>', methods=['POST'])
-def add_to_cart(item_id):
+@item_routes.route('/<int:id>/cart', methods=['POST'])
+def add_to_cart(id):
     '''A user can add an item to their cart'''
 
 
-    item = StoreItem.query.filter_by(item_id=item_id).first()
+    item = StoreItem.query.filter_by(id=id).first()
 
     user_id = ''
     if current_user:
@@ -65,7 +65,7 @@ def add_to_cart(item_id):
 
     if (item != None):
         new_cart_item = CartItem(
-            item_id= item_id,
+            item_id= id,
             user_id= user_id
 
         )
@@ -79,11 +79,11 @@ def add_to_cart(item_id):
 
 
 
-@item_routes.route('/<int:item_id>')
-def get_reviews(item_id):
+@item_routes.route('/<int:id>/reviews')
+def get_reviews(id):
     '''Get all reviews for an item on the item's detail page'''
     user_id = current_user.id
-    reviews = [x.to_dict() for x in Review.query.filter_by(item_id=item_id).all()]
+    reviews = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
     for review in reviews:
         review['User'] = User.query.filter_by(user_id=user_id).first().to_dict_no_email()
 
@@ -91,9 +91,9 @@ def get_reviews(item_id):
 
 ## NEED AN AUTH ROUTE TO MAKE SURE THEY HAVE PURCHASED THE ITEM THEY WISH TO REVIEW -HANDLE IN THE FRONT END AND CAN HANDLE IN BACK     
 
-@item_routes.route('/<int:item_id>', methods=['POST'])
+@item_routes.route('/<int:id>/reviews', methods=['POST'])
 @login_required
-def post_review(item_id):
+def post_review(id):
     '''If logged in, and user has purchased an item, Post a review on an item'''
 
     form = ReviewForm()
@@ -104,7 +104,7 @@ def post_review(item_id):
             review = form.data['review'],
             stars = form.data['stars'],
             user_id = current_user.id,
-            item_id = item_id
+            item_id = id
         )
 
         db.session.add(new_review)
