@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, AdmissionTicketType
+from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, AdmissionTicketType, OrderedItem, StoreOrder
 from app.forms.review_form import ReviewForm
 from datetime import datetime
 
@@ -195,3 +195,20 @@ def cancel_admission_purchase(purchase_id):
 
     return {"message": "Admission ticket purchase canceled successfully"}, 200
 
+
+
+@user_routes.route('/orders')
+@login_required
+def get_orders():
+    '''A user can look at all their orders and the items they purchased'''
+    purchaser_id = current_user.id
+    orders = [x.to_dict() for x in StoreOrder.query.filter_by(purchaser_id=purchaser_id).all()]
+
+    if orders == None:
+        return {"message": "No orders found for this user"}, 404
+    
+
+    for order in orders:
+        order_id = order.id
+        order["OrderedItems": OrderedItem.query.filter_by(order_id=order_id).all()]
+    return {"Orders": orders}
