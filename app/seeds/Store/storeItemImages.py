@@ -71,8 +71,8 @@ def seed_store_item_images():
         selected_urls = random.sample(urls, k=2)  # Select 2 unique URLs for each item
         for url in selected_urls:
             image = StoreItemImage(
-                store_item_id=store_item[0],
-                image_url=url
+                item_id=store_item[0],
+                url=url
             )
             db.session.add(image)
 
