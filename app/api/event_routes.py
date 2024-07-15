@@ -17,6 +17,7 @@ def get_all_events():
 
 @event_routes.route('/<int:event_id>')
 def get_event_information(event_id):
+    '''Get specific event details'''
     event = Event.query.filter_by(event_id=event_id).first()
     if event == None:
         return {"message": "Event could not be found"}, 404
@@ -25,4 +26,13 @@ def get_event_information(event_id):
 
     return {"Event": eventObj}
 
+@event_routes.route('/members')
+def get_member_events():
+    '''Allows users to search for "Members Only" events'''
+    events = [x.to_dict() for x in Event.query.filter((Event.members_only == True) | (Event.members_only == 1)).all()]
+
+    if events !=None:
+        return {"Events": events}
+    else:
+        return {"message": "No Events found"}, 404
 
