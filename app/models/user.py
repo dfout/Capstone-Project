@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    is_member = db.Column(db.Boolean, nullable=False, default=False)
     first_name=db.Column(db.String(40), nullable=False)
     last_name=db.Column(db.String(40), nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
@@ -32,6 +33,7 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'email': self.email,
+            'isMember':self.is_member,
             'firstName': self.first_name,
             'lastName':self.last_name
         }
@@ -40,5 +42,6 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
+            'isMember':self.is_member,
             'firstName':self.first_name
         }

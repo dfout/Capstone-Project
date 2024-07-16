@@ -1,6 +1,6 @@
 const GET_MEMBERSHIPS = '/memberships/getAll'
 const GET_USER_MEMBERSHIP = '/user/membership'
-const PURCHASE_MEMBERSHIP = '/membership/purchase'
+// const PURCHASE_MEMBERSHIP = '/membership/purchase'
 const CANCEL_MEMBERSHIP = '/membership/cancel'
 const CHANGE_MEMBERSHIP = '/membership/update'
 
@@ -15,10 +15,10 @@ const getUserMembership =(membership) => ({
     payload: membership
 })
 
-const purchaseMembership =(membership) => ({
-    type: PURCHASE_MEMBERSHIP,
-    payload: membership
-})
+// const purchaseMembership =(membership) => ({
+//     type: PURCHASE_MEMBERSHIP,
+//     payload: membership
+// })
 
 const cancelMembership =(id) => ({
     type: CANCEL_MEMBERSHIP,
@@ -54,17 +54,18 @@ export const getUserMembershipThunk = () => async(dispatch) =>{
     }
 }
 
-export const purchaseMembershipThunk = (id) => async (dispatch)=>{
-    const response = await fetch(`/api/memberships/purchase/${id}`, {method: "POST"})
+// export const purchaseMembershipThunk = (id) => async (dispatch)=>{
+//     const response = await fetch(`/api/memberships/purchase/${id}`, {method: "POST"})
 
-    if(response.ok){
-        const {Member} = await response.json()
-        dispatch(purchaseMembership(Member))
-    }else{
-        const data = response.json()
-        return data.errors
-    }
-}
+//     if(response.ok){
+//         const {Member} = await response.json()
+//         dispatch(purchaseMembership(Member))
+//         // return {Member}
+//     }else{
+//         const data = response.json()
+//         return data.errors
+//     }
+// }
 
 export const cancelMembershipThunk = (id)=> async (dispatch) =>{
     const response = await fetch(`/api/memberships/${id}`, {method:"DELETE"})
@@ -98,12 +99,6 @@ function membershipReducer(state=initialState, action){
 
         }
         case GET_USER_MEMBERSHIP:{
-            const newState = {...state}
-            newState[action.payload.id] = action.payload
-            return newState
-
-        }
-        case PURCHASE_MEMBERSHIP:{
             const newState = {...state}
             newState[action.payload.id] = action.payload
             return newState

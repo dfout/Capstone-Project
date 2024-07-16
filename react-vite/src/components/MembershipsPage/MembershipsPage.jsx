@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { getMembershipsThunk } from "../../redux/membership"
+import { useNavigate } from "react-router-dom"
+import { purchaseMembershipThunk } from "../../redux/session"
+
 
 
 
 function MembershipsPage(){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const memberships = useSelector((state)=>state.memberships)
 
 
@@ -15,6 +19,14 @@ function MembershipsPage(){
 
     // clicking on any of these membership tiles will take you to the membership purchase page. If you aleady have a membership, this link in the navbar will not exist. only the manage your membership. Under that, then you can change your membership OR
     //Or, this stays up and there is logic included in here
+
+    const handleJoin = async(id)=>{
+        
+       const response =  await dispatch(purchaseMembershipThunk(id))
+
+       navigate('/')
+        
+    }
 
     return(
         <>
@@ -31,7 +43,7 @@ function MembershipsPage(){
     
                     <p>${membership.pricePerCycle} / Year </p>
                     <p>{membership.description}</p>
-                    <button className='membership-button'>Join</button>
+                    <button onClick={()=> handleJoin(membership.id)}className='membership-button'>Join</button>
                 </div>
             ) )}
         </div>
