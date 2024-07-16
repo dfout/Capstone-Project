@@ -1,4 +1,7 @@
+import { createSelector } from "reselect"
+
 const GET_REVIEWS = '/reviews/getReviews'
+const GET_ITEM_REVIEWS = '/item/getReviews'
 const POST_REVIEW = '/reviews/PostReview'
 const DELETE_REVIEW = '/reviews/deleteReview'
 const UPDATE_REVIEW = '/reviews/updateReview'
@@ -7,6 +10,11 @@ const UPDATE_REVIEW = '/reviews/updateReview'
 const getReviews = (reviews) =>({
     type:GET_REVIEWS, 
     payload:reviews
+})
+
+const getItemReviews = (reviews)=>({
+    type:GET_ITEM_REVIEWS,
+    payload: reviews
 })
 
 const postReview = (review) =>({
@@ -37,11 +45,11 @@ export const getUserReviewsThunk = ()=> async (dispatch) =>{
 }
 
 //! Might not technically have to do this. But I need to make sure if I change reviews from the items page that a new slice of state is made so that it re-renders. Think then I need to have a separate slice of state to be honest? 
-export const getItemReviewsThunk = ()=> async(dispatch) =>{
+export const getItemReviewsThunk = (id)=> async(dispatch) =>{
     const response = await fetch(`/api/store/items/${id}/reviews`)
     if (response.ok){
         const {Reviews} = await response.json()
-    dispatch(getReviews(Reviews))
+    dispatch(getItemReviews(Reviews))
     }else{
         const data = await response.json()
         return data.errors
@@ -80,6 +88,10 @@ export const updateReviewThunk = ()=> async (dispatch) =>{
 
 }
 
+export const getReviewsList = createSelector(
+    (state)=> state.reviews,
+    (reviews)=> Object.values(reviews)
+)
 
 const initialState = {}
 
@@ -89,6 +101,10 @@ function reviewsReducer (state=initialState, action){
             const newState = {...state}
             action.payload.forEach((review)=>newState[review.id]= review)
             return newState
+        }
+        case GET_ITEM_REVIEWS:{
+            const newState = {...state}
+            action.payload.forEach((review)=>newState[review.id]=review)
         }
         case POST_REVIEW:{
             const newState = {...state}

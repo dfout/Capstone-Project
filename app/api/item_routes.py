@@ -87,10 +87,11 @@ def add_to_cart(id):
 @item_routes.route('/<int:id>/reviews')
 def get_reviews(id):
     '''Get all reviews for an item on the item's detail page'''
-    user_id = current_user.id
+    # user_id = current_user.id
     reviews = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
     for review in reviews:
-        review['User'] = User.query.filter_by(user_id=user_id).first().to_dict_no_email()
+        id=review["ownerId"]
+        review['User'] = (User.query.filter_by(id=id).first()).to_dict_no_email_no_last()
 
     return {"Reviews": reviews}
 
