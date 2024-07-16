@@ -57,6 +57,10 @@ function ProfileButton() {
                 <button onClick={logout}>Log Out</button>
               </li>
               <li><NavLink to='user/reviews'>Manage Reviews</NavLink></li>
+              {user.isMember && (
+                <li><NavLink to='user/membership'>Manage Membership</NavLink></li>
+              )}
+              
             </>
           ) : (
             <>

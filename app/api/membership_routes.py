@@ -18,8 +18,12 @@ def get_memberships():
 def purchase_membership(membership_id):
     '''Allows a user to subscribe to a membership'''
     id = current_user.id
-    user = (User.query.filter_by(id=id).first()).to_dict()
-    user["isMember"] = True
+    user = User.query.get(id)
+    user.is_member = True
+    db.session.commit()
+
+    user = user.to_dict()
+    
     
     membership_type_info = (MembershipType.query.filter_by(id=membership_id).first()).to_dict()
     current_datetime = datetime.now()

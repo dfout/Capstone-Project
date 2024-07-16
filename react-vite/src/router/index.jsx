@@ -8,6 +8,7 @@ import StoreHomePage from '../components/StoreHomePage'
 import ItemDetailPage from '../components/ItemDetailPage';
 import MembershipsPage from '../components/MembershipsPage';
 import ManageReviews from '../components/ManageReviews';
+import MembershipDetails from '../components/MembershipDetails';
 
 
 export const router = createBrowserRouter([
@@ -46,6 +47,11 @@ export const router = createBrowserRouter([
       {
         path: 'user/reviews',
         element: <ManageReviews />
+
+      },
+      {
+        path: 'user/membership',
+        element: <MembershipDetails/>
 
       },
     ],

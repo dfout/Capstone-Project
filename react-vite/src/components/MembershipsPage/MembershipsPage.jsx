@@ -24,7 +24,7 @@ function MembershipsPage(){
         
        const response =  await dispatch(purchaseMembershipThunk(id))
 
-       navigate('/')
+       navigate('/user/membership')
         
     }
 
