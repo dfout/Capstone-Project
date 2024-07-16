@@ -7,6 +7,7 @@ import ExhibitionDetail from '../components/ExhibitionDetailPage';
 import StoreHomePage from '../components/StoreHomePage'
 import ItemDetailPage from '../components/ItemDetailPage';
 import MembershipsPage from '../components/MembershipsPage';
+import ManageReviews from '../components/ManageReviews';
 
 
 export const router = createBrowserRouter([
@@ -41,6 +42,11 @@ export const router = createBrowserRouter([
       {
         path:'/memberships',
         element: <MembershipsPage />
+      },
+      {
+        path: 'user/reviews',
+        element: <ManageReviews />
+
       },
     ],
   },

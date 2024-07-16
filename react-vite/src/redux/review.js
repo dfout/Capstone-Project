@@ -98,12 +98,12 @@ const initialState = {}
 function reviewsReducer (state=initialState, action){
     switch(action.type){
         case GET_REVIEWS:{
-            const newState = {...state}
+            const newState = {}
             action.payload.forEach((review)=>newState[review.id]= review)
             return newState
         }
         case GET_ITEM_REVIEWS:{
-            const newState = {...state}
+            const newState = {}
             action.payload.forEach((review)=>newState[review.id]=review)
         }
         case POST_REVIEW:{

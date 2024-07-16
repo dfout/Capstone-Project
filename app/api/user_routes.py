@@ -38,8 +38,8 @@ def get_user_reviews():
     user_id= current_user.id
     reviews = [x.to_dict() for x in Review.query.filter_by(user_id=user_id).all()]
     for review in reviews:
-        item_id = review.item_id
-        review["Item"] = (StoreItem.query.filter_by(item_id=item_id).first()).to_dict()
+        id = review["itemId"]
+        review["Item"] = (StoreItem.query.filter_by(id=id).first()).to_dict()
 
     return {"Reviews": reviews}
 
