@@ -12,6 +12,7 @@ from .api.item_routes import item_routes
 from .api.event_routes import event_routes
 from .api.admission_ticket_routes import admission_ticket_routes
 from .api.exposition_routes import exposition_routes
+from .api.membership_routes import membership_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -38,6 +39,7 @@ app.register_blueprint(cart_routes, url_prefix='/api/store/cart')
 app.register_blueprint(event_routes, url_prefix='/api/events')
 app.register_blueprint(admission_ticket_routes, url_prefix='/api/admission')
 app.register_blueprint(exposition_routes, url_prefix='/api/exhibitions')
+app.register_blueprint(membership_routes, url_prefix='/api/memberships')
 
 db.init_app(app)
 Migrate(app, db)

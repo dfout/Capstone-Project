@@ -10,13 +10,16 @@ import itemReducer from "./item";
 import cartReducer from "./cart";
 import reviewsReducer from "./review";
 import exhibitionReducer from "./exhibition";
+import membershipReducer from "./membership";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  memberships:membershipReducer,
   cart: cartReducer,
   items: itemReducer,
   reviews:reviewsReducer,
-  exhibitions: exhibitionReducer
+  exhibitions: exhibitionReducer,
+
 });
 
 let enhancer;

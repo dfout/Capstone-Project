@@ -6,6 +6,7 @@ import MuseumHomePage from '../components/MuseumHomePage';
 import ExhibitionDetail from '../components/ExhibitionDetailPage';
 import StoreHomePage from '../components/StoreHomePage'
 import ItemDetailPage from '../components/ItemDetailPage';
+import MembershipsPage from '../components/MembershipsPage';
 
 
 export const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
       {
         path:"store/items/:id",
         element: <ItemDetailPage />
+      },
+      {
+        path:'/memberships',
+        element: <MembershipsPage />
       },
     ],
   },

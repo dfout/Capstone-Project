@@ -54,12 +54,21 @@ def edit_membership(membership_id):
     ## change it
 
     membership_type_id = membership_id
-    membership = Member.query.filter_by(membership_type_id=membership_type_id)
+    membership = (Member.query.filter_by(membership_type_id=membership_type_id)).to_dict()
     id= membership_type_id
     new_membership_info = (MembershipType.query.filter_by(id=id).first()).to_dict()
-    membership["membership_type_id"] = membership_type_id
-    membership["curr_card_holders"] = new_membership_info["cardholders"]
-    
+    membership["membershipTypeId"] = membership_type_id
+    membership["currCardHolders"] = new_membership_info["cardholders"]
+    current_datetime = datetime.now()
+    next_payment_date = current_datetime + timedelta(days=365)
+    membership["nextPayment"] = next_payment_date
+    membership["updatedAt"] = current_datetime
+
+    db.session.commit()
+
+    membership["MembershipType"] = (MembershipType.query.filter_by(id=id).first()).to_dict()
+
+    return {"Member": membership}
   
 
     
