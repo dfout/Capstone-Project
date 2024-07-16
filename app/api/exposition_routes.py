@@ -18,3 +18,15 @@ def get_expositions():
         exposition["Images"] = ExpositionImage.query.filter_by(exposition_id=exposition_id)
 
     return {"Exhibitions": expositions}
+
+
+@exposition_routes.route('/<int:id>')
+def get_exposition_details(id):
+    '''A user can see specific exposition details'''
+
+    exposition = (Exposition.query.filter_by(id=id).first()).to_dict()
+    exposition_id = id
+    exposition["Images"] = ExpositionImage.query.filter_by(exposition_id=exposition_id).all()
+
+
+    return {"Exhibition": exposition}
