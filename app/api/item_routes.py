@@ -45,13 +45,15 @@ def get_item(id):
     Get one item from the store when clicking on the item, searching by it's id. All the item's reviews will be on this call. 
     '''
   
-    item = StoreItem.query.filter_by(id=id).first()
+    item = (StoreItem.query.filter_by(id=id).first()).to_dict()
     if item == None:
         return {"message": "Item could not be found"}, 404
-    itemObj = item.to_dict()
-    itemObj["Reviews"] = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
 
-    return {"Item": itemObj}
+    item["Reviews"] = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
+    item_id=id
+    item["Images"] = [image.to_dict() for image in StoreItemImage.query.filter_by(item_id=item_id).all()]
+
+    return {"Item": item}
 
 @item_routes.route('/<int:id>/cart', methods=['POST'])
 def add_to_cart(id):

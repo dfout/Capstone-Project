@@ -5,6 +5,8 @@ import Layout from './Layout';
 import MuseumHomePage from '../components/MuseumHomePage';
 import ExhibitionDetail from '../components/ExhibitionDetailPage';
 import StoreHomePage from '../components/StoreHomePage'
+import ItemDetailPage from '../components/ItemDetailPage';
+
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,10 @@ export const router = createBrowserRouter([
       {
         path:"store",
         element: <StoreHomePage/>
+      },
+      {
+        path:"store/items/:id",
+        element: <ItemDetailPage />
       },
     ],
   },
