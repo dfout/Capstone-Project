@@ -15,7 +15,7 @@ def get_expositions():
         return {"message": "No Current Exhibitions"}, 404
 
     for exposition in expositions:
-        print("--------------",exposition,"-----------------------------")
+    
         exposition_id = exposition["id"]
         exposition["Images"] = [image.to_dict() for image in ExpositionImage.query.filter_by(exposition_id=exposition_id).all()]
         

@@ -1,6 +1,6 @@
 from flask_login import current_user, login_required
 from flask import Blueprint, request
-from app.models import Review, User, StoreItem, db, CartItem
+from app.models import Review, User, StoreItem, db, CartItem, StoreItemImage
 from app.forms.review_form import ReviewForm
 
 item_routes = Blueprint('items', __name__)
@@ -31,7 +31,10 @@ def all_items():
     #     # item['Categories'] = [x.to_dict() for x in ]
     # item[''] = item.
 
-    return {"StoreItems": items}
+    for item in items:
+        item["Images"] = [image.to_dict() for image in StoreItemImage.query.filter_by(item_id=item["id"]).all()]
+
+    return {"Items": items}
 
 
 ## Works on backend too

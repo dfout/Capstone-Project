@@ -8,6 +8,12 @@ function Navigation() {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
+      <li>
+      <NavLink to='/store'>Store</NavLink>
+      </li>
+      <li>
+      <NavLink to='/memberships'>Memberships</NavLink>
+      </li>
 
       <li>
         <ProfileButton />

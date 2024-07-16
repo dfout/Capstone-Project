@@ -4,6 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import MuseumHomePage from '../components/MuseumHomePage';
 import ExhibitionDetail from '../components/ExhibitionDetailPage';
+import StoreHomePage from '../components/StoreHomePage'
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
         path: "exhibitions/:id",
         element: <ExhibitionDetail />
 
+      },
+      {
+        path:"store",
+        element: <StoreHomePage/>
       },
     ],
   },
