@@ -1,14 +1,15 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getExhibitionThunk } from "../../redux/exhibition";
+import { useDispatch, useSelector } from "react-redux";
+import { getExhibitionsThunk } from "../../redux/exhibition";
+import { NavLink } from "react-router-dom";
 
 
 
 function MuseumHomePage(){
     const dispatch = useDispatch()
-    const expositions = useSelector((state))
+    const expositions = useSelector((state)=>state.exhibitions)
     useEffect(()=>{
-        dispatch(getExhibitionThunk())
+        dispatch(getExhibitionsThunk())
     }, [dispatch])
 
 
@@ -20,7 +21,7 @@ function MuseumHomePage(){
                     <NavLink className='exposition-link' to={`/exhibitions/${exposition.id}`}>
                     <h3>{exposition.name}</h3>  
                     {exposition.Images.map((image)=>(
-                        <img src={image.url}/>
+                        <img key={image.id}src={image.url}/>
                     ))}            
                     </NavLink>
                     </div>

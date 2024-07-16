@@ -20,14 +20,14 @@ export const getItemsThunk = () => async (dispatch) => {
     const response = await fetch('/api/store/items/')
     if (response.ok){
         const {Items} = await response.json()
-        if (data.errors){
-            return data.errors
-        }
         dispatch(getItems(Items))
+    }else{
+        const data = await response.json()
+        return data.errors
     }
 }
 
-export const getItemThunk = (id) =async(dispatch) =>{
+export const getItemThunk = (id) =>async(dispatch) =>{
     const response = await fetch(`/api/store/items/${id}`)
     if (response.ok) {
         const {Item} = await response.json()
@@ -57,6 +57,8 @@ function itemReducer(state=initialState, action){
             return {...newState}
 
         }
+        default:
+            return state
 
     }
 }

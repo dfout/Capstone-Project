@@ -13,7 +13,7 @@ const getOneExhibition = (exhibition)=>({
 
 
 export const getExhibitionsThunk = () => async (dispatch)=>{
-    const response = await fetch(`/api/exhibitions/`)
+    const response = await fetch("/api/exhibitions/")
 
     if (response.ok){
         const {Exhibitions} = await response.json()
