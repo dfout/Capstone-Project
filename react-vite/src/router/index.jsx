@@ -3,6 +3,7 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import MuseumHomePage from '../components/MuseumHomePage';
+import ExhibitionDetail from '../components/ExhibitionDetailPage';
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,11 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignupFormPage />,
+      },
+      {
+        path: "exhibitions/:id",
+        element: <ExhibitionDetail />
+
       },
     ],
   },

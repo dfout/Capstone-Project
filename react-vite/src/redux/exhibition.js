@@ -25,7 +25,7 @@ export const getExhibitionsThunk = () => async (dispatch)=>{
 }
 
 export const getExhibitionThunk = (id) => async (dispatch)=>{
-    const response = await fetch(`/api/exhibtions/${id}`)
+    const response = await fetch(`/api/exhibitions/${id}`)
     if (response.ok){
         const {Exhibition} = await response.json()
         dispatch(getOneExhibition(Exhibition))
@@ -46,7 +46,7 @@ function exhibitionReducer(state=initialState, action){
             return newState
         }
         case GET_EXHIBITION:{
-            const newSpotState = {...state}
+            const newSpotState = {}
             const exhibition = action.payload
             newSpotState[action.payload.id] = exhibition;
             return {...newSpotState}

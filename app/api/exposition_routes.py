@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Review, db, StoreItem, MembershipType, Member, Event, Exposition, ExpositionImage
+from app.models import User, Review, db, StoreItem, MembershipType, Member, Event, Exposition, ExpositionImage, Gallery
 
 
 exposition_routes = Blueprint('exhibitions', __name__ )
@@ -31,8 +31,10 @@ def get_exposition_details(id):
     if not exposition:
         return {"message": "Exposition not found"}, 404
  
-    exposition_dict = exposition.to_dict()
-    exposition_dict["Images"] = [image.to_dict() for image in ExpositionImage.query.filter_by(exposition_id=id).all()]
+    
+    exposition["Images"] = [image.to_dict() for image in ExpositionImage.query.filter_by(exposition_id=id).all()]
+    gallery_id = exposition["galleryId"]
+    exposition["Gallery"] = (Gallery.query.filter_by(id=gallery_id).first()).to_dict()
 
 
-    return {"Exhibition": exposition_dict}
+    return {"Exhibition": exposition}
