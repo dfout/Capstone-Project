@@ -7,6 +7,7 @@ import { getItemReviewsThunk } from "../../redux/review"
 import OpenModalButton from "../OpenModalButton"
 import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import { getReviewsList } from "../../redux/review"
+import './itemDetailPage.css'
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
@@ -51,14 +52,29 @@ function ItemDetailPage(){
 
     return(
         <>
+        <div className='item-imgs-info'>
+
+        <div className='item-imgs-container'>
+
+
         {item.Images && item.Images.map((image)=>(
-            <img key={image.id} src={image.url}/>
+            <div className='item-img-container'>
+                            <img className='item-detail-image' key={image.id} src={image.url}/>
+
+            </div>
+
         ))}
+        </div>
+        <div className='item-info'>
+
         <h2>{item.name}</h2>
         <span>{item.avgRating}</span>
         <span>{item.price}</span>
         <p>{item.description}</p>
-        {/* <section>
+        <button>Add to Cart</button>
+        </div>
+        </div>
+        <section>
         <ul className='item-reviews'>
             {console.log(reviews, "REVIEWS HERE")}
             {reviews.length != 0 && reviews?.map(({ id, ownerId, User, stars, review, createdAt }) => {
@@ -81,7 +97,7 @@ function ItemDetailPage(){
             })}
         </ul>
 
-        </section> */}
+        </section>
         
         </>
     )

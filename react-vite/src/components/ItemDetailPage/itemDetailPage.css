@@ -1,0 +1,21 @@
+.item-img-container{
+    width: 200px;
+    height:300px;
+}
+
+
+.item-detail-image{
+    height:100%;
+    width:100%;
+}
+
+
+.item-imgs-container{
+    display:flex;
+}
+
+
+.item-imgs-info{
+    display:flex;
+    
+}

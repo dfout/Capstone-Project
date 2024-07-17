@@ -88,6 +88,7 @@ def add_to_cart(id):
 def get_reviews(id):
     '''Get all reviews for an item on the item's detail page'''
     # user_id = current_user.id
+    id= int(id)
     reviews = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
     for review in reviews:
         id=review["ownerId"]
