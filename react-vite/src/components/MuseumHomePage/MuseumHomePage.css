@@ -42,13 +42,20 @@
 
 .exposition-intro-container-one{
     height: 400px;
+    display: flex;
+    justify-content: center; /* Center align horizontally */
+    align-items: center; /* Center align vertically */
     /* width: 500px; */
     background-color: aquamarine;
     flex:1;
+    
 }
 
 .exposition-intro-container-two{
     height: 400px;
+    display: flex;
+    justify-content: center; /* Center align horizontally */
+    align-items: center; /* Center align vertically */
     /* width: 500px; */
     background-color: rgb(151, 81, 216);
     flex:1;
@@ -56,7 +63,33 @@
 
 .exposition-intro-container-three{
     height: 400px;
+    display: flex;
+    justify-content: center; /* Center align horizontally */
+    align-items: center; /* Center align vertically */
     /* width: 500px; */
     background-color: rgb(73, 198, 73);
     flex:1;
+}
+
+
+#name{
+    font-size: 24pt;
+    
+}
+
+.expo-info{
+    display: flex;
+    /* justify-content: center; */
+    flex-wrap:wrap;
+    text-wrap: wrap;
+    flex-direction: column;
+    /* width: 100px; */
+    width:50%;
+    height:100%;
+    align-items: center;
+    text-align: center;
+    /* background-color: red; */
+    padding-top: 10%;
+    
+
 }

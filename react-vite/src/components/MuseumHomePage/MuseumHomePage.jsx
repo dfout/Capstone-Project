@@ -22,7 +22,10 @@ function MuseumHomePage(){
                 <div className='exposition-tile'>
                     <NavLink className='exposition-link' to={`/exhibitions/${expositions[3].id}`}>
                     <div className='exposition-intro-container-one'>
-                    <h3 className="archivo-black-regular">{expositions[3].name}</h3>  
+                        <div className='expo-info'>
+                        <h3 id="name" className="archivo-black-regular">{expositions[3].name}</h3>  
+                        </div>
+
                     </div>
             
                     
@@ -39,7 +42,10 @@ function MuseumHomePage(){
                             <img id='preview-image' src={expositions[7].Images[0].url}/>
                         </div>    
                         <div className='exposition-intro-container-two'>
-                    <h3 className="archivo-black-regular">{expositions[7].name}</h3>  
+                            <div className='expo-info'>
+                            <h3 id="name" className="archivo-black-regular">{expositions[7].name}</h3> 
+                            </div>
+ 
                     </div>
                     </NavLink>
                 </div>
@@ -48,7 +54,9 @@ function MuseumHomePage(){
                 <div className='exposition-tile'>
                     <NavLink className='exposition-link' to={`/exhibitions/${expositions[9].id}`}>
                     <div className='exposition-intro-container-three'>
-                    <h3 className="archivo-black-regular">{expositions[9].name}</h3>  
+                        <div className='expo-info'>
+                        <h3 id="name"  className="archivo-black-regular">{expositions[9].name}</h3>
+                        </div>
                     </div>
             
                     
