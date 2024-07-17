@@ -31,10 +31,14 @@ function MembershipsPage(){
 
     return(
         <>
+        <h2 className="archivo-black-regular discover-mem">Discover More as a Member</h2>
+        <div className="mem-intro">        <p id='intro'>Get closer to the art you love, enjoy exclusive events, and immerse yourself in our vibrant, creative community when you become a member today.</p></div>
+
         <div className='memberships-container'>
+
             {memberships && Object.values(memberships).map((membership)=>(
                 <div key={membership.id} className='membership-tile'>
-                    <h3>{membership.name}</h3>
+                    <h3 id='mem-name'>{membership.name}</h3>
                     {membership.cardholders == 1 ? (
                             <span>{membership.cardholders} cardholder</span>
 
