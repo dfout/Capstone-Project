@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { getExhibitionThunk } from "../../redux/exhibition"
 import { useState } from "react"
+import './ExhibitionDetail.css'
 
 function ExhibitionDetail(){
     const dispatch = useDispatch()
@@ -36,7 +37,7 @@ function ExhibitionDetail(){
     return(
         <>
         {exhibition.Images.map((image)=>(
-        <img key={image.id}src={image.url}/>
+        <img className='exposition-img-conts' key={image.id}src={image.url}/>
         ))}   
         <h2>{exhibition.name}</h2>
         <h3>{exhibition.showingStartDate} - {exhibition.showingEndDate}</h3>

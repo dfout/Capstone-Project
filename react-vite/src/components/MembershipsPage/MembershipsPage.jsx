@@ -46,9 +46,46 @@ function MembershipsPage(){
                         <span>{membership.cardholders} cardholders</span>
                     )}
     
-                    <p>${membership.pricePerCycle} / Year </p>
-                    <p>{membership.description}</p>
-                    <button onClick={()=> handleJoin(membership.id)}className='membership-button'>Join</button>
+                    <p id='membership-price' className='archivo-black-regular'>${membership.pricePerCycle} / Year </p>
+                    {membership.description.split('.').map((point,index)=>{
+                        if (index == 0 && membership.id != 1){
+                            let arr = point.split(' ')
+                            return (
+                                <div id='first-line'>
+                                <span>{arr[0]} </span>
+                                <span style={{fontWeight:"bold"}}>{arr[1]}</span>
+                                <span id='first-info'> {arr[2]}</span>
+                                <span> {arr[3]}:</span>
+                                </div>
+                            )
+                        }
+                        
+                    })}
+                    <ul className='member-d-list'>
+                    {membership.description.split('.').map((point, index)=>{
+                        // if (index == 0 && membership.id != 1){
+                        //     let arr = point.split(' ')
+                        //     return (
+                        //         <>
+                        //         <span>{arr[0]} </span>
+                        //         <span style={{fontWeight:"bold"}}>{arr[1]}</span>
+                        //         <span id='first-info'> {arr[2]}</span>
+                        //         <span> {arr[3]}:</span>
+                        //         </>
+                        //     )
+                        // }
+                        if((membership.id==2 || membership.id==2) && index==0){
+                            return;
+                        }
+                        return(
+
+                            <li className='bullet-points' key={index} item>{point}</li>
+                        )
+                        
+                        })}
+                    </ul>
+             
+                    <button onClick={()=> handleJoin(membership.id)}className='membership-button archivo-black-regular'>Join</button>
                 </div>
             ) )}
         </div>
