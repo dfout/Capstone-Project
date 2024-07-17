@@ -4,33 +4,41 @@ import "./Navigation.css";
 
 function Navigation() {
   return (
+    <>
     <div className='navbar'>
-      <ul className='navbar-links'>
-      <li>
         <div id='name-container'>
         <NavLink to='/' className='nav-links archivo-black-regular' id='musee'>Musée 4</NavLink>
         </div>
-
-        </li>
-      <li>
-      <NavLink className='nav-links archivo-black-regular' to='/memberships'>Memberships</NavLink>
-      </li>
-      <li>
+      
+      <div className='navbar-links'>
+    
+      <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Memberships</NavLink>
+      
+      
       <button className='archivo-black-regular' to='/memberships'id='tickets-button'>Tickets</button>
-      </li>
+      
 
-      <li>
-        <ProfileButton />
-      </li>
-    </ul>
+      
+      <ProfileButton />
+    
+    </div>
+    
+    </div>
     <ul className='other-links'>
     <li>
-      <NavLink className='nav-links archivo-black-regular'to='/store'>Store</NavLink>
+      <NavLink className='nav-links archivo-black-regular underline'to='/exhibitions'>Exhibitions</NavLink>
+      </li>
+      <li>
+      <NavLink className='nav-links archivo-black-regular underline'to='/events'>Events</NavLink>
+      </li>
+      <li>
+      <NavLink className='nav-links archivo-black-regular underline'to='/artists'>Art & Artists </NavLink>
+      </li>
+    <li>
+      <NavLink className='nav-links archivo-black-regular underline'to='/store'>Store</NavLink>
       </li>
     </ul>
-
-
-    </div>
+    </>
 
   );
 }
