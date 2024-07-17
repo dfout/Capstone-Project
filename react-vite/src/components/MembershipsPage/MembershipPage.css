@@ -1,0 +1,13 @@
+.memberships-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content: center;
+}
+.membership-tile{
+    background-color: rgb(88, 88, 182);
+    height: 500px;
+    width: 395px;
+}
+

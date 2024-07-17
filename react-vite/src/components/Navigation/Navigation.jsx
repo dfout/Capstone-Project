@@ -4,21 +4,31 @@ import "./Navigation.css";
 
 function Navigation() {
   return (
-    <ul>
+    <div className='navbar'>
+      <ul className='navbar-links'>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <div id='name-container'>
+        <NavLink to='/' className='nav-links archivo-black-regular' id='musee'>Musée 4</NavLink>
+        </div>
+
+        </li>
+      <li>
+      <NavLink className='nav-links archivo-black-regular'to='/store'>Store</NavLink>
       </li>
       <li>
-      <NavLink to='/store'>Store</NavLink>
+      <NavLink className='nav-links archivo-black-regular' to='/memberships'>Memberships</NavLink>
       </li>
       <li>
-      <NavLink to='/memberships'>Memberships</NavLink>
+      <button className='archivo-black-regular' to='/memberships'id='tickets-button'>Tickets</button>
       </li>
 
       <li>
         <ProfileButton />
       </li>
     </ul>
+
+    </div>
+
   );
 }
 

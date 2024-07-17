@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { getMembershipsThunk } from "../../redux/membership"
 import { useNavigate } from "react-router-dom"
 import { purchaseMembershipThunk } from "../../redux/session"
+import './MembershipPage.css'
 
 
 

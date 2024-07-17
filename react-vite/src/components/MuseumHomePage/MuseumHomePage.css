@@ -1,0 +1,35 @@
+.exposition-image-container {
+    height: 400px;
+    width: 820px;
+    /* width: 65.5%; */
+    /* padding-bottom: 10px; */
+    position: relative;
+    cursor: pointer;
+    overflow:hidden;
+}
+
+#preview-image {
+   
+    height:auto;
+    width: 100%;
+    overflow: hidden;
+    /* border-radius: 10px; */
+    cursor: pointer;
+}
+
+.exposition-link{
+    text-decoration: none;
+    color:black;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    width:100%;
+    /* background-color: red; */
+}
+
+.exposition-intro-container{
+    height: 400px;
+    width: 450px;
+    background-color: aquamarine;
+}
+

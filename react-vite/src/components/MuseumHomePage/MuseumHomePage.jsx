@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getExhibitionsThunk } from "../../redux/exhibition";
 import { NavLink } from "react-router-dom";
+import './MuseumHomePage.css'
 
 
 
@@ -17,14 +18,17 @@ function MuseumHomePage(){
         <>
         <div className='home-exhibitions-container'>
             {Object.values(expositions).map((exposition)=>(
-                <div key={exposition.id} className='exposition'>
+                <div key={exposition.id} className='exposition-tile'>
                     <NavLink className='exposition-link' to={`/exhibitions/${exposition.id}`}>
-                    <h3>{exposition.name}</h3>  
-                    {exposition.Images.map((image)=>(
-                        <img key={image.id}src={image.url}/>
-                    ))}            
-                    </NavLink>
+                    <div className='exposition-intro-container'>
+                    <h3 className="archivo-black-regular">{exposition.name}</h3>  
                     </div>
+                    
+                    <div className='exposition-image-container'>
+                            <img id='preview-image' src={exposition.Images[0].url}/>
+                        </div>    
+                    </NavLink>
+                </div>
                 ))}
         </div>
         </>
