@@ -37,7 +37,7 @@ function MembershipsPage(){
         <div className='memberships-container'>
 
             {memberships && Object.values(memberships).map((membership)=>(
-                <div key={membership.id} className='membership-tile'>
+                <div key={membership.id} className='membership-tile' id={membership.name}>
                     <h3 id='mem-name'>{membership.name}</h3>
                     {membership.cardholders == 1 ? (
                             <span id='cardholder'>{membership.cardholders} cardholder</span>

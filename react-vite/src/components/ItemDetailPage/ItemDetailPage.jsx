@@ -36,7 +36,7 @@ function ItemDetailPage(){
     useEffect(() => {
         let timeout;
        
-        if (!item || !item.Images || !item.Reviews || !reviews || !reviews[0].User.firstName) {
+        if (!item || !item.Images || !item.Reviews || !reviews) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }
@@ -44,8 +44,8 @@ function ItemDetailPage(){
         return () => clearTimeout(timeout);
     }, [item]);
 
-    if (!item || !item.Images || !item.Reviews || !reviews || !reviews[0].User.firstName && timeCheck) return <h1>Loading...</h1>;
-    else if (!item || !item.Images || !item.Reviews || !reviews || !reviews[0].User.firstName && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+    if (!item || !item.Images || !item.Reviews || !reviews && timeCheck) return <h1>Loading...</h1>;
+    else if (!item || !item.Images || !item.Reviews || !reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -58,7 +58,7 @@ function ItemDetailPage(){
         <span>{item.avgRating}</span>
         <span>{item.price}</span>
         <p>{item.description}</p>
-        <section>
+        {/* <section>
         <ul className='item-reviews'>
             {console.log(reviews, "REVIEWS HERE")}
             {reviews.length != 0 && reviews?.map(({ id, ownerId, User, stars, review, createdAt }) => {
@@ -70,7 +70,7 @@ function ItemDetailPage(){
 
                 return (
                     <li className='review-tile' key={id}>
-                        <h4>{firstName}</h4>
+                        <h4>{User.firstName}</h4>
                         <p className='review-info'>{monthName} {year}</p>
                         <p className='review-info'>{stars} stars</p>
                         <p className='review-info'>{review}</p>
@@ -81,7 +81,7 @@ function ItemDetailPage(){
             })}
         </ul>
 
-        </section>
+        </section> */}
         
         </>
     )
