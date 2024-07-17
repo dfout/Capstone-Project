@@ -63,7 +63,7 @@ function MembershipsPage(){
                     })}
                     <ul className='member-d-list'>
                     {membership.description.split('.').map((point, index)=>{
-                        if((membership.id==2 || membership.id==2) && index==0){
+                        if((membership.id==2 || membership.id==3) && index==0){
                             return;
                         }
                         return(

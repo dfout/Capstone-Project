@@ -8,6 +8,7 @@ import OpenModalButton from "../OpenModalButton"
 import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import { getReviewsList } from "../../redux/review"
 import './itemDetailPage.css'
+import { useModal } from '../../context/Modal';
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
@@ -24,6 +25,7 @@ function ItemDetailPage(){
     let numReviews = reviews.length
 
     const [timeCheck, setTimeCheck] = useState(true);
+    const closeMenu = useModal();
 
     useEffect(()=>{
         dispatch(getItemThunk(id))
