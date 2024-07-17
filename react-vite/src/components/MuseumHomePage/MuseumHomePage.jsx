@@ -83,7 +83,11 @@ function MuseumHomePage(){
 
 
 
+
         </div>
+        <section>
+            <h4 className='archivo-black-regular h4home'>Collection</h4>
+        </section>
         </>
     )
 }
