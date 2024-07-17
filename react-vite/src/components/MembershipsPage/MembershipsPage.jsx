@@ -40,7 +40,7 @@ function MembershipsPage(){
                 <div key={membership.id} className='membership-tile'>
                     <h3 id='mem-name'>{membership.name}</h3>
                     {membership.cardholders == 1 ? (
-                            <span>{membership.cardholders} cardholder</span>
+                            <span id='cardholder'>{membership.cardholders} cardholder</span>
 
                     ):(
                         <span>{membership.cardholders} cardholders</span>
@@ -63,17 +63,6 @@ function MembershipsPage(){
                     })}
                     <ul className='member-d-list'>
                     {membership.description.split('.').map((point, index)=>{
-                        // if (index == 0 && membership.id != 1){
-                        //     let arr = point.split(' ')
-                        //     return (
-                        //         <>
-                        //         <span>{arr[0]} </span>
-                        //         <span style={{fontWeight:"bold"}}>{arr[1]}</span>
-                        //         <span id='first-info'> {arr[2]}</span>
-                        //         <span> {arr[3]}:</span>
-                        //         </>
-                        //     )
-                        // }
                         if((membership.id==2 || membership.id==2) && index==0){
                             return;
                         }

@@ -8,15 +8,21 @@
 }
 .membership-tile{
     background-color: rgb(88, 88, 182);
-    height: 500px;
+    min-height: 400px;
     width: 395px;
-    padding:3%;
+    padding:4%;
     box-sizing:border-box;
     display:flex;
     flex-direction:column;
     gap: 10px;
+    color:rgb(235, 152, 0);
 }
 
+.membership-tile:hover{
+    cursor:pointer;
+    background-color: rgb(235, 152, 0);
+    color:rgb(88, 88, 182);
+}
 
 .discover-mem{
     /* padding-top:2%; */
@@ -52,12 +58,15 @@
 }
 
 .membership-button{
-    width: 100px;
-    height:30px;
+    max-width: 80px;
+    min-height:30px;
     color:white;
     background-color: black;
     border:none;
+    box-sizing: border-box;
     font-size: 12pt;
+    margin-top:auto;
+   
 }
 
 .membership-button:hover{
@@ -71,9 +80,19 @@
 }
 
 #membership-price{
-    font-size: 14pt;
+    font-size: 15pt;
 }
 
 .member-d-list{
     padding-left:7%;
+    font-size:13pt;
+    padding-bottom:5%;
+}
+
+.bullet-points{
+    padding: 1%;
+}
+
+#cardholder{
+    font-size: 13pt;
 }
