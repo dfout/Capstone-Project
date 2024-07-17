@@ -13,9 +13,6 @@ function Navigation() {
 
         </li>
       <li>
-      <NavLink className='nav-links archivo-black-regular'to='/store'>Store</NavLink>
-      </li>
-      <li>
       <NavLink className='nav-links archivo-black-regular' to='/memberships'>Memberships</NavLink>
       </li>
       <li>
@@ -26,6 +23,12 @@ function Navigation() {
         <ProfileButton />
       </li>
     </ul>
+    <ul className='other-links'>
+    <li>
+      <NavLink className='nav-links archivo-black-regular'to='/store'>Store</NavLink>
+      </li>
+    </ul>
+
 
     </div>
 

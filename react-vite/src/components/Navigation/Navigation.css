@@ -9,10 +9,13 @@
   height:20vh;
   /* background-color: rgba(214, 214, 241, 0.619); */
   /* justify-content: center; */
-
+  /* display:flex; */
   padding-left: 5%;
   padding-right:5%;
-  margin:0;
+  
+  /* justify-content: space-between; */
+  /* margin-left:auto; */
+  /* margin-right:auto; */
   /* align-items:center; */
   /* padding-left: 5%;
   padding-right:5%; */
@@ -20,19 +23,24 @@
 }
 .navbar-links{
   list-style-type: none;
-  display: inline-flex;
+  display: flex;
+  /* position:relative; */
   justify-content: space-between;
-  padding:0;
-  margin:0;
+  /* align-items: flex-end; */
+  /* flex-direction:row-reverse; */
+  /* justify-content: flex-end; */
+  
   align-items:center;
-  width: 100%;
+  /* width: 100%; */
   padding-top:1%;
+  /* margin-left:auto; */
 
 }
 .nav-links{
   text-decoration: none;
   color:black;
   font-size: 14pt;
+  margin:0 5px;
 }
 
 #musee{
