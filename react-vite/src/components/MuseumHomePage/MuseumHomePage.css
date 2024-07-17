@@ -1,6 +1,18 @@
+.home-exhibitions-container{
+    width:100vw;
+}
+
+.exposition-tile{
+    width:100%;
+    display:flex;
+    background-color: red;
+    height:fit-content;
+}
+
 .exposition-image-container {
     height: 400px;
-    width: 820px;
+    /* width: 900px; */
+    flex:2;
     /* width: 65.5%; */
     /* padding-bottom: 10px; */
     position: relative;
@@ -27,9 +39,24 @@
     /* background-color: red; */
 }
 
-.exposition-intro-container{
+
+.exposition-intro-container-one{
     height: 400px;
-    width: 450px;
+    /* width: 500px; */
     background-color: aquamarine;
+    flex:1;
 }
 
+.exposition-intro-container-two{
+    height: 400px;
+    /* width: 500px; */
+    background-color: rgb(151, 81, 216);
+    flex:1;
+}
+
+.exposition-intro-container-three{
+    height: 400px;
+    /* width: 500px; */
+    background-color: rgb(73, 198, 73);
+    flex:1;
+}
