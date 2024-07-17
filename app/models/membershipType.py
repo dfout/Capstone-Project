@@ -16,6 +16,7 @@ class MembershipType(db.Model):
     billing_cycle = db.Column(db.String(255), nullable=False)
     price_per_cycle = db.Column(db.Float, nullable=False)
     cardholders = db.Column(db.Integer, nullable=False)
+    # Members = db.relationship('Member', backref='membershipType', lazy='joined')
 
 
 

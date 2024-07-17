@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     first_name=db.Column(db.String(40), nullable=False)
     last_name=db.Column(db.String(40), nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
+    # Member = db.relationship('Member', backref='user', uselist=False, cascade='all, delete')
 
     @property
     def password(self):
@@ -35,7 +36,8 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'isMember':self.is_member,
             'firstName': self.first_name,
-            'lastName':self.last_name
+            'lastName':self.last_name,
+            # 'Member':self.Member
         }
     
     def to_dict_no_email_no_last(self):
@@ -43,5 +45,6 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'username': self.username,
             'isMember':self.is_member,
-            'firstName':self.first_name
+            'firstName':self.first_name,
+            'Member':self.Member
         }

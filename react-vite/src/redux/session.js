@@ -19,8 +19,9 @@ const purchaseMembership =(user) => ({
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
-		const {User} = await response.json();
-    dispatch(setUser(User))
+		const data = await response.json();
+    console.log(data, "DATAAA_------------")
+    dispatch(setUser(data))
 	}
   else{
     const data = await response.json()
