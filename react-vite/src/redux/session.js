@@ -1,6 +1,8 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 const PURCHASE_MEMBERSHIP = 'session/membership/purchase'
+const UPDATE_MEMBERSHIP_STATUS = 'session/updateMembershipStatus'; 
+
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -11,10 +13,11 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
-const purchaseMembership =(user) => ({
-  type: PURCHASE_MEMBERSHIP,
-  payload: user
-})
+export const updateMembershipStatus = (isMember) => ({ // Action creator for updating membership status
+  type: UPDATE_MEMBERSHIP_STATUS,
+  payload: isMember
+});
+
 
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
@@ -70,18 +73,7 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
-export const purchaseMembershipThunk = (id) => async (dispatch)=>{
-  const response = await fetch(`/api/memberships/purchase/${id}`, {method: "POST"})
 
-  if(response.ok){
-      const {User} = await response.json()
-      dispatch(purchaseMembership(User))
-      // return {Member}
-  }else{
-      const data = response.json()
-      return data.errors
-  }
-}
 
 const initialState = { user: null };
 
@@ -89,10 +81,16 @@ function sessionReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
       return { ...state, user: action.payload };
-    case PURCHASE_MEMBERSHIP:
-      return {...state, user: action.payload}
     case REMOVE_USER:
       return { ...state, user: null };
+    case UPDATE_MEMBERSHIP_STATUS:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            isMember: action.payload
+          }
+        }
     default:
       return state;
   }

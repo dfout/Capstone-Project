@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
+import { useSelector } from "react-redux";
 import "./Navigation.css";
 
 function Navigation() {
+
+  const member = useSelector((state)=>state.member)
   return (
     <>
     <div className='navbar'>
@@ -11,8 +14,11 @@ function Navigation() {
         </div>
       
       <div className='navbar-links'>
-    
-      <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Memberships</NavLink>
+      {!member["MembershipType"] &&
+            <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Memberships</NavLink>
+      
+      }
+
       
       
       <button className='archivo-black-regular' to='/memberships'id='tickets-button'>Tickets</button>

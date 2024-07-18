@@ -13,6 +13,7 @@ function MuseumHomePage(){
         dispatch(getExhibitionsThunk())
     }, [dispatch])
 
+    const images = ["https://musee4.s3.us-east-2.amazonaws.com/exhibitions/xavier-von-erlach-g_2U9j6uIEw-unsplash.jpg", ""]
     // const expositionsArr = Object.values(expositions)
     //2,
     return(
@@ -30,7 +31,7 @@ function MuseumHomePage(){
             
                     
                     <div className='exposition-image-container'>
-                            <img id='preview-image' src={expositions[3].Images[0].url}/>
+                            <img id='preview-image' src="https://musee4.s3.us-east-2.amazonaws.com/exhibitions/mahdis-mousavi-MJ-bloex-zs-unsplash.jpg"/>
                         </div>    
                     </NavLink>
                 </div>
@@ -39,7 +40,7 @@ function MuseumHomePage(){
                 <div className='exposition-tile'>
                     <NavLink className='exposition-link' to={`/exhibitions/${expositions[7].id}`}>
                     <div className='exposition-image-container'>
-                            <img id='preview-image' src={expositions[7].Images[0].url}/>
+                            <img id='preview-image' src="https://musee4.s3.us-east-2.amazonaws.com/exhibitions/charlesdeluvio-ZBsqJwNOSoE-unsplash.jpg"/>
                         </div>    
                         <div className='exposition-intro-container-two'>
                             <div className='expo-info'>
@@ -61,7 +62,7 @@ function MuseumHomePage(){
             
                     
                     <div className='exposition-image-container'>
-                            <img id='preview-image' src={expositions[9].Images[0].url}/>
+                            <img id='preview-image' src="https://musee4.s3.us-east-2.amazonaws.com/exhibitions/roberto-contreras-KyFajImq1-A-unsplash.jpg"/>
                         </div>    
                     </NavLink>
                 </div>

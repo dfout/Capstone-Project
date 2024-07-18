@@ -88,7 +88,7 @@
 }
 
 .membership-button{
-    max-width: 80px;
+    max-width: fit-content;
     min-height:30px;
     color:white;
     background-color: black;
@@ -96,6 +96,7 @@
     box-sizing: border-box;
     font-size: 12pt;
     margin-top:auto;
+    padding: 2%;
    
 }
 

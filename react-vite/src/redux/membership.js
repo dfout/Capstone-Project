@@ -44,7 +44,7 @@ const initialState = {}
 function membershipReducer(state=initialState, action){
     switch(action.type){
         case GET_MEMBERSHIPS:{
-            const newState = {}
+            const newState = {...state}
             action.payload.forEach((membership)=> newState[membership.id]=membership)
             return newState
 

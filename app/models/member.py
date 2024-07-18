@@ -17,8 +17,8 @@ class Member(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    users = db.relationship("User", cascade = "all, delete")
-    membershipTypes = db.relationship("MembershipType", cascade='all, delete')
+    users = db.relationship("User")
+    membershipTypes = db.relationship("MembershipType")
 
 
     def to_dict(self):

@@ -40,6 +40,10 @@ function MembershipDetails(){
         await dispatch(cancelMembershipThunk(id))
         navigate('/')
     }
+
+    const handleUpdate = async() =>{
+        navigate('/memberships')
+    }
     
     return(
         <div className='user-mem-container'>
@@ -96,8 +100,8 @@ function MembershipDetails(){
                             <button onClick={()=> handleJoin(membership.id)}className='membership-button archivo-black-regular'>Join</button> */}
                             <div className='user-mem-buttons'>
 
-                                    <button className='user-membership-button archivo-black-regular' >Update</button>
-                                    <button className='user-membership-button archivo-black-regular' onClick={()=> handleDelete(member["membershipTypeId"])} >Delete</button>
+                                    <button className='user-membership-button archivo-black-regular' onClick={handleUpdate}>Change or Cancel</button>
+                                    {/* <button className='user-membership-button archivo-black-regular' onClick={()=> handleDelete(member["membershipTypeId"])} >Delete</button> */}
                             </div>
                         </div>
         )}

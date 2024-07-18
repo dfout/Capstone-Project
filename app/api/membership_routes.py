@@ -13,6 +13,7 @@ def get_memberships():
     return {"Memberships": memberships}
 
 
+
 @membership_routes.route('/purchase/<int:membership_id>', methods=["POST"])
 @login_required
 def purchase_membership(membership_id):
@@ -23,32 +24,48 @@ def purchase_membership(membership_id):
     db.session.commit()
 
     user = user.to_dict()
-    
-    
+
     membership_type_info = (MembershipType.query.filter_by(id=membership_id).first()).to_dict()
     current_datetime = datetime.now()
     next_payment_date = current_datetime + timedelta(days=365)
 
+    # Check if the user already has a membership
+    existing_member = Member.query.filter_by(user_id=id).first()
 
-    new_member = Member(
-        user_id = id,
-        membership_type_id = membership_id,
-        curr_card_holders = membership_type_info["cardholders"],
-        next_payment = next_payment_date
-    )
+    if existing_member:
+        if existing_member.membership_type_id < membership_id:
+            existing_member.created_at = current_datetime
+        
+        # Update existing membership
+        existing_member.membership_type_id = membership_id
+        existing_member.curr_card_holders = membership_type_info["cardholders"]
+        existing_member.next_payment = next_payment_date
 
-    
+        db.session.commit()
 
-    db.session.add(new_member)
-    db.session.commit()
-    
-    new_safe_member = new_member.to_dict()
-    new_safe_member["MembershipType"] = membership_type_info
-    user["MembershipDetails"] = new_safe_member
+        updated_safe_member = existing_member.to_dict()
+        updated_safe_member["MembershipType"] = membership_type_info
+        user["MembershipDetails"] = updated_safe_member
 
-    return {"User": user}
-    # return {"Member": new_safe_member}
+        return {"Member": updated_safe_member}
+    else:
+        # Create new membership
+        new_member = Member(
+            user_id=id,
+            membership_type_id=membership_id,
+            curr_card_holders=membership_type_info["cardholders"],
+            next_payment=next_payment_date,
+            created_at=current_datetime
+        )
 
+        db.session.add(new_member)
+        db.session.commit()
+
+        new_safe_member = new_member.to_dict()
+        new_safe_member["MembershipType"] = membership_type_info
+        user["MembershipDetails"] = new_safe_member
+
+        return {"Member": new_safe_member}
 
 
 @membership_routes.route('change/<int:membership_id>', methods=["PATCH"])
@@ -80,18 +97,19 @@ def edit_membership(membership_id):
   
 
     
-@membership_routes.route('/<int:membership_id>', methods=["DELETE"])
+@membership_routes.route('/<int:member_id>', methods=["DELETE"])
 @login_required
-def delete_membership(membership_id):
+def delete_membership(member_id):
     '''if a logged in user is also member they can change their membership'''
-    membership_type_id = membership_id
+    # membership_type_id = membership_id
     ## delete the member instance
     ## change the user key of is_member to false
-    membership = Member.query.filter_by(membership_type_id=membership_type_id).first()
-    user_id = current_user.id
-    user = (User.query.filter_by(user_id=user_id).first()).to_dict()
-    user["is_member"] = False
-    db.session.delete(membership)
+    id = member_id
+    member = Member.query.filter_by(id=id).first()
+    id = current_user.id
+    user = User.query.filter_by(id=id).first()
+    user.is_member = False
+    db.session.delete(member)
     db.session.commit()
 
     return{"message":"Membership successfully canceled"},200

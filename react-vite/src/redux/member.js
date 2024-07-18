@@ -1,17 +1,19 @@
 const GET_USER_MEMBERSHIP = '/user/membership'
-// const PURCHASE_MEMBERSHIP = '/membership/purchase'
+const PURCHASE_MEMBERSHIP = '/membership/purchase'
 const CANCEL_MEMBERSHIP = '/membership/cancel'
 const CHANGE_MEMBERSHIP = '/membership/update'
 
+
+import { updateMembershipStatus } from "./session"
 const getUserMembership =(membership) => ({
     type: GET_USER_MEMBERSHIP,
     payload: membership
 })
 
-// const purchaseMembership =(membership) => ({
-//     type: PURCHASE_MEMBERSHIP,
-//     payload: membership
-// })
+const purchaseMembership =(membership) => ({
+    type: PURCHASE_MEMBERSHIP,
+    payload: membership
+})
 
 const cancelMembership =(id) => ({
     type: CANCEL_MEMBERSHIP,
@@ -35,11 +37,27 @@ export const getUserMembershipThunk = () => async(dispatch) =>{
     }
 }
 
+export const purchaseMembershipThunk = (id) => async (dispatch)=>{
+    const response = await fetch(`/api/memberships/purchase/${id}`, {method: "POST"})
+  
+    if(response.ok){
+        const {Member} = await response.json()
+        dispatch(purchaseMembership(Member))
+        dispatch(updateMembershipStatus(true))
+        // return {Member}
+    }else{
+        const data = response.json()
+        return data.errors
+    }
+  }
+
 export const cancelMembershipThunk = (id)=> async (dispatch) =>{
     const response = await fetch(`/api/memberships/${id}`, {method:"DELETE"})
     if (response.ok){
         dispatch(cancelMembership(id))
-        return true
+        dispatch(updateMembershipStatus(false))
+       const {message}= await response.json()
+        return message
     }else{
         const data = response.json()
         return data.errors
@@ -66,10 +84,10 @@ function memberReducer(state=initialState, action){
             return newState
 
         }
-        case CANCEL_MEMBERSHIP:{
-            const newState = {...state}
-            delete newState[action.payload]
-            return newState
+        case PURCHASE_MEMBERSHIP:
+            return {...action.payload}
+        case CANCEL_MEMBERSHIP:{    
+            return {}
 
         }
         case CHANGE_MEMBERSHIP:{
