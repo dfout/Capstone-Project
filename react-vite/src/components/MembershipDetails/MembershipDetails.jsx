@@ -1,37 +1,45 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch, useSelector} from "react-redux"
+import { useNavigate } from "react-router-dom"
 import './MembershipDetail.css'
-import { getUserMembershipThunk } from "../../redux/membership"
+import { getUserMembershipThunk, cancelMembershipThunk } from "../../redux/member"
 import { useEffect } from "react"
 import { useState } from "react"
 import { thunkAuthenticate } from "../../redux/session"
 
 function MembershipDetails(){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
 
-    const user = useSelector((state)=>state.session.user)
-    console.log(user)
+    const member = useSelector((state)=>state.member)
+    console.log(member)
     const [timeCheck, setTimeCheck] = useState(true);
 
     useEffect(()=>{
 
-        dispatch(thunkAuthenticate())
+        // dispatch(thunkAuthenticate())
+        dispatch(getUserMembershipThunk())
         
     }, [dispatch])
 
     useEffect(() => {
         let timeout;
        
-        if (!user || !user["MembershipDetails"]) {
+        if (!member|| !member["MembershipType"]) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }
     
         return () => clearTimeout(timeout);
-    }, [user]);
+    }, [member]);
 
-    if (!user || !user["MembershipDetails"]  && timeCheck) return <h1>Loading...</h1>;
-    else if (!user || !user["MembershipDetails"] && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+    if (!member || !member["MembershipType"]  && timeCheck) return <h1>Loading...</h1>;
+    else if (!member || !member["MembershipType"] && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+
+    const handleDelete = async(id)=>{
+        await dispatch(cancelMembershipThunk(id))
+        navigate('/')
+    }
     
     return(
         <div className='user-mem-container'>
@@ -39,27 +47,27 @@ function MembershipDetails(){
 
         <h3>Your Membership</h3>
         <ul className='user-mem-info'>
-        <li>Type: {user["MembershipDetails"]["MembershipType"].name}</li>
-        <li>Purchased On:{user["MembershipDetails"].createdAt} </li>
-        <li>Next Payment:{user["MembershipDetails"].nextPayment} </li>
+        <li>Type: {member["MembershipType"].name}</li>
+        <li>Purchased On:{member.createdAt} </li>
+        <li>Next Payment:{member.nextPayment} </li>
         </ul>
         </section>
 
         <section className='mem-block'>
 
-        {user.isMember && (
-                            <div className='membership-tile' id={user["MembershipDetails"]["MembershipType"].name}>
-                            <h3 id='mem-name'>{user["MembershipDetails"]["MembershipType"].name}</h3>
-                            {user["MembershipDetails"].currCardHolders == 1 ? (
-                                    <span id='cardholder'>{user["MembershipDetails"].currCardHolders} cardholder</span>
+        {member && (
+                            <div className='membership-tile' id={member["MembershipType"].name}>
+                            <h3 id='mem-name'>{member["MembershipType"].name}</h3>
+                            {member.currCardHolders == 1 ? (
+                                    <span id='cardholder'>{member.currCardHolders} cardholder</span>
         
                             ):(
-                                <span>{user["MembershipDetails"].currCardHolders} cardholders</span>
+                                <span>{member.currCardHolders} cardholders</span>
                             )}
             
-                            <p id='membership-price' className='archivo-black-regular'>${user["MembershipDetails"]["MembershipType"].pricePerCycle} / Year </p>
-                            {user["MembershipDetails"]["MembershipType"].description.split('.').map((point,index)=>{
-                                if (index == 0 && user["MembershipDetails"]["membershipTypeId"] != 1){
+                            <p id='membership-price' className='archivo-black-regular'>${member["MembershipType"].pricePerCycle} / Year </p>
+                            {member["MembershipType"].description.split('.').map((point,index)=>{
+                                if (index == 0 && member["membershipTypeId"] != 1){
                                     let arr = point.split(' ')
                                     return (
                                         <div id='first-line'>
@@ -73,13 +81,13 @@ function MembershipDetails(){
                                 
                             })}
                             <ul className='member-d-list'>
-                            {user["MembershipDetails"]["MembershipType"].description.split('.').map((point, index)=>{
-                                if((user["MembershipDetails"]["membershipTypeId"]==2 || user["MembershipDetails"]["membershipTypeId"]==3) && index==0){
+                            {member["MembershipType"].description.split('.').map((point, index)=>{
+                                if((member["membershipTypeId"]==2 || member["membershipTypeId"]==3) && index==0){
                                     return;
                                 }
                                 return(
         
-                                    <li className='bullet-points' key={index} item>{point}</li>
+                                    <li className='bullet-points' key={index}>{point}</li>
                                 )
                                 
                                 })}
@@ -89,7 +97,7 @@ function MembershipDetails(){
                             <div className='user-mem-buttons'>
 
                                     <button className='user-membership-button archivo-black-regular' >Update</button>
-                                    <button className='user-membership-button archivo-black-regular' >Delete</button>
+                                    <button className='user-membership-button archivo-black-regular' onClick={()=> handleDelete(member["membershipTypeId"])} >Delete</button>
                             </div>
                         </div>
         )}

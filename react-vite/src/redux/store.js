@@ -11,9 +11,11 @@ import cartReducer from "./cart";
 import reviewsReducer from "./review";
 import exhibitionReducer from "./exhibition";
 import membershipReducer from "./membership";
+import memberReducer from "./member";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  member: memberReducer,
   memberships:membershipReducer,
   cart: cartReducer,
   items: itemReducer,

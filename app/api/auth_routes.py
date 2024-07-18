@@ -14,18 +14,18 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        id=current_user.id
-        user = (User.query.filter_by(id=id).first()).to_dict()
-        user_id = current_user.id
-        if user['isMember'] == True or user["isMember"] == 1:
-            member_info = (Member.query.filter_by(user_id=user_id).first()).to_dict()
+        # id=current_user.id
+        # user = (User.query.filter_by(id=id).first()).to_dict()
+        # user_id = current_user.id
+        # if user['isMember'] == True or user["isMember"] == 1:
+        #     member_info = (Member.query.filter_by(user_id=user_id).first()).to_dict()
 
-            id = member_info["membershipTypeId"]
+        #     id = member_info["membershipTypeId"]
             
-            user["MembershipDetails"] = member_info
-            member_info["MembershipType"] = (MembershipType.query.filter_by(id=id).first()).to_dict()
+        #     user["MembershipDetails"] = member_info
+        #     member_info["MembershipType"] = (MembershipType.query.filter_by(id=id).first()).to_dict()
            
-        return user
+        return current_user.to_dict()
     return {'errors': {'message': 'Unauthorized'}}, 401
 
 

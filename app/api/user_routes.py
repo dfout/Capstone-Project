@@ -93,8 +93,11 @@ def get_membership_details():
         return {"message": "User is not a member"}
     
     member_info = member_info.to_dict()
-    membership_type_id = member_info["membership_type_id"]
-    member_info["MembershipType"] = MembershipType.query.filter_by(membership_type_id=membership_type_id)
+    id = member_info["membershipTypeId"]
+    membership_type = MembershipType.query.filter_by(id=id).first()
+    member_info["MembershipType"] = membership_type.to_dict() if membership_type else None
+
+    print(member_info, "----------------")
 
     return {"Member": member_info}
 
