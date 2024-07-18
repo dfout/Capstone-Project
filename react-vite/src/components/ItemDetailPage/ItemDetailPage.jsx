@@ -45,7 +45,7 @@ function ItemDetailPage(){
         }
     
         return () => clearTimeout(timeout);
-    }, [item]);
+    }, [item, reviews]);
 
     if (!item || !item.Images || !item.Reviews || !reviews && timeCheck) return <h1>Loading...</h1>;
     else if (!item || !item.Images || !item.Reviews || !reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
@@ -60,7 +60,7 @@ function ItemDetailPage(){
 
 
         {item.Images && item.Images.map((image)=>(
-            <div className='item-img-container'>
+            <div key={image.id}className='item-img-container'>
                             <img className='item-detail-image' key={image.id} src={image.url}/>
 
             </div>

@@ -46,5 +46,5 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'isMember':self.is_member,
             'firstName':self.first_name,
-            'Member':self.Member
+            # 'Member':self.Member
         }

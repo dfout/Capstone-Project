@@ -20,6 +20,13 @@
 #Access{
     background-color:rgb(255, 152, 152);
     color: rgb(6, 107, 14);
+    min-height: 400px;
+    width: 395px;
+    padding:2%;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
 
 }
 
