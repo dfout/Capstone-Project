@@ -74,11 +74,13 @@ function MembershipDetails(){
                                 if (index == 0 && member["membershipTypeId"] != 1){
                                     let arr = point.split(' ')
                                     return (
+                                        <div key={index}>
                                         <div id='first-line'>
                                         <span>{arr[0]} </span>
                                         <span style={{fontWeight:"bold"}}>{arr[1]}</span>
                                         <span id='first-info'> {arr[2]}</span>
                                         <span> {arr[3]}:</span>
+                                        </div>
                                         </div>
                                     )
                                 }

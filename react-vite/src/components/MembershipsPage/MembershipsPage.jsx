@@ -79,7 +79,7 @@ function MembershipsPage(){
                         {user && user.isMember && memberships? (
                             member && member["membershipTypeId"] == membership.id ? (
                                 <button 
-                                    onClick={() => handleCancel(membership.id)} 
+                                    onClick={() => handleCancel(member.id)} 
                                     className='membership-button archivo-black-regular'>
                                     Cancel Membership
                                 </button>
