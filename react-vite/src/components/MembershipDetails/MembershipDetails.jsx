@@ -1,15 +1,37 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import './MembershipDetail.css'
+import { getUserMembershipThunk } from "../../redux/membership"
+import { useEffect } from "react"
+import { useState } from "react"
+import { thunkAuthenticate } from "../../redux/session"
 
 function MembershipDetails(){
+    const dispatch = useDispatch()
 
 
     const user = useSelector((state)=>state.session.user)
     console.log(user)
+    const [timeCheck, setTimeCheck] = useState(true);
 
-    // useEffect(()=>{
-    //     dispatchEvent()
-    // })
+    useEffect(()=>{
+
+        dispatch(thunkAuthenticate())
+        
+    }, [dispatch])
+
+    useEffect(() => {
+        let timeout;
+       
+        if (!user || !user["MembershipDetails"]) {
+            timeout = setTimeout(() => setTimeCheck(false), 3000);
+            
+        }
+    
+        return () => clearTimeout(timeout);
+    }, [user]);
+
+    if (!user || !user["MembershipDetails"]  && timeCheck) return <h1>Loading...</h1>;
+    else if (!user || !user["MembershipDetails"] && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
     
     return(
         <div className='user-mem-container'>
