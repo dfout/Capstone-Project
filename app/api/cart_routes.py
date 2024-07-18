@@ -16,7 +16,7 @@ cart_routes = Blueprint('cart', __name__ )
 @login_required
 def show_cart():
     '''Get all the current items in the user's cart'''
-    user_id = current_user["id"]
+    user_id = current_user.id
 
     cart_items = [x.to_dict() for x in CartItem.query.filter_by(user_id=user_id).all()]
 

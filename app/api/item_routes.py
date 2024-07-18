@@ -60,7 +60,7 @@ def add_to_cart(id):
     '''A user can add an item to their cart'''
 
 
-    item = StoreItem.query.filter_by(id=id).first()
+    item = (StoreItem.query.filter_by(id=id).first()).to_dict()
 
     user_id = ''
     if current_user:

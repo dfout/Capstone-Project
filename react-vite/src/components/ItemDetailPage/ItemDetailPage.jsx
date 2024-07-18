@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useState } from "react"
 import { getItemThunk } from "../../redux/item"
 import { getItemReviewsThunk } from "../../redux/review"
@@ -9,9 +9,11 @@ import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import { getReviewsList } from "../../redux/review"
 import './itemDetailPage.css'
 import { useModal } from '../../context/Modal';
+import { addToCartThunk } from "../../redux/cart"
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     let {id} = useParams()
     id = Number(id)
 
@@ -52,6 +54,11 @@ function ItemDetailPage(){
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+    const handleAddToCart = async(id)=>{
+        await dispatch(addToCartThunk(id))
+        navigate('/cart')
+    }
+
     return(
         <>
         <div className='item-imgs-info'>
@@ -73,7 +80,7 @@ function ItemDetailPage(){
         <span>{item.avgRating}</span>
         <span>{item.price}</span>
         <p>{item.description}</p>
-        <button>Add to Cart</button>
+        <button onClick={()=>handleAddToCart(item.id)}>Add to Cart</button>
         </div>
         </div>
         <section>
