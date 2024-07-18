@@ -10,6 +10,7 @@ import { getReviewsList } from "../../redux/review"
 import './itemDetailPage.css'
 import { useModal } from '../../context/Modal';
 import { addToCartThunk } from "../../redux/cart"
+import { getOrdersThunk } from "../../redux/order"
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
@@ -22,6 +23,7 @@ function ItemDetailPage(){
     // let reviews = useSelector((state)=>state.reviews)
     console.log(reviews, "REVIEWS")
     let sessionUser = useSelector((state) => state.session.user);
+    const orders = useSelector((state)=>state.orders)
 
     reviews = [...reviews].reverse();
     let numReviews = reviews.length
@@ -32,6 +34,7 @@ function ItemDetailPage(){
     useEffect(()=>{
         dispatch(getItemThunk(id))
         dispatch(getItemReviewsThunk(id))
+        dispatch(getOrdersThunk())
 
     },[dispatch,id])
 
@@ -41,7 +44,7 @@ function ItemDetailPage(){
     useEffect(() => {
         let timeout;
        
-        if (!item || !item.Images || !item.Reviews || !reviews) {
+        if (!item || !item.Images || !item.Reviews || !reviews || !orders) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }
@@ -49,8 +52,8 @@ function ItemDetailPage(){
         return () => clearTimeout(timeout);
     }, [item, reviews]);
 
-    if (!item || !item.Images || !item.Reviews || !reviews && timeCheck) return <h1>Loading...</h1>;
-    else if (!item || !item.Images || !item.Reviews || !reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+    if (!item || !item.Images || !item.Reviews || !reviews || !orders && timeCheck) return <h1>Loading...</h1>;
+    else if (!item || !item.Images || !item.Reviews || !reviews || !orders && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -58,6 +61,46 @@ function ItemDetailPage(){
         await dispatch(addToCartThunk(id))
         navigate('/cart')
     }
+
+    // Need  to check if the user has purchased the item
+
+    const hasPurchased = (orders) =>{
+        const ordersArr = Object.values(orders)
+        for (let order of ordersArr){
+           let items = order["OrderedItems"]
+           for (let item of items){
+            if (item.id == id){
+                return true
+            }
+
+           }
+        }
+        return false
+
+    }
+    // Need to check if the user has already reviewed the item:
+
+    const hasReviewed = (reviews)=>{
+        const reviewsArr = Object.values(reviews)
+        for (let review of reviews){
+            if (review.ownerId == sessionUser.id){
+                return true
+            }
+        }
+        return false
+
+    }
+
+    // function that returns a bool for each of these conditions. 
+
+
+    const canReview = (hasPurchased, hasReviewed, orders, reviews)=>{
+       if (hasPurchased(orders) && !hasReviewed(reviews)) return true
+       else{
+        return false
+       }
+    }
+
 
     return(
         <>

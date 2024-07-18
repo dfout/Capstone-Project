@@ -216,6 +216,6 @@ def get_orders():
     
 
     for order in orders:
-        order_id = order.id
-        order["OrderedItems": OrderedItem.query.filter_by(order_id=order_id).all()]
+        order_id = order["id"]
+        order["OrderedItems"]= [x.to_dict() for x in OrderedItem.query.filter_by(order_id=order_id).all()]
     return {"Orders": orders}

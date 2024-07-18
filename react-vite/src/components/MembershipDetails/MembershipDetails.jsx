@@ -4,7 +4,7 @@ import './MembershipDetail.css'
 import { getUserMembershipThunk, cancelMembershipThunk } from "../../redux/member"
 import { useEffect } from "react"
 import { useState } from "react"
-import { thunkAuthenticate } from "../../redux/session"
+
 
 function MembershipDetails(){
     const dispatch = useDispatch()
