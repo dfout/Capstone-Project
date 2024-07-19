@@ -156,7 +156,7 @@ function ItemDetailPage(){
 
                 return (
                     <li className='review-tile' key={id}>
-                        <h4>{User.firstName}</h4>
+                        <h4>{User ? User.firstName : 'Anonymous'}</h4>
                         <p className='review-info'>{monthName} {year}</p>
                         <p className='review-info'>{stars} stars</p>
                         <p className='review-info'>{review}</p>

@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { getUserReviewsThunk } from "../../redux/review"
 import { useEffect } from "react"
 import { useState } from "react"
-
+import { useModal } from '../../context/Modal';
+import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
+import OpenModalButton from "../OpenModalButton"
+import EditReviewModal from "../EditReviewModal";
 function ManageReviews(){
     const dispatch = useDispatch()
     const reviews = useSelector((state)=>state.reviews)
+    const closeMenu = useModal();
 
     useEffect(()=>{
         dispatch(getUserReviewsThunk())
@@ -39,8 +43,8 @@ function ManageReviews(){
                             <span>{review.rating}</span>
                             <p>{review.review}</p>
                             <span>Posted on {review.createdAt}</span>
-                            <button>Update</button>
-                            <button>Delete</button>
+                            <OpenModalButton id='review-button' disabled={false} buttonText={'Edit'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<EditReviewModal reviewId={review.id}/>}/>
+                            <OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={review.id}/>}/>
                         </>
                     ) : (
                         <p>Item data is missing</p>

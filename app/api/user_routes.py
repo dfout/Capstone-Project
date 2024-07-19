@@ -57,26 +57,51 @@ def delete_review(id):
         return {"message": "Review could not be found"}, 404
 
 
-@user_routes.route('/reviews/<int:review_id>', methods=['PUT'])
+@user_routes.route('/reviews/<int:id>', methods=['PUT'])
 @login_required
-def update_review(review_id):
+def update_review(id):
     '''A logged-in user can edit or update any review they have posted'''
 
-    review = Review.query.filter_by(review_id=review_id).first()
+    review = Review.query.filter_by(id=id).first()
+
+    if not review:
+        return {"message": "Review not found"}, 404
 
     if review.user_id != current_user.id:
         return {"message": "Not the owner of this review"}, 401
-    form = ReviewForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
 
-    if form.validate_on_submit():
-        review.review = form.data['review']
-        review.stars = form.data['stars']
-        db.session.commit()
+    data = request.json
 
-        reviewObj = review.to_dict()
+    # Basic validation
+    review_text = data.get('review')
+    rating = data.get('rating')
 
-        return {"Review": reviewObj}
+    if not review_text or len(review_text) < 10:
+        return {"message": "Bad Request", "errors": {"review": "Review must be at least 10 characters"}}, 400
+
+    if not rating or not (1 <= rating <= 5):
+        return {"message": "Bad Request", "errors": {"rating": "Rating must be between 1 and 5"}}, 400
+
+    # Log the received data for debugging
+    print(f"Updating review {id} with review: {review_text} and rating: {rating}")
+
+    # Update the review fields
+    review.review = review_text
+    review.rating = rating
+
+    # Log the review object before committing
+    print(f"Review object before commit: {review.to_dict()}")
+
+    db.session.commit()
+
+    # Log the review object after committing
+    print(f"Review object after commit: {review.to_dict()}")
+
+    reviewObj = review.to_dict()
+    item_id = reviewObj["itemId"]
+    reviewObj["Item"] = (StoreItem.query.filter_by(id=item_id).first()).to_dict()
+
+    return {"Review": reviewObj}, 200
     if form.errors:
         return {"message":"Bad Request", "errors": form.errors}, 400
     

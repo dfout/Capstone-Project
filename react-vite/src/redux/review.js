@@ -85,11 +85,18 @@ export const deleteReviewThunk = (id)=> async (dispatch) =>{
         return data.errors
     }
 }
-export const updateReviewThunk = ()=> async (dispatch) =>{
-    const response = await fetch(`/api/store/items/${id}`)
+export const updateReviewThunk = (reviewData,id)=> async (dispatch) =>{
+    const response = await fetch(`/api/users/reviews/${id}`,{
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reviewData)
+    })
     if (response.ok){
         const {Review} = await response.json()
         dispatch(updateReview(Review))
+        return Review
     }else{
         const data = response.json()
         return data.errors
@@ -107,7 +114,7 @@ const initialState = {}
 function reviewsReducer (state=initialState, action){
     switch(action.type){
         case GET_REVIEWS:{
-            const newState = {}
+            const newState = {...state}
             action.payload.forEach((review)=>newState[review.id]= review)
             return newState
         }

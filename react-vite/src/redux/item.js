@@ -46,7 +46,7 @@ const initialState = {};
 function itemReducer(state=initialState, action){
     switch(action.type){
         case GET_ITEMS:{
-            const newState = {...state}
+            const newState = {}
             action.payload.forEach((item)=> newState[item.id]= item)
             return newState
         }
