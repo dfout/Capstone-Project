@@ -43,6 +43,7 @@ def seed_event_images():
 
     # Randomly assign images to each event
     for event in events:
+        
         selected_url = random.choice(urls)  # Select a random URL for each event
         image = EventImage(
             event_id=event.id,
