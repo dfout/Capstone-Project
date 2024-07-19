@@ -43,18 +43,20 @@
 .exposition-intro-container-one{
     height: 400px;
     display: flex;
-    justify-content: center; /* Center align horizontally */
+    justify-content: left; /* Center align horizontally */
     align-items: center; /* Center align vertically */
     /* width: 500px; */
     background-color: aquamarine;
+    box-sizing:border-box;
     flex:1;
+    padding-left:7%;
     
 }
 
 .exposition-intro-container-two{
     height: 400px;
     display: flex;
-    justify-content: center; /* Center align horizontally */
+    justify-content: center; 
     align-items: center; /* Center align vertically */
     /* width: 500px; */
     background-color: rgb(151, 81, 216);
@@ -64,11 +66,14 @@
 .exposition-intro-container-three{
     height: 400px;
     display: flex;
-    justify-content: center; /* Center align horizontally */
-    align-items: center; /* Center align vertically */
+    /* justify-content: center;  */
+    justify-content: left;
+    align-items: center; 
     /* width: 500px; */
     background-color: rgb(73, 198, 73);
+    box-sizing:border-box;
     flex:1;
+    padding-left:7%;
 }
 
 
@@ -86,10 +91,11 @@
     /* width: 100px; */
     width:50%;
     height:100%;
-    align-items: center;
-    text-align: center;
+    /* align-items: center; */
+    /* text-align: left; */
     /* background-color: red; */
     padding-top: 10%;
+    /* padding-left:50px; */
     
 
 }
