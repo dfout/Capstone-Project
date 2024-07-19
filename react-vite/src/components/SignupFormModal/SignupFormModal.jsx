@@ -9,6 +9,8 @@ function SignupFormModal() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
@@ -28,6 +30,8 @@ function SignupFormModal() {
         email,
         username,
         password,
+        first_name:firstName,
+        last_name: lastName
       })
     );
 
@@ -43,6 +47,8 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       {errors.server && <p className ='errors'>* {errors.server}</p>}
       <form onSubmit={handleSubmit}>
+        <label>First Name<input type='text' value={firstName} onChange={(e)=> setFirstName(e.target.value)} required /></label>
+        <label>Last Name<input type='text' value={lastName} onChange={(e)=> setLastName(e.target.value)} required /></label>
         <label>
           Email
           <input

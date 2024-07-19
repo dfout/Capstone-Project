@@ -2,7 +2,7 @@
 import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 
-import {Modal, useModal} from '../../context/Modal'
+import {useModal} from '../../context/Modal'
 import './DeleteReviewModal.css'
 
 
