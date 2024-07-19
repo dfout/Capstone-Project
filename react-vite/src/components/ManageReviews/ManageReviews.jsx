@@ -40,7 +40,19 @@ function ManageReviews(){
         <h2 className='manage-title'>Your Reviews</h2>
         <div className='manage-reviews'>
         
-        {Object.values(reviews).map((review)=> (
+        {Object.values(reviews).map((review)=> {
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                let date;
+                let month;
+                let year;
+                let day;
+                if (review.createdAt){
+                    date = new Date(review.createdAt);
+                    day = date.getDate()
+                    month = monthNames[date.getMonth()];
+                    year = date.getFullYear();
+                }
+            return(
             <div key={review.id} className='user-review-tile'>
                  {review["Item"] ? (
                         <>
@@ -48,17 +60,17 @@ function ManageReviews(){
                             </Link></h3>
                             <span>{review.rating}</span>
                             <p>{review.review}</p>
-                            <span>Posted on {review.createdAt}</span>
+                            <span>Posted: {month} {day}, {year}</span>
                             <div className="manage-buttons">
                             <OpenModalButton className='up-button' disabled={false} buttonText={'Edit'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<EditReviewModal reviewId={review.id}/>}/>
-                            <OpenModalButton className="button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={review.id}/>}/>
+                            <OpenModalButton className="button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={review.id} review={review}/>}/>
                             </div>
                         </>
                     ) : (
                         <p>Item data is missing</p>
                     )}
             </div>
-        ))}
+)})}
         
         </div>
         </>

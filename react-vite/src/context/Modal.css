@@ -22,4 +22,8 @@
 #modal-content {
   position: absolute;
   background-color:white;
+  height:fit-content;
+  width:fit-content;
+  /* display:flex; */
+  /* align-items: baseline; */
 }

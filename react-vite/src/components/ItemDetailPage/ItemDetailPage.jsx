@@ -147,7 +147,7 @@ function ItemDetailPage(){
 </div>
 
         )}
-            {reviews.length != 0 && reviews?.map(({ id, ownerId, User, stars, review, createdAt }) => {
+            {reviews.length != 0 && reviews?.map(({ id, ownerId, User, rating, review, createdAt }) => {
                 const date = new Date(createdAt);
                 const monthName = monthNames[date.getMonth()];
                 const year = date.getFullYear();
@@ -158,10 +158,10 @@ function ItemDetailPage(){
                     <li className='review-tile' key={id}>
                         <h4>{User ? User.firstName : 'Anonymous'}</h4>
                         <p className='review-info'>{monthName} {year}</p>
-                        <p className='review-info'>{stars} stars</p>
+                        <p className='review-info'>{rating} stars</p>
                         <p className='review-info'>{review}</p>
                         {sessionUser!= null && sessionUser.id === ownerId && 
-                        (<OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={id}/>}/>)}
+                        (<OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={id} review={review} rating={rating} createdAt={createdAt} itemName={item.name} itemId={item.id}/>}/>)}
                     </li>
                 );
             })}
