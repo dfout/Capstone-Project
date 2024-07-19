@@ -1,4 +1,4 @@
-from app.models import db, StoreItemImage, environment, SCHEMA
+from app.models import db, StoreItemImage, environment, SCHEMA, StoreItem
 import random
 from sqlalchemy.sql import text
 
@@ -62,16 +62,20 @@ def seed_store_item_images():
         "https://musee4.s3.us-east-2.amazonaws.com/items/shio-yang-wUcnlW5c19M-unsplash.jpg",
         "https://musee4.s3.us-east-2.amazonaws.com/items/roman-kraft-sXKoi7ifLno-unsplash.jpg",
     ]
-
-    # Fetch all store items
-    store_items = db.session.execute(text("SELECT id FROM store_items")).fetchall()
+    if environment == "production":
+        # Use SQLAlchemy declarative models (if applicable) for production
+                store_items = db.session.execute(text("SELECT id FROM musee_schema.store_items")).fetchall()
+          # Assuming StoreItem model exists
+    else:
+        # Use raw SQL for development to avoid relying on existing models
+        store_items =StoreItem.query.all()
 
     # Randomly assign images to each store item
     for store_item in store_items:
         selected_urls = random.sample(urls, k=2)  # Select 2 unique URLs for each item
         for url in selected_urls:
             image = StoreItemImage(
-                item_id=store_item[0],
+                item_id=store_item.id,
                 url=url
             )
             db.session.add(image)
