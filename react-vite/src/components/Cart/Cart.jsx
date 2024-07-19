@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartThunk } from '../../redux/cart';
+import { getCartThunk, removeFromCartThunk, updateCartItemThunk } from '../../redux/cart';
 import OpenModalButton from '../OpenModalButton';
 import Checkout from './Checkout';
 import LoginFormModal from '../LoginFormModal';
@@ -37,7 +37,7 @@ const Cart = () => {
 
   const handleDelete = async (cartItemId) => {
     try {
-      await dispatch(removeItemFromCart(cartItemId));
+      await dispatch(removeFromCartThunk(cartItemId));
       setMessage('Item was removed from your cart');
       setTimeout(() => setMessage(''), 3000); 
     } catch (error) {
@@ -48,7 +48,7 @@ const Cart = () => {
   const handleQuantityChange = async (cartItemId, newQuantity) => {
     try {
       if (newQuantity < 1) return; 
-      await dispatch(updateCartItemQuantityThunk(cartItemId, newQuantity));
+      await dispatch(updateCartItemThunk(cartItemId, newQuantity));
     } catch (error) {
       console.error('Failed to update cart item quantity:', error);
     }

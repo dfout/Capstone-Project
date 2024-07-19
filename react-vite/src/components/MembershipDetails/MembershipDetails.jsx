@@ -1,7 +1,7 @@
 import { useDispatch, useSelector} from "react-redux"
 import { useNavigate } from "react-router-dom"
 import './MembershipDetail.css'
-import { getUserMembershipThunk, cancelMembershipThunk } from "../../redux/member"
+import { getUserMembershipThunk} from "../../redux/member"
 import { useEffect } from "react"
 import { useState } from "react"
 
