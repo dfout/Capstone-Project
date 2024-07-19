@@ -15,6 +15,8 @@ function MembershipsPage(){
     const user = useSelector((state)=> state.session.user)
     const member = useSelector((state)=>state.member)
 
+    
+
 
     useEffect(()=>{
         dispatch(getMembershipsThunk())
@@ -24,16 +26,22 @@ function MembershipsPage(){
     //Or, this stays up and there is logic included in here
 
     const handleJoin = async(id)=>{
-        
-       const response =  await dispatch(purchaseMembershipThunk(id))
+    
+        if (user != null){
 
-       navigate('/user/membership')
+            const response =  await dispatch(purchaseMembershipThunk(id))
+     
+            navigate('/user/membership')
+        }else{
+            navigate('/login')
+        }    
         
     }
 
     const handleCancel = async (id) => {
         await dispatch(cancelMembershipThunk(id));
         navigate('/');
+        alert("Membership successfully canceled")
     };
 
     return(

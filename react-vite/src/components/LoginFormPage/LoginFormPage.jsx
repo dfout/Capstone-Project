@@ -2,6 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./LoginForm.css";
 
 function LoginFormPage() {
@@ -27,7 +28,7 @@ function LoginFormPage() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      navigate("/");
+      navigate("/memberships");
     }
   };
 
@@ -59,6 +60,8 @@ function LoginFormPage() {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
+      <span>Need an account?</span>
+      <NavLink to='/signup'>Register Here</NavLink>
     </>
   );
 }
