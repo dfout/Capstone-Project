@@ -22,7 +22,6 @@ class StoreOrder(db.Model):
             'id':self.id,
             'purchaserId':self.purchaser_id,
             'status':self.status,
-            'itemId': self.item_id,
             'purchasedOn':self.purchased_on,
             'updatedAt':self.updated_at
         }

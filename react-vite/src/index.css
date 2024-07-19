@@ -1,1 +1,39 @@
 /* TODO: Add sitewide styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+.archivo-black-regular {
+    font-family: "Archivo Black", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+  
+*{
+    padding:0;
+    margin:0;
+    /* font-family: "Lynstone", Helvetica, Arial, sans-serif; */
+    font-family:sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering: optimizeLegibility;
+    
+}
+
+button {
+    /* Your custom button styles here */
+    border: 1px solid #d5d5d5; /* Example: Set a solid border with desired color */
+}
+
+/* h1{
+    font-size: 15pt;
+    /* font-weight:100; */
+    /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+
+
+
+h1{
+    font-size: 15pt;
+    /* font-weight:100; */
+    /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
+
 import "./LoginForm.css";
 
 function LoginFormModal() {
@@ -21,12 +22,17 @@ function LoginFormModal() {
       })
     );
 
+
+
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
       closeModal();
     }
   };
+  const demoUserLogIn = () =>{
+    return dispatch(thunkLogin({email:'marnie@aa.io', password: 'password'})).then(closeModal)
+ }
 
   return (
     <>
@@ -41,7 +47,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='errors'>* {errors.email}</p>}
         <label>
           Password
           <input
@@ -51,8 +57,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        {errors.password && <p className='errors'>* {errors.password}</p>}
+        <button type="submit" className = 'membership-button archivo-black-regular'>Log In</button>
+        <button id='demo-login' className = 'membership-button archivo-black-regular' onClick={demoUserLogIn}>Demo User</button>
       </form>
     </>
   );

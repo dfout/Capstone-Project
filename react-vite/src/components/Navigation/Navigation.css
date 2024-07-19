@@ -1,3 +1,107 @@
 .profile-dropdown {
   position: absolute;
 }
+
+.navbar { 
+  height:14vh;
+  /* overflow-y: scroll; */
+  /* position:sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white; */
+  box-sizing: border-box;
+  padding-left: 7%;
+  padding-right:7%;
+  display:inline-flex;
+  flex-direction: row;
+  /* background-color: purple; */
+  width:100%;
+
+}
+.navbar-links{
+  position:sticky;
+  top: 20px;
+  z-index: 2000; /* Ensure it's above other content */
+  background-color: white; /* Adjust background color as needed */
+  
+  /* background-color: red; */
+  box-sizing: border-box;
+  margin-top: 2%;
+  margin-right:auto;
+  display:inline-flex;
+  align-items: center;
+  flex:1;
+  justify-content: space-between;
+  height:fit-content;
+  /* background-color: red; */
+
+}
+.nav-links{
+  text-decoration: none;
+  color:black;
+  font-size: 14pt;
+ 
+}
+.underline:hover{
+  text-decoration: underline;
+}
+
+#musee{
+  font-size: 45pt;
+}
+
+#tickets-button{
+  /* background-color: yellow; */
+  height: 40px;
+  width: 100px;
+  background-color: rgb(240, 213, 76);
+  border:none;
+  font-size: 14pt;
+
+}
+
+#tickets-button:hover{
+  cursor:pointer;
+}
+
+#name-container{
+  flex: 2;
+  /* background-color: red; */
+  display: flex;
+  height: 140px;
+  align-items: center;
+  /* margin-top:40px; */
+  
+  /* padding-top:20%; */
+  /* position:absolute; */
+  /* top:80px; */
+}
+
+
+.other-links{
+  position:sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it's above other content */
+  background-color: white; /* Adjust background color as needed */
+  padding-left: 7%;
+  box-sizing: border-box;
+  list-style-type: none;
+  display: inline-flex;
+  gap:30px;
+  padding-bottom: 1.5%;
+  padding-top:1%;
+  width:100%
+}
+
+
+.manage-link{
+  color:black;
+  text-decoration: none;
+}
+
+.manage-link:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+

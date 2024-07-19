@@ -6,9 +6,25 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
+import itemReducer from "./item";
+import cartReducer from "./cart";
+import reviewsReducer from "./review";
+import exhibitionReducer from "./exhibition";
+import membershipReducer from "./membership";
+import memberReducer from "./member";
+import ordersReducer from "./order";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  member: memberReducer,
+  memberships:membershipReducer,
+  cart: cartReducer,
+  orders: ordersReducer,
+  items: itemReducer,
+  reviews:reviewsReducer,
+  exhibitions: exhibitionReducer,
+  
+
 });
 
 let enhancer;

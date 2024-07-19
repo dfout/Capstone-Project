@@ -1,6 +1,9 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
+
+## add the perk information. 
+
 class MembershipType(db.Model):
     __tablename__ = "membership_types"
 
@@ -13,6 +16,7 @@ class MembershipType(db.Model):
     billing_cycle = db.Column(db.String(255), nullable=False)
     price_per_cycle = db.Column(db.Float, nullable=False)
     cardholders = db.Column(db.Integer, nullable=False)
+    # Members = db.relationship('Member', backref='membershipType', lazy='joined')
 
 
 
