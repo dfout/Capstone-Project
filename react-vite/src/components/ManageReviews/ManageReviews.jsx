@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getUserReviewsThunk } from "../../redux/review"
 import { useEffect } from "react"
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { useModal } from '../../context/Modal';
 import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import OpenModalButton from "../OpenModalButton"
@@ -35,13 +36,16 @@ function ManageReviews(){
     else if (!reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
     return (
+        <>
+        <h2 className='manage-title'>Your Reviews</h2>
         <div className='manage-reviews'>
-        <h2>Your Reviews</h2>
+        
         {Object.values(reviews).map((review)=> (
             <div key={review.id} className='user-review-tile'>
                  {review["Item"] ? (
                         <>
-                            <h3 className='archivo-black-regular'>{review["Item"].name}</h3>
+                            <h3><Link to={`store/items/${review["Item"]}.id`} className=' item-review archivo-black-regular'>{review["Item"].name}
+                            </Link></h3>
                             <span>{review.rating}</span>
                             <p>{review.review}</p>
                             <span>Posted on {review.createdAt}</span>
@@ -55,6 +59,7 @@ function ManageReviews(){
         ))}
         
         </div>
+        </>
     )
 }
 
