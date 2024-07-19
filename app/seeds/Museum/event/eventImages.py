@@ -1,4 +1,4 @@
-from app.models import db, EventImage, environment, SCHEMA
+from app.models import db, EventImage, environment, SCHEMA, Event
 from sqlalchemy.sql import text
 import random
 
@@ -30,15 +30,23 @@ def seed_event_images():
         "https://musee4.s3.us-east-2.amazonaws.com/events/aaina-sharma-nqj3ncOPS0g-unsplash.jpg"
     ]
 
-    # Fetch all event IDs
-    events = db.session.execute(text("SELECT id, title FROM events")).fetchall()
+    # # Fetch all event IDs
+    # events = db.session.execute(text("SELECT id, title FROM events")).fetchall()
+
+    if environment == "production":
+    # Use SQLAlchemy declarative models (if applicable) for production
+            events = db.session.execute(text("SELECT id FROM musee_schema.events")).fetchall()
+        # Assuming StoreItem model exists
+    else:
+    # Use raw SQL for development to avoid relying on existing models
+        events =Event.query.all()
 
     # Randomly assign images to each event
     for event in events:
         selected_url = random.choice(urls)  # Select a random URL for each event
         image = EventImage(
-            event_id=event[0],
-            name=event[1] + " Image",
+            event_id=event.id,
+            name=event.title,
             url=selected_url
         )
         db.session.add(image)
