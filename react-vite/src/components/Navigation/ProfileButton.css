@@ -129,6 +129,7 @@ ul{
 
 .model-text.item:hover{
 cursor: pointer;
+
 }
 
 
@@ -212,4 +213,13 @@ cursor: default;
     padding: 5px 10px;
     /* border-radius: 5px; */
     cursor: pointer;
+  }
+
+  .profile-dropdown li:hover{
+    text-decoration: underline;
+  }
+
+
+  .profile-button:hover{
+    text-decoration: underline;
   }

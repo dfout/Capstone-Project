@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useModal } from '../../context/Modal';
 import { postReviewThunk } from "../../redux/review";
 import { FaStar, FaRegStar } from "react-icons/fa";

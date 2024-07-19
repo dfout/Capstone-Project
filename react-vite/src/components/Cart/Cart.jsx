@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartThunk, removeFromCartThunk, updateCartItemThunk } from '../../redux/cart';
+import { getCartThunk } from '../../redux/cart';
 import OpenModalButton from '../OpenModalButton';
 import Checkout from './Checkout';
 import LoginFormModal from '../LoginFormModal';

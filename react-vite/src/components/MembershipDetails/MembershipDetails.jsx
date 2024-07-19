@@ -36,10 +36,10 @@ function MembershipDetails(){
     if (!member || !member["MembershipType"]  && timeCheck) return <h1>Loading...</h1>;
     else if (!member || !member["MembershipType"] && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
-    const handleDelete = async(id)=>{
-        await dispatch(cancelMembershipThunk(id))
-        navigate('/')
-    }
+    // const handleDelete = async(id)=>{
+    //     await dispatch(cancelMembershipThunk(id))
+    //     navigate('/')
+    // }
 
     const handleUpdate = async() =>{
         navigate('/memberships')

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from '../../context/Modal';
-import { postReviewThunk, updateReviewThunk } from "../../redux/review";
+import { updateReviewThunk } from "../../redux/review";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import '../ReviewModal/ReviewModal.css'; // Ensure you import your CSS file
 

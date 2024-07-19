@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useState } from "react"
 import { getItemThunk } from "../../redux/item"
 import { getItemReviewsThunk } from "../../redux/review"
@@ -9,14 +9,14 @@ import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import { getReviewsList } from "../../redux/review"
 import './itemDetailPage.css'
 import { useModal } from '../../context/Modal';
-import { addToCartThunk } from "../../redux/cart"
+// import { addToCartThunk } from "../../redux/cart"
 import { getOrdersThunk } from "../../redux/order"
 import LoginFormModal from "../LoginFormModal"
 import ReviewModal from "../ReviewModal"
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     let {id} = useParams()
     id = Number(id)
 
@@ -28,7 +28,7 @@ function ItemDetailPage(){
     const orders = useSelector((state)=>state.orders)
 
     reviews = [...reviews].reverse();
-    let numReviews = reviews.length
+    // let numReviews = reviews.length
 
     const [timeCheck, setTimeCheck] = useState(true);
     const closeMenu = useModal();
@@ -40,8 +40,8 @@ function ItemDetailPage(){
 
     },[dispatch,id])
 
-    let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.stars, 0)
-    avgRating = (avgRating / numReviews).toFixed(2)
+    // let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.stars, 0)
+    // avgRating = (avgRating / numReviews).toFixed(2)
 
     useEffect(() => {
         let timeout;
@@ -59,10 +59,10 @@ function ItemDetailPage(){
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    const handleAddToCart = async(id)=>{
-        await dispatch(addToCartThunk(id))
-        navigate('/cart')
-    }
+    // const handleAddToCart = async(id)=>{
+    //     await dispatch(addToCartThunk(id))
+    //     navigate('/cart')
+    // }
 
     // Need  to check if the user has purchased the item
 

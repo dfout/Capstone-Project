@@ -46,7 +46,7 @@
     justify-content: left; /* Center align horizontally */
     align-items: center; /* Center align vertically */
     /* width: 500px; */
-    background-color: aquamarine;
+    background-color: rgba(127, 255, 212);
     box-sizing:border-box;
     flex:1;
     padding-left:7%;

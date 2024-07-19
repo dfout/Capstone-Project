@@ -13,7 +13,7 @@ function MuseumHomePage(){
         dispatch(getExhibitionsThunk())
     }, [dispatch])
 
-    const images = ["https://musee4.s3.us-east-2.amazonaws.com/exhibitions/xavier-von-erlach-g_2U9j6uIEw-unsplash.jpg", ""]
+    // const images = ["https://musee4.s3.us-east-2.amazonaws.com/exhibitions/xavier-von-erlach-g_2U9j6uIEw-unsplash.jpg", ""]
     // const expositionsArr = Object.values(expositions)
     //2,
     return(
