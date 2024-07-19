@@ -94,6 +94,7 @@ function LoginFormPage() {
         </label>
         {hasSubmitted && errors.password && <p className='errors'>* {errors.password}</p>}
         <button type="submit" className = 'membership-button archivo-black-regular' onClick={handleSubmit}>Log In</button>
+        <NavLink to='/signup'>Create Account</NavLink>
         <div id='demo-login' className = 'membership-button archivo-black-regular' onClick={demoUserLogIn}>Demo User</div>
       </form>
     </>
