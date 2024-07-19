@@ -54,11 +54,11 @@ function ProfileButton() {
               <li>{user.username}</li>
               <li>{user.email}</li>
               <li>
-                <button onClick={logout}>Log Out</button>
+                <button className='membership-button archivo-black-regular' onClick={logout}>Log Out</button>
               </li>
-              <li><NavLink to='user/reviews'>Manage Reviews</NavLink></li>
+              <li><NavLink className='manage-link' to='user/reviews'>Manage Reviews</NavLink></li>
               {user.isMember && (
-                <li><NavLink to='user/membership'>Manage Membership</NavLink></li>
+                <li><NavLink className='manage-link' to='user/membership'>Manage Membership</NavLink></li>
               )}
               
             </>

@@ -1,0 +1,25 @@
+
+
+.manage-reviews{
+    display:flex;
+    flex-direction:column;
+}
+
+.user-review-tile{
+    width:200px;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.up-button{
+    max-width: fit-content;
+    min-height:30px;
+    color:white;
+    background-color: black;
+    border:none;
+    box-sizing: border-box;
+    font-size: 12pt;
+    margin-top:auto;
+    padding: 2%;
+   
+}

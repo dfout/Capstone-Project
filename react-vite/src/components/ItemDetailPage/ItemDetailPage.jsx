@@ -125,7 +125,7 @@ function ItemDetailPage(){
         <span>{item.avgRating}</span>
         <span>{item.price}</span>
         <p>{item.description}</p>
-        <button onClick={()=>handleAddToCart(item.id)}>Add to Cart</button>
+        {/* <button onClick={()=>handleAddToCart(item.id)}>Add to Cart</button> */}
         </div>
         </div>
         <section>

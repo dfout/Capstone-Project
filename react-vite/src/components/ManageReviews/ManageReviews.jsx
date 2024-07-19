@@ -7,6 +7,8 @@ import { useModal } from '../../context/Modal';
 import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import OpenModalButton from "../OpenModalButton"
 import EditReviewModal from "../EditReviewModal";
+import './ManageReviews.css'
+
 function ManageReviews(){
     const dispatch = useDispatch()
     const reviews = useSelector((state)=>state.reviews)
@@ -33,18 +35,18 @@ function ManageReviews(){
     else if (!reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
     return (
-        <>
+        <div className='manage-reviews'>
         <h2>Your Reviews</h2>
         {Object.values(reviews).map((review)=> (
             <div key={review.id} className='user-review-tile'>
                  {review["Item"] ? (
                         <>
-                            <h3>{review["Item"].name}</h3>
+                            <h3 className='archivo-black-regular'>{review["Item"].name}</h3>
                             <span>{review.rating}</span>
                             <p>{review.review}</p>
                             <span>Posted on {review.createdAt}</span>
-                            <OpenModalButton id='review-button' disabled={false} buttonText={'Edit'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<EditReviewModal reviewId={review.id}/>}/>
-                            <OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={review.id}/>}/>
+                            <OpenModalButton className='up-button' disabled={false} buttonText={'Edit'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<EditReviewModal reviewId={review.id}/>}/>
+                            <OpenModalButton className="button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={review.id}/>}/>
                         </>
                     ) : (
                         <p>Item data is missing</p>
@@ -52,7 +54,7 @@ function ManageReviews(){
             </div>
         ))}
         
-        </>
+        </div>
     )
 }
 

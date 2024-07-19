@@ -92,3 +92,14 @@
   padding-top:1%;
   width:100%
 }
+
+
+.manage-link{
+  color:black;
+  text-decoration: none;
+}
+
+.manage-link:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
