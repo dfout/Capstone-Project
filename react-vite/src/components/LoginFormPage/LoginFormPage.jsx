@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -6,37 +7,71 @@ import { NavLink } from "react-router-dom";
 import "./LoginForm.css";
 
 function LoginFormPage() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
+  const [block, setBlock] = useState(false)
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+ 
+  useEffect(() => {
+    let errObj = {}
 
-  if (sessionUser) return <Navigate to="/" replace={true} />;
+    //comparison regex : [any char, num, symbol] + @[any char or num] + .[any char or num]
+    //ex: demo@aa.io would match, as would demo@aa.i, but demo@aa. would not match, nor would demo@aa and so on
+
+
+    let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-]/;
+    if (
+      email.length === 0 ||
+      email.length > 65 ||
+      !email.match(validRegex) ||
+      password.length < 6
+    ) {
+      setBlock(true);
+    } else {
+      setBlock(false);
+    }
+
+    if (email.length === 0) errObj.email = "Please provide a valid Email";
+    if (email.length > 65) errObj.email = "Email must be 65 characters or less";
+    if (!email.match(validRegex)) errObj.email = "Please provide a valid Email";
+    if (password.length < 6) errObj.password = "Please provide a password of at least 6 characters";
+
+    setErrors(errObj)
+    // console.log(errors)
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setHasSubmitted(true)
 
-    const serverResponse = await dispatch(
-      thunkLogin({
-        email,
-        password,
-      })
-    );
+    if(!Object.values(errors).length){
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      navigate("/memberships");
+      const serverResponse = await dispatch(
+        thunkLogin({
+          email,
+          password,
+        })
+      );
+      console.log(serverResponse)
+  
+  
+      if (serverResponse) {
+        setErrors(serverResponse);
+      } else {
+        navigate('/')
+      }
     }
   };
+  const demoUserLogIn = () =>{
+    return dispatch(thunkLogin({email:'marnie@aa.io', password: 'password'}))
+ }
 
   return (
     <>
       <h1>Log In</h1>
-      {errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)}
       <form onSubmit={handleSubmit}>
         <label>
           Email
@@ -47,7 +82,7 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {hasSubmitted && errors.email && <p className='errors'>* {errors.email}</p>}
         <label>
           Password
           <input
@@ -57,11 +92,10 @@ function LoginFormPage() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        {hasSubmitted && errors.password && <p className='errors'>* {errors.password}</p>}
+        <button type="submit" className = 'membership-button archivo-black-regular' onClick={handleSubmit}>Log In</button>
+        <div id='demo-login' className = 'membership-button archivo-black-regular' onClick={demoUserLogIn}>Demo User</div>
       </form>
-      <span>Need an account?</span>
-      <NavLink to='/signup'>Register Here</NavLink>
     </>
   );
 }
