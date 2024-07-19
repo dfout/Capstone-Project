@@ -38,45 +38,70 @@ def get_user_reviews():
     user_id= current_user.id
     reviews = [x.to_dict() for x in Review.query.filter_by(user_id=user_id).all()]
     for review in reviews:
-        item_id = review.item_id
-        review["Item"] = (StoreItem.query.filter_by(item_id=item_id).first()).to_dict()
+        id = review["itemId"]
+        review["Item"] = (StoreItem.query.filter_by(id=id).first()).to_dict()
 
     return {"Reviews": reviews}
 
-@user_routes.route('/reviews/<int:review_id>', methods=['DELETE'])
+@user_routes.route('/reviews/<int:id>', methods=['DELETE'])
 @login_required
-def delete_review(review_id):
+def delete_review(id):
     '''Allows a user to delete a review they have posted'''
 
-    review = Review.query.filter_by(review_id=review_id).first()
+    review = Review.query.filter_by(id=id).first()
     if review != None:
         db.session.delete(review)
         db.session.commit()
-        return {'review_id': review_id}
+        return {'review_id': id}
     else:
         return {"message": "Review could not be found"}, 404
 
 
-@user_routes.route('/reviews/<int:review_id>', methods=['PUT'])
+@user_routes.route('/reviews/<int:id>', methods=['PUT'])
 @login_required
-def update_review(review_id):
+def update_review(id):
     '''A logged-in user can edit or update any review they have posted'''
 
-    review = Review.query.filter_by(review_id=review_id).first()
+    review = Review.query.filter_by(id=id).first()
+
+    if not review:
+        return {"message": "Review not found"}, 404
 
     if review.user_id != current_user.id:
         return {"message": "Not the owner of this review"}, 401
-    form = ReviewForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
 
-    if form.validate_on_submit():
-        review.review = form.data['review']
-        review.stars = form.data['stars']
-        db.session.commit()
+    data = request.json
 
-        reviewObj = review.to_dict()
+    # Basic validation
+    review_text = data.get('review')
+    rating = data.get('rating')
 
-        return {"Review": reviewObj}
+    if not review_text or len(review_text) < 10:
+        return {"message": "Bad Request", "errors": {"review": "Review must be at least 10 characters"}}, 400
+
+    if not rating or not (1 <= rating <= 5):
+        return {"message": "Bad Request", "errors": {"rating": "Rating must be between 1 and 5"}}, 400
+
+    # Log the received data for debugging
+    print(f"Updating review {id} with review: {review_text} and rating: {rating}")
+
+    # Update the review fields
+    review.review = review_text
+    review.rating = rating
+
+    # Log the review object before committing
+    print(f"Review object before commit: {review.to_dict()}")
+
+    db.session.commit()
+
+    # Log the review object after committing
+    print(f"Review object after commit: {review.to_dict()}")
+
+    reviewObj = review.to_dict()
+    item_id = reviewObj["itemId"]
+    reviewObj["Item"] = (StoreItem.query.filter_by(id=item_id).first()).to_dict()
+
+    return {"Review": reviewObj}, 200
     if form.errors:
         return {"message":"Bad Request", "errors": form.errors}, 400
     
@@ -91,6 +116,13 @@ def get_membership_details():
 
     if(member_info == None):
         return {"message": "User is not a member"}
+    
+    member_info = member_info.to_dict()
+    id = member_info["membershipTypeId"]
+    membership_type = MembershipType.query.filter_by(id=id).first()
+    member_info["MembershipType"] = membership_type.to_dict() if membership_type else None
+
+    print(member_info, "----------------")
 
     return {"Member": member_info}
 
@@ -209,6 +241,6 @@ def get_orders():
     
 
     for order in orders:
-        order_id = order.id
-        order["OrderedItems": OrderedItem.query.filter_by(order_id=order_id).all()]
+        order_id = order["id"]
+        order["OrderedItems"]= [x.to_dict() for x in OrderedItem.query.filter_by(order_id=order_id).all()]
     return {"Orders": orders}

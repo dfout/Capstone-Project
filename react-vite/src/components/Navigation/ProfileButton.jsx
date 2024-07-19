@@ -1,16 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from 'react-icons/fa';
+
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { NavLink, useNavigate } from "react-router-dom";
+import './ProfileButton.css'
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
+  const navigate = useNavigate()
 
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
@@ -37,12 +40,13 @@ function ProfileButton() {
     e.preventDefault();
     dispatch(thunkLogout());
     closeMenu();
+    navigate('/')
   };
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button className='profile-button archivo-black-regular' onClick={toggleMenu}>
+      My account
       </button>
       {showMenu && (
         <ul className={"profile-dropdown"} ref={ulRef}>
@@ -51,8 +55,13 @@ function ProfileButton() {
               <li>{user.username}</li>
               <li>{user.email}</li>
               <li>
-                <button onClick={logout}>Log Out</button>
+                <button className='membership-button archivo-black-regular' onClick={logout}>Log Out</button>
               </li>
+              <li><NavLink className='manage-link' to='user/reviews'>Manage Reviews</NavLink></li>
+              {user.isMember && (
+                <li><NavLink className='manage-link' to='user/membership'>Manage Membership</NavLink></li>
+              )}
+              
             </>
           ) : (
             <>

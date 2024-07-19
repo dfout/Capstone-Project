@@ -17,9 +17,9 @@ class StoreItem(db.Model):
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
-    cartItems = db.relationship("CartItem", cascade = "all, delete")
-    itemCategories = db.relationship("ItemCategory", cascade= "all, delete")
-    orderedItems = db.relationship("OrderedItem", cascade="all, delete")
+    cartItems = db.relationship("CartItem")
+    itemCategories = db.relationship("ItemCategory")
+    orderedItems = db.relationship("OrderedItem")
 
     def to_dict(self):
         return {

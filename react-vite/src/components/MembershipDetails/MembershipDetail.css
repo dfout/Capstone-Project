@@ -1,0 +1,43 @@
+.user-mem-buttons{
+    display:flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.user-membership-button{
+    width: fit-content;
+    min-height:30px;
+    color:white;
+    background-color: black;
+    border:none;
+    box-sizing: border-box;
+    font-size: 12pt;
+    margin-top:auto;
+    padding:2%;
+   
+}
+.user-membership-button:hover{
+    cursor: pointer;
+}
+
+.user-mem-container{
+    display:flex;
+    /* flex-direction: row;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content: center;
+    padding-bottom: 7%; */
+}
+
+.mem-block{
+    box-sizing: border-box;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content: center;
+    padding-bottom: 7%;
+}
+
+
+

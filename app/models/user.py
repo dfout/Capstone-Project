@@ -12,7 +12,11 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    is_member = db.Column(db.Boolean, nullable=False, default=False)
+    first_name=db.Column(db.String(40), nullable=False)
+    last_name=db.Column(db.String(40), nullable=False)
     hashed_password = db.Column(db.String(255), nullable=False)
+    # Member = db.relationship('Member', backref='user', uselist=False, cascade='all, delete')
 
     @property
     def password(self):
@@ -29,11 +33,18 @@ class User(db.Model, UserMixin):
         return {
             'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'isMember':self.is_member,
+            'firstName': self.first_name,
+            'lastName':self.last_name,
+            # 'Member':self.Member
         }
     
-    def to_dict_no_email(self):
+    def to_dict_no_email_no_last(self):
         return {
             'id': self.id,
-            'username': self.username
+            'username': self.username,
+            'isMember':self.is_member,
+            'firstName':self.first_name,
+            # 'Member':self.Member
         }

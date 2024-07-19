@@ -22,8 +22,7 @@ class Exposition(db.Model):
             'id':self.id,
             'name':self.name,
             'description':self.description,
-            'igalleryId': self.gallery_id,
-            'ownerId':self.user_id,
+            'galleryId': self.gallery_id,
             'showingStartDate':self.showing_start_date,
             'showingEndDate':self.showing_end_date
         }

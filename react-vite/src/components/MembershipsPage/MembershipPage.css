@@ -1,0 +1,129 @@
+.memberships-container{
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content: center;
+    padding-bottom: 7%;
+}
+.membership-tile{
+    background-color: rgb(88, 88, 182);
+    min-height: 400px;
+    width: 395px;
+    padding:30px;
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    color:rgb(235, 152, 0);
+}
+#Access{
+    background-color:rgb(255, 152, 152);
+    color: rgb(6, 107, 14);
+    min-height: 400px;
+    width: 395px;
+    
+    box-sizing:border-box;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+
+}
+
+#Access:hover{
+    cursor:pointer;
+    background-color:rgb(6, 107, 14) ;
+    color:rgb(255, 152, 152);
+}
+
+#Supporting{
+    color:rgb(40, 40, 158);
+    background-color: rgb(221, 255, 128);
+}
+#Supporting:hover{
+    cursor:pointer;
+    color:rgb(221, 255, 128);
+    background-color:rgb(40, 40, 158) ;
+
+}
+
+
+.membership-tile:hover{
+    cursor:pointer;
+    background-color: rgb(235, 152, 0);
+    color:rgb(88, 88, 182);
+}
+
+.discover-mem{
+    /* padding-top:2%; */
+    text-align: center;
+    font-size: 40pt;
+}
+
+.mem-intro{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 28%;
+    padding-right: 28%;
+    /* width: 50%; */
+    text-align: center;
+    font-size:20pt;
+    padding-top:1%;
+    padding-bottom:2%;
+    /* width: 50%; */
+    /* width:100px; */
+    /* align-self: center;
+    justify-self: center; */
+}
+
+#intro{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mem-name{
+    font-size: 28pt;
+}
+
+.membership-button{
+    max-width: fit-content;
+    min-height:30px;
+    color:white;
+    background-color: black;
+    border:none;
+    box-sizing: border-box;
+    font-size: 12pt;
+    margin-top:auto;
+    padding: 2%;
+   
+}
+
+.membership-button:hover{
+    cursor: pointer;
+}
+
+#membership-description{
+    padding-top:10px;
+    padding-bottom:10px;
+
+}
+
+#membership-price{
+    font-size: 15pt;
+}
+
+.member-d-list{
+    padding-left:7%;
+    font-size:13pt;
+    padding-bottom:5%;
+}
+
+.bullet-points{
+    padding: 1%;
+}
+
+#cardholder{
+    font-size: 13pt;
+}

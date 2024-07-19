@@ -1,8 +1,9 @@
 from flask import Blueprint, request
-from app.models import User, db
+from app.models import User, db, Member, MembershipType
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from sqlalchemy import join
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -13,6 +14,17 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
+        # id=current_user.id
+        # user = (User.query.filter_by(id=id).first()).to_dict()
+        # user_id = current_user.id
+        # if user['isMember'] == True or user["isMember"] == 1:
+        #     member_info = (Member.query.filter_by(user_id=user_id).first()).to_dict()
+
+        #     id = member_info["membershipTypeId"]
+            
+        #     user["MembershipDetails"] = member_info
+        #     member_info["MembershipType"] = (MembershipType.query.filter_by(id=id).first()).to_dict()
+           
         return current_user.to_dict()
     return {'errors': {'message': 'Unauthorized'}}, 401
 
@@ -29,7 +41,22 @@ def login():
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
+        print("USER-------------", user)
+        
+
+
         login_user(user)
+
+        # user = user.to_dict()
+        # user_id = user["id"]
+        # if user['isMember'] == True:
+        #     member_info = (Member.query.filter_by(user_id=user_id).first()).to_dict()
+
+        #     id = member_info["membershipTypeId"]
+            
+        #     user["MembershipDetails"] = member_info
+        #     member_info["MembershipType"] = (MembershipType.query.filter_by(id=id).first()).to_dict()
+        #     print("USER________________", user)
         return user.to_dict()
     return form.errors, 401
 

@@ -1,6 +1,9 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
+const UPDATE_MEMBERSHIP_STATUS = 'session/updateMembershipStatus'; 
+
+
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -10,16 +13,23 @@ const removeUser = () => ({
   type: REMOVE_USER
 });
 
+export const updateMembershipStatus = (isMember) => ({ // Action creator for updating membership status
+  type: UPDATE_MEMBERSHIP_STATUS,
+  payload: isMember
+});
+
+
 export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
 		const data = await response.json();
-		if (data.errors) {
-			return;
-		}
-
-		dispatch(setUser(data));
+    console.log(data, "DATAAA_------------")
+    dispatch(setUser(data))
 	}
+  else{
+    const data = await response.json()
+    return data.errors
+  }
 };
 
 export const thunkLogin = (credentials) => async dispatch => {
@@ -63,6 +73,8 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+
+
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
@@ -71,6 +83,14 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case UPDATE_MEMBERSHIP_STATUS:
+        return {
+          ...state,
+          user: {
+            ...state.user,
+            isMember: action.payload
+          }
+        }
     default:
       return state;
   }

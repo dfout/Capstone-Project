@@ -1,0 +1,112 @@
+.home-exhibitions-container{
+    width:100vw;
+}
+
+.exposition-tile{
+    width:100%;
+    display:flex;
+   
+    height:fit-content;
+}
+
+.exposition-image-container {
+    height: 400px;
+    /* width: 900px; */
+    flex:2;
+    /* width: 65.5%; */
+    /* padding-bottom: 10px; */
+    position: relative;
+    cursor: pointer;
+    overflow:hidden;
+}
+
+#preview-image {
+   
+    height:auto;
+    width: 100%;
+    overflow: hidden;
+    /* border-radius: 10px; */
+    cursor: pointer;
+}
+
+.exposition-link{
+    text-decoration: none;
+    color:black;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:wrap;
+    width:100%;
+    /* background-color: red; */
+}
+
+
+.exposition-intro-container-one{
+    height: 400px;
+    display: flex;
+    justify-content: left; /* Center align horizontally */
+    align-items: center; /* Center align vertically */
+    /* width: 500px; */
+    background-color: rgba(127, 255, 212);
+    box-sizing:border-box;
+    flex:1;
+    padding-left:7%;
+    
+}
+
+.exposition-intro-container-two{
+    height: 400px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; /* Center align vertically */
+    /* width: 500px; */
+    background-color: rgb(151, 81, 216);
+    flex:1;
+}
+
+.exposition-intro-container-three{
+    height: 400px;
+    display: flex;
+    /* justify-content: center;  */
+    justify-content: left;
+    align-items: center; 
+    /* width: 500px; */
+    background-color: rgb(73, 198, 73);
+    box-sizing:border-box;
+    flex:1;
+    padding-left:7%;
+}
+
+
+#name{
+    font-size: 24pt;
+    
+}
+
+.expo-info{
+    display: flex;
+    /* justify-content: center; */
+    flex-wrap:wrap;
+    text-wrap: wrap;
+    flex-direction: column;
+    /* width: 100px; */
+    width:50%;
+    height:100%;
+    /* align-items: center; */
+    /* text-align: left; */
+    /* background-color: red; */
+    padding-top: 10%;
+    /* padding-left:50px; */
+    
+
+}
+
+section{
+    /* padding:7%; */
+    padding-top:2%;
+    padding-left:7%;
+    height: 50vh;
+}
+
+.h4home{
+    font-size: 15pt;
+}

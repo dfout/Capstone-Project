@@ -29,3 +29,23 @@ def seed_membership_types():
 
     }
     ]
+
+    for type in types:
+        type_entry = MembershipType(
+            name=type["name"],
+            description=type["description"],
+            billing_cycle = type["billing_cycle"],
+            price_per_cycle = type["price_per_cycle"],
+            cardholders = type["cardholders"]
+        )
+        db.session.add(type_entry)
+
+    db.session.commit()
+
+def undo_membership_types():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.membership_types RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM membership_types"))
+
+    db.session.commit()
