@@ -60,7 +60,7 @@ export const DeleteReviewModal = ({reviewId,review, rating, createdAt, itemName,
                     <>
                 <h3><Link to={`/store/items/${review["Item"].id}`} className=' item-review archivo-black-regular'>{review["Item"].name}
                             </Link></h3>
-                <span>{review.rating}/5 Stars</span>
+                <span>{review.rating}/5 stars</span>
                 <p>{review.review}</p>
                 <span>Posted: {month}/{day}/{year}</span>
                 </>
@@ -68,7 +68,7 @@ export const DeleteReviewModal = ({reviewId,review, rating, createdAt, itemName,
                     <>
                         <h3><Link to={`/store/items/${itemId}`} className=' item-review archivo-black-regular'>{itemName}
                         </Link></h3>
-                    <span>{rating}/5 Stars</span>
+                    <span>{rating}/5 stars</span>
                     <p>{review}</p>
                     <span>Posted: {month}/{day}/{year}</span>
                     </>

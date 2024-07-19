@@ -13,6 +13,7 @@ import './ManageReviews.css'
 function ManageReviews(){
     const dispatch = useDispatch()
     const reviews = useSelector((state)=>state.reviews)
+    const reviewsArr = Object.values(reviews)
     const closeMenu = useModal();
 
     useEffect(()=>{
@@ -40,7 +41,7 @@ function ManageReviews(){
         <h2 className='manage-title'>Your Reviews</h2>
         <div className='manage-reviews'>
         
-        {Object.values(reviews).map((review)=> {
+        {reviews && reviewsArr.map((review)=> {
                 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
                 let date;
                 let month;
@@ -58,8 +59,8 @@ function ManageReviews(){
                         <>
                             <h3><Link to={`/store/items/${review["Item"].id}`} className=' item-review archivo-black-regular'>{review["Item"].name}
                             </Link></h3>
-                            <span>{review.rating}</span>
-                            <p>{review.review}</p>
+                            <span>{review.rating} stars</span>
+                            <p className="review">{review.review}</p>
                             <span>Posted: {month} {day}, {year}</span>
                             <div className="manage-buttons">
                             <OpenModalButton className='up-button' disabled={false} buttonText={'Edit'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<EditReviewModal reviewId={review.id}/>}/>
