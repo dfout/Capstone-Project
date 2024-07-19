@@ -29,7 +29,7 @@ function MembershipsPage(){
     
         if (user != null){
 
-            const response =  await dispatch(purchaseMembershipThunk(id))
+             await dispatch(purchaseMembershipThunk(id))
      
             navigate('/user/membership')
         }else{
