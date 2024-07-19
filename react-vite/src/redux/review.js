@@ -56,21 +56,30 @@ export const getItemReviewsThunk = (id)=> async(dispatch) =>{
     }
 }
 
-export const postReviewThunk = ()=> async (dispatch) =>{
-    const response = await fetch(`/api/store/items/${id}`, {method:"POST"})
-    if (response.ok){
-        const {Review} = await response.json()
-        dispatch(postReview(Review))
-    }else{
-        const data = await response.json()
-        return data.errors
+export const postReviewThunk = (review, itemId)=> async (dispatch) =>{
+    const response = await fetch(`/api/store/items/${itemId}/reviews`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(review)
+    });
+
+    if (response.ok) {
+        const { Review } = await response.json();
+        dispatch(postReview(Review));
+        return Review;
+    } else {
+        const data = await response.json().catch(() => ({ message: "An error occurred" }));
+        return data.errors || { message: data.message };
     }
 }
-export const deleteReviewThunk = ()=> async (dispatch) =>{
-    const response = await fetch(`/api/store/items/${id}`, {method:"DELETE"})
+export const deleteReviewThunk = (id)=> async (dispatch) =>{
+    const response = await fetch(`/api/users/reviews/${id}`, {method:"DELETE"})
     if (response.ok){
         const {review_id} = await response.json()
         dispatch(deleteReview(review_id))
+        return true
     }else{
         const data = response.json()
         return data.errors
@@ -109,8 +118,8 @@ function reviewsReducer (state=initialState, action){
         }
         case POST_REVIEW:{
             const newState = {...state}
-            newState[action.payload.id] = action.payload
-            return newState
+            newState[action.payload.id] = {...action.payload}
+            return {...newState}
         }
         case DELETE_REVIEW:{
             const newState = {...state}

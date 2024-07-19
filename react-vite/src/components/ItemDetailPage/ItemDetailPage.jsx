@@ -11,6 +11,8 @@ import './itemDetailPage.css'
 import { useModal } from '../../context/Modal';
 import { addToCartThunk } from "../../redux/cart"
 import { getOrdersThunk } from "../../redux/order"
+import LoginFormModal from "../LoginFormModal"
+import ReviewModal from "../ReviewModal"
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
@@ -50,7 +52,7 @@ function ItemDetailPage(){
         }
     
         return () => clearTimeout(timeout);
-    }, [item, reviews]);
+    }, [item, reviews, orders]);
 
     if (!item || !item.Images || !item.Reviews || !reviews || !orders && timeCheck) return <h1>Loading...</h1>;
     else if (!item || !item.Images || !item.Reviews || !reviews || !orders && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
@@ -82,7 +84,7 @@ function ItemDetailPage(){
 
     const hasReviewed = (reviews)=>{
         const reviewsArr = Object.values(reviews)
-        for (let review of reviews){
+        for (let review of reviewsArr){
             if (review.ownerId == sessionUser.id){
                 return true
             }
@@ -129,6 +131,22 @@ function ItemDetailPage(){
         <section>
         <ul className='item-reviews'>
             {console.log(reviews, "REVIEWS HERE")}
+            {!sessionUser && (
+        //  <button id='review-button' disabled={true}>Sign-in to post a Review</button>
+        <div id= 'post-your-review-button'>
+                    <OpenModalButton buttonText='Sign-in to post a Review' className='modal-text'onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>
+
+        </div>
+
+        )
+        }
+        {canReview(hasPurchased, hasReviewed, orders, reviews)&&(
+            <div id='post-your-review-button'>
+            <OpenModalButton id='review-button' disabled={false} buttonText={'Post Your Review'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<ReviewModal itemId={item.id}/>}/>
+
+</div>
+
+        )}
             {reviews.length != 0 && reviews?.map(({ id, ownerId, User, stars, review, createdAt }) => {
                 const date = new Date(createdAt);
                 const monthName = monthNames[date.getMonth()];
@@ -142,7 +160,7 @@ function ItemDetailPage(){
                         <p className='review-info'>{monthName} {year}</p>
                         <p className='review-info'>{stars} stars</p>
                         <p className='review-info'>{review}</p>
-                        {sessionUser.id === ownerId && 
+                        {sessionUser!= null && sessionUser.id === ownerId && 
                         (<OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={id}/>}/>)}
                     </li>
                 );

@@ -43,16 +43,16 @@ def get_user_reviews():
 
     return {"Reviews": reviews}
 
-@user_routes.route('/reviews/<int:review_id>', methods=['DELETE'])
+@user_routes.route('/reviews/<int:id>', methods=['DELETE'])
 @login_required
-def delete_review(review_id):
+def delete_review(id):
     '''Allows a user to delete a review they have posted'''
 
-    review = Review.query.filter_by(review_id=review_id).first()
+    review = Review.query.filter_by(id=id).first()
     if review != None:
         db.session.delete(review)
         db.session.commit()
-        return {'review_id': review_id}
+        return {'review_id': id}
     else:
         return {"message": "Review could not be found"}, 404
 

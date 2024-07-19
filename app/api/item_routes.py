@@ -88,8 +88,8 @@ def add_to_cart(id):
 def get_reviews(id):
     '''Get all reviews for an item on the item's detail page'''
     # user_id = current_user.id
-    id= int(id)
-    reviews = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
+    item_id= int(id)
+    reviews = [x.to_dict() for x in Review.query.filter_by(item_id=item_id).all()]
     for review in reviews:
         id=review["ownerId"]
         review['User'] = (User.query.filter_by(id=id).first()).to_dict_no_email_no_last()
@@ -107,22 +107,25 @@ def post_review(id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        new_review = Review(
-            review = form.data['review'],
-            stars = form.data['stars'],
-            user_id = current_user.id,
-            item_id = id
-        )
+        try:
+            new_review = Review(
+                review=form.data['review'],
+                rating=form.data['rating'],
+                user_id=current_user.id,
+                item_id=id
+            )
 
-        db.session.add(new_review)
-        db.session.commit()
+            db.session.add(new_review)
+            db.session.commit()
 
-        safe_review = new_review.to_dict()
-        return {"Review": safe_review}
-
-    if form.errors:
-        print(form.errors)
-        return{"message": "Bad Request", "errors": form.errors}, 400
+            safe_review = new_review.to_dict()
+            id = current_user.id
+            safe_review["User"] = (User.query.filter_by(id=id).first()).to_dict_no_email_no_last()
+            return {"Review": safe_review}
+        except Exception as e:
+            return {"errors": str(e)}, 500
+    else:
+        return {"errors": form.errors}, 400
     
 
 

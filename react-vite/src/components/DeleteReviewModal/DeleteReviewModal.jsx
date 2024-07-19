@@ -11,7 +11,7 @@ export const DeleteReviewModal = ({reviewId})=>{
     const dispatch = useDispatch();
     const {closeModal} = useModal()
 
-    const handleDelete = async() =>{
+    const handleDelete = async(reviewId) =>{
         
         console.log(reviewId)
         const response = await dispatch(deleteReviewThunk(reviewId))
@@ -25,7 +25,7 @@ export const DeleteReviewModal = ({reviewId})=>{
 
     return (
         <>
-        <button onClick={handleDelete}>Yes (Delete Review)</button>
+        <button onClick={()=>handleDelete(reviewId)}>Yes (Delete Review)</button>
         <button onClick={closeModal}>No(Keep Review)</button>
         </>
 
