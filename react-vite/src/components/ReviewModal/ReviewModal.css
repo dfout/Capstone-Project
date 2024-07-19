@@ -33,8 +33,8 @@ button {
   
   /* Hover effect for submit button */
   .submit-review-button:hover {
-    background-color: rgba(255, 33, 52, 1); /* Darken color on hover */
-    transform: translateY(-2px); /* Lift button slightly on hover */
+    background-color: rgba(255, 33, 52, 1);  
+    transform: translateY(-2px); 
   }
   
   /* Disabled state for submit button */
@@ -93,3 +93,16 @@ button {
   .submit-review-button {
     margin-top: 10px;
   }
+
+.membership-button{
+
+    max-width: fit-content;
+    min-height:30px;
+    color:white;
+    background-color: black;
+    border:none;
+    box-sizing: border-box;
+    font-size: 12pt;
+    margin-top:auto;
+    padding: 2%;
+}

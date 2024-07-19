@@ -9,17 +9,21 @@
     gap: 10px;
     padding-left:7%;
     padding-right:7%;
+    padding-top:3%;
+    padding-bottom: 3%;
 }
 
 .user-review-tile{
     max-width:200px;
     display:flex;
     flex-direction: column;
-    background-color: rgba(255, 15, 15, 0.634);
+    /* background-color: rgba(255, 15, 15, 0.634); */
+    border: 2px solid black;
     flex-wrap: wrap;
     text-overflow: clip;
     overflow-y:auto;
     text-wrap: wrap;
+    padding:5px;
 }
 .up-button{
     max-width: fit-content;
@@ -39,3 +43,10 @@
     /* text-decoration: none; */
 }
 
+
+.manage-buttons{
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    gap:10px;
+}

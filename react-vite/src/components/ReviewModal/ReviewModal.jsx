@@ -111,7 +111,7 @@ const ReviewModal = ({ itemId }) => {
           <span>{rating} Stars</span>
           {hasSubmitted && errors.rating && <p>{errors.rating}</p>}
         </div>
-        <button className="submit-review-button" disabled={disabled} type="submit">Submit Your Review</button>
+        <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
       </form>
     </div>
   );
