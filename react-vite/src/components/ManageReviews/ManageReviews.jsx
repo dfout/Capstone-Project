@@ -55,7 +55,7 @@ function ManageReviews(){
                 }
             return(
             <div key={review.id} className='user-review-tile'>
-                 {review["Item"] ? (
+                 {review["Item"] && 
                         <>
                             <h3><Link to={`/store/items/${review["Item"].id}`} className=' item-review archivo-black-regular'>{review["Item"].name}
                             </Link></h3>
@@ -67,9 +67,7 @@ function ManageReviews(){
                             <OpenModalButton className="button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={review.id} review={review}/>}/>
                             </div>
                         </>
-                    ) : (
-                        <p>Item data is missing</p>
-                    )}
+                    }
             </div>
 )})}
         
