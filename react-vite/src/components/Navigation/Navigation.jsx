@@ -15,7 +15,7 @@ function Navigation() {
       
       <div className='navbar-links'>
       {!member["MembershipType"] &&
-            <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Memberships</NavLink>
+            <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Become a member</NavLink>
       
       }
 

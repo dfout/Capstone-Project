@@ -64,22 +64,23 @@ function ItemDetailPage(){
     //     navigate('/cart')
     // }
 
-    // Need  to check if the user has purchased the item
+    //! For later implementation: When the user can purchase an item
+    //* Need  to check if the user has purchased the item
 
-    const hasPurchased = (orders) =>{
-        const ordersArr = Object.values(orders)
-        for (let order of ordersArr){
-           let items = order["OrderedItems"]
-           for (let item of items){
-            if (item.id == id){
-                return true
-            }
+    // const hasPurchased = (orders) =>{
+    //     const ordersArr = Object.values(orders)
+    //     for (let order of ordersArr){
+    //        let items = order["OrderedItems"]
+    //        for (let item of items){
+    //         if (item.id == id){
+    //             return true
+    //         }
 
-           }
-        }
-        return false
+    //        }
+    //     }
+    //     return false
 
-    }
+    // }
     // Need to check if the user has already reviewed the item:
 
     const hasReviewed = (reviews)=>{
@@ -93,14 +94,17 @@ function ItemDetailPage(){
 
     }
 
-    // function that returns a bool for each of these conditions. 
+    //* Function that returns a bool for each of these conditions. 
 
+    // const canReview = (hasPurchased, hasReviewed, orders, reviews)=>{
+    //    if (hasPurchased(orders) && !hasReviewed(reviews)) return true
+    //    else{
+    //     return false
+    //    }
+    // }
 
-    const canReview = (hasPurchased, hasReviewed, orders, reviews)=>{
-       if (hasPurchased(orders) && !hasReviewed(reviews)) return true
-       else{
-        return false
-       }
+    const canReview = (hasReviewed, reviews) =>{
+        return !hasReviewed(reviews)
     }
 
 
@@ -140,7 +144,7 @@ function ItemDetailPage(){
 
         )
         }
-        {canReview(hasPurchased, hasReviewed, orders, reviews)&&(
+        {canReview(hasReviewed, reviews)&&(
             <div id='post-your-review-button'>
             <OpenModalButton id='review-button' disabled={false} buttonText={'Post Your Review'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<ReviewModal itemId={item.id}/>}/>
 
