@@ -61,11 +61,12 @@ function LoginFormPage() {
       if (serverResponse) {
         setErrors(serverResponse);
       } else {
-        navigate('/')
+        navigate('/memberships')
       }
     }
   };
   const demoUserLogIn = () =>{
+    navigate('/memberships')
     return dispatch(thunkLogin({email:'marnie@aa.io', password: 'password'}))
  }
 

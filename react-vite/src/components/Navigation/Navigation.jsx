@@ -6,6 +6,7 @@ import "./Navigation.css";
 function Navigation() {
 
   const member = useSelector((state)=>state.member)
+  const sessionUser = useSelector((state)=>state.session.user)
   return (
     <>
     <div className='navbar'>
@@ -14,7 +15,14 @@ function Navigation() {
         </div>
       
       <div className='navbar-links'>
-      {!member["MembershipType"] &&
+        {/* {sessionUser != null && sessionUser.isMember == false && (
+             <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Become a member</NavLink>
+        )
+        } */}
+        {sessionUser == null && (
+                      <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Become a member</NavLink>
+        ) }
+      {sessionUser && !member["MembershipType"] &&
             <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Become a member</NavLink>
       
       }
