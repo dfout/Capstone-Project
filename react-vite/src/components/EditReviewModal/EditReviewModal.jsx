@@ -93,7 +93,7 @@ const EditReviewModal = ({ reviewId }) => {
          <p style={{ color: review.length < 10 || review.length === maxLength ? "red" : "black" }}>
           {review.length}/{maxLength}
         </p>
-        {beforeSubErrors.review && <p classname='Errors'>{beforeSubErrors.review}</p>}
+        {beforeSubErrors.review && <p className='errors'>{beforeSubErrors.review}</p>}
         {hasSubmitted && errors.review && <p className="errors">{errors.review}</p>}
         <div className="star-rating">
           {ratings.map((rating, index) => {

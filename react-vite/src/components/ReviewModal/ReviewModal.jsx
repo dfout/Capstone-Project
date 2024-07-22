@@ -61,7 +61,7 @@ const ReviewModal = ({ itemId }) => {
         errors.review = ""
     }
     if (review.length >=100){
-      error.review = "Review must be under 100 characters"
+      errors.review = "Review must be under 100 characters"
     }
     setBeforeSubErrors(errors)
     
@@ -75,7 +75,7 @@ const ReviewModal = ({ itemId }) => {
           rows={3}
           cols={30}
           minLength="10"
-          maxlength="100"
+          maxLength="100"
           value={review}
           name="review"
           placeholder="Leave your review here..."

@@ -10,7 +10,7 @@ import { getReviewsList } from "../../redux/review"
 import './itemDetailPage.css'
 import { useModal } from '../../context/Modal';
 // import { addToCartThunk } from "../../redux/cart"
-import { getOrdersThunk } from "../../redux/order"
+// import { getOrdersThunk } from "../../redux/order"
 import LoginFormModal from "../LoginFormModal"
 import ReviewModal from "../ReviewModal"
 
