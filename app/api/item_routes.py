@@ -93,6 +93,8 @@ def get_reviews(id):
     for review in reviews:
         id=review["ownerId"]
         review['User'] = (User.query.filter_by(id=id).first()).to_dict_no_email_no_last()
+        id= item_id
+        review["Item"] = (StoreItem.query.filter_by(id=id).first()).to_dict()
 
     return {"Reviews": reviews}
 
@@ -119,8 +121,11 @@ def post_review(id):
             db.session.commit()
 
             safe_review = new_review.to_dict()
+            item_id = id
             id = current_user.id
             safe_review["User"] = (User.query.filter_by(id=id).first()).to_dict_no_email_no_last()
+            id = item_id
+            safe_review["Item"] = (StoreItem.query.filter_by(id=id).first()).to_dict()
             return {"Review": safe_review}
         except Exception as e:
             return {"errors": str(e)}, 500

@@ -25,7 +25,7 @@ function ItemDetailPage(){
     // let reviews = useSelector((state)=>state.reviews)
     console.log(reviews, "REVIEWS")
     let sessionUser = useSelector((state) => state.session.user);
-    const orders = useSelector((state)=>state.orders)
+    // const orders = useSelector((state)=>state.orders)
 
     reviews = [...reviews].reverse();
     // let numReviews = reviews.length
@@ -36,7 +36,7 @@ function ItemDetailPage(){
     useEffect(()=>{
         dispatch(getItemThunk(id))
         dispatch(getItemReviewsThunk(id))
-        dispatch(getOrdersThunk())
+        // dispatch(getOrdersThunk())
 
     },[dispatch,id])
 
@@ -46,16 +46,16 @@ function ItemDetailPage(){
     useEffect(() => {
         let timeout;
        
-        if (!item || !item.Images || !item.Reviews || !reviews || !orders) {
+        if (!item || !item.Images || !item.Reviews || !reviews ) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }
     
         return () => clearTimeout(timeout);
-    }, [item, reviews, orders]);
+    }, [item, reviews]);
 
-    if (!item || !item.Images || !item.Reviews || !reviews || !orders && timeCheck) return <h1>Loading...</h1>;
-    else if (!item || !item.Images || !item.Reviews || !reviews || !orders && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+    if (!item || !item.Images || !item.Reviews || !reviews && timeCheck) return <h1>Loading...</h1>;
+    else if (!item || !item.Images || !item.Reviews || !reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -64,25 +64,29 @@ function ItemDetailPage(){
     //     navigate('/cart')
     // }
 
-    // Need  to check if the user has purchased the item
+    //! For later implementation: When the user can purchase an item
+    //* Need  to check if the user has purchased the item
 
-    const hasPurchased = (orders) =>{
-        const ordersArr = Object.values(orders)
-        for (let order of ordersArr){
-           let items = order["OrderedItems"]
-           for (let item of items){
-            if (item.id == id){
-                return true
-            }
+    // const hasPurchased = (orders) =>{
+    //     const ordersArr = Object.values(orders)
+    //     for (let order of ordersArr){
+    //        let items = order["OrderedItems"]
+    //        for (let item of items){
+    //         if (item.id == id){
+    //             return true
+    //         }
 
-           }
-        }
-        return false
+    //        }
+    //     }
+    //     return false
 
-    }
+    // }
     // Need to check if the user has already reviewed the item:
 
     const hasReviewed = (reviews)=>{
+        if(!sessionUser){
+            return true
+        }
         const reviewsArr = Object.values(reviews)
         for (let review of reviewsArr){
             if (review.ownerId == sessionUser.id){
@@ -93,14 +97,17 @@ function ItemDetailPage(){
 
     }
 
-    // function that returns a bool for each of these conditions. 
+    //* Function that returns a bool for each of these conditions. 
 
+    // const canReview = (hasPurchased, hasReviewed, orders, reviews)=>{
+    //    if (hasPurchased(orders) && !hasReviewed(reviews)) return true
+    //    else{
+    //     return false
+    //    }
+    // }
 
-    const canReview = (hasPurchased, hasReviewed, orders, reviews)=>{
-       if (hasPurchased(orders) && !hasReviewed(reviews)) return true
-       else{
-        return false
-       }
+    const canReview = (hasReviewed, reviews) =>{
+        return !hasReviewed(reviews)
     }
 
 
@@ -140,14 +147,14 @@ function ItemDetailPage(){
 
         )
         }
-        {canReview(hasPurchased, hasReviewed, orders, reviews)&&(
+        {canReview(hasReviewed, reviews)&&(
             <div id='post-your-review-button'>
             <OpenModalButton id='review-button' disabled={false} buttonText={'Post Your Review'} onButtonClick={closeMenu} style={{alignSelf:'left'}} modalComponent={<ReviewModal itemId={item.id}/>}/>
 
 </div>
 
         )}
-            {reviews.length != 0 && reviews?.map(({ id, ownerId, User, stars, review, createdAt }) => {
+            {reviews.length != 0 && reviews?.map(({ id, ownerId, User, rating, review, createdAt }) => {
                 const date = new Date(createdAt);
                 const monthName = monthNames[date.getMonth()];
                 const year = date.getFullYear();
@@ -158,10 +165,10 @@ function ItemDetailPage(){
                     <li className='review-tile' key={id}>
                         <h4>{User ? User.firstName : 'Anonymous'}</h4>
                         <p className='review-info'>{monthName} {year}</p>
-                        <p className='review-info'>{stars} stars</p>
+                        <p className='review-info'>{rating} stars</p>
                         <p className='review-info'>{review}</p>
                         {sessionUser!= null && sessionUser.id === ownerId && 
-                        (<OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={id}/>}/>)}
+                        (<OpenModalButton id="delete-button" buttonText={'Delete'} onButtonClick={closeMenu} modalComponent={<DeleteReviewModal reviewId={id} review={review} rating={rating} createdAt={createdAt} itemName={item.name} itemId={item.id}/>}/>)}
                     </li>
                 );
             })}

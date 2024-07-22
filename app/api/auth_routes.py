@@ -38,25 +38,13 @@ def login():
     # Get the csrf_token from the request cookie and put it into the
     # form manually to validate_on_submit can be used
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
-        print("USER-------------", user)
-        
 
 
         login_user(user)
-
-        # user = user.to_dict()
-        # user_id = user["id"]
-        # if user['isMember'] == True:
-        #     member_info = (Member.query.filter_by(user_id=user_id).first()).to_dict()
-
-        #     id = member_info["membershipTypeId"]
-            
-        #     user["MembershipDetails"] = member_info
-        #     member_info["MembershipType"] = (MembershipType.query.filter_by(id=id).first()).to_dict()
-        #     print("USER________________", user)
         return user.to_dict()
     return form.errors, 401
 
@@ -81,7 +69,9 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            first_name = form.data['first_name'],
+            last_name = form.data['last_name']
         )
         db.session.add(user)
         db.session.commit()

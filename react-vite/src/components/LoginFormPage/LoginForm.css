@@ -1,0 +1,43 @@
+.modal-cont-page{
+    width: 600px;
+    min-height:500px;
+    /* display:flex; */
+    padding:50px;
+    box-sizing: border-box;
+    /* background-color: aquamarine; */
+    margin:auto;
+    /* display:flex; */
+
+    /* background-color: aquamarine; */
+  
+}
+
+.buttons-signup{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    /* align-items: center; */
+    gap:15px;
+    margin-top:auto;
+    /* bottom:0; */
+    padding-top: 40px;
+
+}
+
+.buttons-signup > button{
+    width: 200px;
+}
+
+
+.l-form{
+    display:flex;
+    flex-direction:column;
+    /* gap:40px; */
+    padding-top:10px;
+    /* box-sizing: border-box; */
+    margin:auto;
+    /* width:100%; */
+    /* align-items: center; */
+    /* background-color: red; */
+    /* width:100%; */
+}
