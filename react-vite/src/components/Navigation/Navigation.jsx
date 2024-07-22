@@ -21,7 +21,7 @@ function Navigation() {
 
       
       
-      <button className='archivo-black-regular' to='/memberships'id='tickets-button'>Tickets</button>
+      {/* <button className='archivo-black-regular' to='/memberships'id='tickets-button'>Tickets</button> */}
       
 
       
@@ -35,7 +35,7 @@ function Navigation() {
       <NavLink className='nav-links archivo-black-regular underline'to='/exhibitions'>Exhibitions</NavLink>
       </li>
       <li>
-      <NavLink className='nav-links archivo-black-regular underline'to='/events'>Events</NavLink>
+      {/* <NavLink className='nav-links archivo-black-regular underline'to='/events'>Events</NavLink> */}
       </li>
       <li>
       <NavLink className='nav-links archivo-black-regular underline'to='/artists'>Art & Artists </NavLink>

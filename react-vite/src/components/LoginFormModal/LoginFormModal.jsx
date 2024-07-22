@@ -80,10 +80,10 @@ function LoginFormModal() {
  }
 
   return (
-    <>
+    <div className='modal-cont'>
       <h1>Log In</h1>
       <form className='form'onSubmit={handleSubmit}>
-        <label>
+        <label id='email'>
           Email
           <input
             type="text"
@@ -92,9 +92,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        {hasSubmitted && errors.email && <p className='errors'>* {errors.email}</p>}
-        <label>
-          Password
+        {hasSubmitted && errors.email && <p className='errors'>{errors.email}</p>}
+        <label id='pass'>
+          Password 
           <input
             type="password"
             value={password}
@@ -102,7 +102,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {hasSubmitted && errors.password && <p className='errors'>* {errors.password}</p>}
+        {hasSubmitted && errors.password && <p className='errors'>{errors.password}</p>}
         <div className='buttons'>
 
         <button type="submit"className = 'membership-button archivo-black-regular' onClick={handleSubmit}>Log In</button>
@@ -110,7 +110,7 @@ function LoginFormModal() {
 
         </div>
       </form>
-    </>
+    </div>
   );
 }
 

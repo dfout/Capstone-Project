@@ -2,11 +2,61 @@
 
 .errors{
     color: red;
+    margin:0;
+    padding:0;
+   
 }
 
 .form{
     display:flex;
     flex-direction:column;
-    gap:20px;
-    padding-top: 7%;
+    /* gap:40px; */
+    padding-top:40px;
+    box-sizing: border-box;
+   
 }
+
+label{
+    display:flex;
+    flex-direction:column;
+    box-sizing: border-box;
+    gap:10px
+    /* margin-bottom:8px; */
+    /* font-weight:bold; */
+
+}
+/* label input{
+    margin-top:4px;
+} */
+#email{
+    padding-bottom:10px;
+
+ }
+#pass{
+    padding-top:20px;
+    padding-bottom:10px;
+
+}
+
+input{
+    height:20px;
+    /* width:200px; *//
+}
+.modal-cont{
+    width: 400px;
+    min-height:400px;
+    /* display:flex; */
+    padding:50px;
+    box-sizing: border-box;
+    /* background-color: aquamarine; */
+}
+
+.buttons{
+    display: flex;
+    gap:10px;
+    margin-top:auto;
+    /* bottom:0; */
+    padding-top: 20px;
+}
+
+
