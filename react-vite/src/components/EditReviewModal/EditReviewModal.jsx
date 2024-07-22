@@ -60,14 +60,17 @@ const EditReviewModal = ({ reviewId }) => {
     if(review.length < 10){
         errors.review = ("Review must be at least 10 characters")
     }
-    if(review.length >=10){
+    if(review.length >=10 && review.length <100){
         errors.review = ""
     }
-    if (review.length >=100 && review.length < 100){
-      error.review = "Review must be under 100 characters"
+    if (review.length >100){
+      errors.review = "Review must be under 100 characters"
+    }
+    if (!rating){
+      errors.rating = "Please pick a star rating"
     }
     setBeforeSubErrors(errors)
-    
+  
   }
 
   return (

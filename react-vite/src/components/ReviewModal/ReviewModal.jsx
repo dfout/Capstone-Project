@@ -37,11 +37,16 @@ const ReviewModal = ({ itemId }) => {
     setErrors(errors)
   }, [review, rating]);
 
+  console.log(errors)
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     setHasSubmitted(true);
     
     let review2={review,rating}
+    if (beforeSubErrors.review || beforeSubErrors.rating){
+      return beforeSubErrors
+    }
 
     const result = await dispatch(postReviewThunk(review2, itemId));
 
@@ -60,8 +65,11 @@ const ReviewModal = ({ itemId }) => {
     if(review.length >=10 && review.length < 100){
         errors.review = ""
     }
-    if (review.length >=100){
-      error.review = "Review must be under 100 characters"
+    if (review.length > 100){
+      errors.review = "Review must be under 100 characters"
+    }
+    if (!rating){
+      errors.rating = "Please pick a star rating"
     }
     setBeforeSubErrors(errors)
     
@@ -75,7 +83,7 @@ const ReviewModal = ({ itemId }) => {
           rows={3}
           cols={30}
           minLength="10"
-          maxlength="100"
+          maxLength="100"
           value={review}
           name="review"
           placeholder="Leave your review here..."
@@ -119,6 +127,8 @@ const ReviewModal = ({ itemId }) => {
             );
           })}
           <span>{rating} Stars</span>
+                  {beforeSubErrors.rating && <p className='errors'>{beforeSubErrors.rating}</p>}
+          
           {hasSubmitted && errors.rating && <p className='errors'>{errors.rating}</p>}
         </div>
         <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
