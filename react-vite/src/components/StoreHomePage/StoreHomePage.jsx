@@ -22,7 +22,7 @@ return(
     <>
 
     <div className='all-items'>
-    {Object.values(items).reverse().map((item)=>(
+    {Object.values(items).map((item)=>(
         <div key={item.id} className="item-tile">
             <NavLink className='item-link' to={`/store/items/${item.id}`}>
             <div className='item-image-container'>
