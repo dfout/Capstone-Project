@@ -84,15 +84,15 @@ function SignupFormModal() {
   };
 
   return (
-    <>
+    <div className='modal-cont-sign'>
       <h1>Sign Up</h1>
-      {hasSubmitted && errors.server && <p className ='errors'>* {errors.server}</p>}
-      <form onSubmit={handleSubmit}>
-        <label>First Name<input type='text' value={firstName} onChange={(e)=> setFirstName(e.target.value)} required /></label>
+      {hasSubmitted && errors.server && <p className ='errors'>{errors.server}</p>}
+      <form className='signup-form' onSubmit={handleSubmit}>
+        <label id='pass'>First Name<input type='text' value={firstName} onChange={(e)=> setFirstName(e.target.value)} required /></label>
         {hasSubmitted && errors.firstName && <p className='errors'>* {errors.firstName}</p>}
-        <label>Last Name<input type='text' value={lastName} onChange={(e)=> setLastName(e.target.value)} required /></label>
+        <label id='pass'>Last Name<input type='text' value={lastName} onChange={(e)=> setLastName(e.target.value)} required /></label>
         {hasSubmitted && errors.lastName && <p className='errors'>* {errors.lastName}</p>}
-        <label>
+        <label id='pass'>
           Email
           <input
             type="text"
@@ -101,8 +101,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        {hasSubmitted && errors.email && <p className ='errors'>* {errors.email}</p>}
-        <label>
+
+        <label id='pass'>
           Username
           <input
             type="text"
@@ -111,8 +111,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        {hasSubmitted && errors.username && <p className ='errors'>* {errors.username}</p>}
-        <label>
+
+        <label id='pass'>
           Password
           <input
             type="password"
@@ -121,8 +121,8 @@ function SignupFormModal() {
             required
           />
         </label>
-        {hasSubmitted && errors.password && <p className ='errors'>* {errors.password}</p>}
-        <label>
+
+        <label id='pass'>
           Confirm Password
           <input
             type="password"
@@ -131,10 +131,19 @@ function SignupFormModal() {
             required
           />
         </label>
-        {hasSubmitted && errors.confirmPassword && <p className ='errors'>* {errors.confirmPassword}</p>}
+
+        <div className='error-cont'>
+        {hasSubmitted && errors.email && <p className ='errors'>*  {errors.email}</p>}
+        {hasSubmitted && errors.username && <p className ='errors'>*  {errors.username}</p>}
+        {hasSubmitted && errors.password && <p className ='errors'>* {errors.password}</p>}
+        {hasSubmitted && errors.confirmPassword && <p className ='errors'>*  {errors.confirmPassword}</p>}
+        </div>
+        <div className='buttons-signup'>
+
         <button type="submit" className='membership-button archivo-black-regular'>Sign Up</button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 
