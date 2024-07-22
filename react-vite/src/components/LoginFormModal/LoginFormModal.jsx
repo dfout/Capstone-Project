@@ -82,7 +82,7 @@ function LoginFormModal() {
   return (
     <>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='form'onSubmit={handleSubmit}>
         <label>
           Email
           <input
@@ -103,8 +103,12 @@ function LoginFormModal() {
           />
         </label>
         {hasSubmitted && errors.password && <p className='errors'>* {errors.password}</p>}
+        <div className='buttons'>
+
         <button type="submit"className = 'membership-button archivo-black-regular' onClick={handleSubmit}>Log In</button>
         <div id='demo-login' className = 'membership-button archivo-black-regular' onClick={demoUserLogIn}>Demo User</div>
+
+        </div>
       </form>
     </>
   );

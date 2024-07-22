@@ -3,3 +3,10 @@
 .errors{
     color: red;
 }
+
+.form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    padding-top: 7%;
+}

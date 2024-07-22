@@ -25,7 +25,7 @@ function ItemDetailPage(){
     // let reviews = useSelector((state)=>state.reviews)
     console.log(reviews, "REVIEWS")
     let sessionUser = useSelector((state) => state.session.user);
-    const orders = useSelector((state)=>state.orders)
+    // const orders = useSelector((state)=>state.orders)
 
     reviews = [...reviews].reverse();
     // let numReviews = reviews.length
@@ -36,7 +36,7 @@ function ItemDetailPage(){
     useEffect(()=>{
         dispatch(getItemThunk(id))
         dispatch(getItemReviewsThunk(id))
-        dispatch(getOrdersThunk())
+        // dispatch(getOrdersThunk())
 
     },[dispatch,id])
 
@@ -46,16 +46,16 @@ function ItemDetailPage(){
     useEffect(() => {
         let timeout;
        
-        if (!item || !item.Images || !item.Reviews || !reviews || !orders) {
+        if (!item || !item.Images || !item.Reviews || !reviews ) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }
     
         return () => clearTimeout(timeout);
-    }, [item, reviews, orders]);
+    }, [item, reviews]);
 
-    if (!item || !item.Images || !item.Reviews || !reviews || !orders && timeCheck) return <h1>Loading...</h1>;
-    else if (!item || !item.Images || !item.Reviews || !reviews || !orders && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+    if (!item || !item.Images || !item.Reviews || !reviews && timeCheck) return <h1>Loading...</h1>;
+    else if (!item || !item.Images || !item.Reviews || !reviews && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -84,6 +84,9 @@ function ItemDetailPage(){
     // Need to check if the user has already reviewed the item:
 
     const hasReviewed = (reviews)=>{
+        if(!sessionUser){
+            return true
+        }
         const reviewsArr = Object.values(reviews)
         for (let review of reviewsArr){
             if (review.ownerId == sessionUser.id){
