@@ -16,6 +16,7 @@ const ReviewModal = ({ itemId }) => {
   const [filled, setFilled] = useState(0);
   const [active, setActive] = useState(0);
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [hasBlurred, setHasBlurred] = useState(false)
   const [beforeSubErrors, setBeforeSubErrors] = useState({})
   const { closeModal } = useModal();
   const ratings = [1, 2, 3, 4, 5];
@@ -58,6 +59,7 @@ const ReviewModal = ({ itemId }) => {
   };
 
   const handleBlur = () =>{
+    setHasBlurred(true)
     let errors ={}
     if(review.length < 10){
         errors.review = ("Review must be at least 10 characters")
@@ -69,9 +71,10 @@ const ReviewModal = ({ itemId }) => {
       errors.review = "Review must be under 100 characters"
     }
     if (!rating){
-      errors.rating = "Please pick a star rating"
+      errors.rating = "Please enter a star rating by clicking on the stars"
     }
-    setBeforeSubErrors(errors)
+    // setBeforeSubErrors(errors)
+    setErrors(errors)
     
   }
 
@@ -100,11 +103,14 @@ const ReviewModal = ({ itemId }) => {
         </p>
 
         {beforeSubErrors.review && <p className='errors'>{beforeSubErrors.review}</p>}
-        {hasSubmitted && errors.review && <p className='errors'>{errors.review}</p>}
+        {hasBlurred && errors.review && <p className='errors'>{errors.review}</p>}
         <div className="star-rating">
+          <div className='stars-cont'>
+
           {ratings.map((rating, index) => {
             let starRating = index + 1;
             return (
+          
               <label key={starRating}>
                 <input 
                   type="radio" 
@@ -124,12 +130,14 @@ const ReviewModal = ({ itemId }) => {
                   {active >= starRating || starRating <= filled ? <FaStar /> : <FaRegStar />}
                 </i>
               </label>
+      
             );
           })}
+          </div>
           <span>{rating} Stars</span>
                   {beforeSubErrors.rating && <p className='errors'>{beforeSubErrors.rating}</p>}
           
-          {hasSubmitted && errors.rating && <p className='errors'>{errors.rating}</p>}
+          {hasBlurred && errors.rating && <p className='errors'>{errors.rating}</p>}
         </div>
         <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
       </form>

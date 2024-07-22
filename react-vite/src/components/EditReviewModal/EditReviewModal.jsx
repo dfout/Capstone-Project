@@ -11,6 +11,7 @@ const EditReviewModal = ({ reviewId }) => {
   const [review, setReview] = useState(Review.review);
   const [rating, setRating] = useState(Review.rating);
   const [disabled, setDisabled] = useState(true);
+  const [hasBlurred, setHasBlurred] = useState(false)
   const [errors, setErrors] = useState({});
 //   const [reviewErrors, setReviewErrors] = useState("")
   const [filled, setFilled] = useState(rating);
@@ -57,6 +58,7 @@ const EditReviewModal = ({ reviewId }) => {
 
   const handleBlur = () =>{
     let errors ={}
+    setHasBlurred(true)
     if(review.length < 10){
         errors.review = ("Review must be at least 10 characters")
     }
@@ -67,9 +69,10 @@ const EditReviewModal = ({ reviewId }) => {
       errors.review = "Review must be under 100 characters"
     }
     if (!rating){
-      errors.rating = "Please pick a star rating"
+      errors.rating = "Please enter a star rating by clicking on the stars"
     }
-    setBeforeSubErrors(errors)
+    // setBeforeSubErrors(errors)
+    setErrors(errors)
   
   }
 
@@ -97,8 +100,9 @@ const EditReviewModal = ({ reviewId }) => {
           {review.length}/{maxLength}
         </p>
         {beforeSubErrors.review && <p classname='Errors'>{beforeSubErrors.review}</p>}
-        {hasSubmitted && errors.review && <p className="errors">{errors.review}</p>}
+        {hasBlurred && errors.review && <p className="errors">{errors.review}</p>}
         <div className="star-rating">
+        <div className='stars-cont'>
           {ratings.map((rating, index) => {
             let starRating = index + 1;
             return (
@@ -123,8 +127,9 @@ const EditReviewModal = ({ reviewId }) => {
               </label>
             );
           })}
+          </div>
           <span>{rating} Stars</span>
-          {hasSubmitted && errors.rating && <p className='errors'>{errors.rating}</p>}
+          {hasBlurred && errors.rating && <p className='errors'>{errors.rating}</p>}
         </div>
         <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
       </form>

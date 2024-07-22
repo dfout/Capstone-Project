@@ -66,10 +66,13 @@ button {
     flex-direction: column;
     align-items: center;
   }
-  
+  .stars-cont{
+    display:flex;
+    flex-direction:row;
+  }
   .star-rating {
     display: flex;
-    flex-direction: row;
+    flex-direction:column;
   }
   
   .star-rating label {
