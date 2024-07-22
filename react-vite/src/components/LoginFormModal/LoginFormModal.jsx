@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import "./LoginForm.css";
+import "./LoginFormModal.css";
 import { useNavigate } from "react-router-dom";
 
 function LoginFormModal() {

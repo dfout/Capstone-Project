@@ -70,10 +70,10 @@ function LoginFormPage() {
  }
 
   return (
-    <>
+    <div className='modal-cont-page'>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <form className='l-form' onSubmit={handleSubmit}>
+        <label id='pass'>
           Email
           <input
             type="text"
@@ -83,7 +83,7 @@ function LoginFormPage() {
           />
         </label>
         {hasSubmitted && errors.email && <p className='errors'>* {errors.email}</p>}
-        <label>
+        <label id='pass'>
           Password
           <input
             type="password"
@@ -93,11 +93,15 @@ function LoginFormPage() {
           />
         </label>
         {hasSubmitted && errors.password && <p className='errors'>* {errors.password}</p>}
+        <div className="buttons-signup">
+
         <button type="submit" className = 'membership-button archivo-black-regular' onClick={handleSubmit}>Log In</button>
-        <NavLink to='/signup'>Create Account</NavLink>
+
         <div id='demo-login' className = 'membership-button archivo-black-regular' onClick={demoUserLogIn}>Demo User</div>
+        <NavLink to='/signup'>Create Account</NavLink>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

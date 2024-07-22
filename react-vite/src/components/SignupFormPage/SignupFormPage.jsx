@@ -85,12 +85,12 @@ function SignupFormPage() {
   };
 
   return (
-    <>
+    <div className='modal-cont-sign'>
       <h1>Sign Up</h1>
       {hasSubmitted && errors.server && <p className ='errors'>* {errors.server}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className='signup-form' onSubmit={handleSubmit}>
         <label>First Name<input type='text' value={firstName} onChange={(e)=> setFirstName(e.target.value)} required /></label>
-        {hasSubmitted && errors.firstName && <p className='errors'>* {errors.firstName}</p>}
+    
         <label>Last Name<input type='text' value={lastName} onChange={(e)=> setLastName(e.target.value)} required /></label>
         {hasSubmitted && errors.lastName && <p className='errors'>* {errors.lastName}</p>}
         <label>
@@ -102,7 +102,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {hasSubmitted && errors.email && <p className ='errors'>* {errors.email}</p>}
+
         <label>
           Username
           <input
@@ -112,7 +112,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {hasSubmitted && errors.username && <p className ='errors'>* {errors.username}</p>}
+
         <label>
           Password
           <input
@@ -122,7 +122,7 @@ function SignupFormPage() {
             required
           />
         </label>
-        {hasSubmitted && errors.password && <p className ='errors'>* {errors.password}</p>}
+
         <label>
           Confirm Password
           <input
@@ -132,10 +132,17 @@ function SignupFormPage() {
             required
           />
         </label>
-        {hasSubmitted && errors.confirmPassword && <p className ='errors'>* {errors.confirmPassword}</p>}
+        <div className='error-cont'>
+        {hasSubmitted && errors.email && <p className ='errors'>*  {errors.email}</p>}
+        {hasSubmitted && errors.username && <p className ='errors'>*  {errors.username}</p>}
+        {hasSubmitted && errors.password && <p className ='errors'>* {errors.password}</p>}
+        {hasSubmitted && errors.confirmPassword && <p className ='errors'>*  {errors.confirmPassword}</p>}
+        </div>
+        
+
         <button type="submit" className='membership-button archivo-black-regular'>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
