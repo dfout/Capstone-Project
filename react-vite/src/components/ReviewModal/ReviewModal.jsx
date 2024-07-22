@@ -31,7 +31,7 @@ const ReviewModal = ({ itemId }) => {
 
     if(review.length < 10) errors.review = "Review must be at least 10 characters"
     if(review.length >= 10 && review.length < 100) errors.review = ""
-    if (review.length >= maxLength) errors.review = "Review must be under 200 characters";
+    if (review.length >= maxLength) errors.review = "Review must be under 100 characters";
     if(!rating) errors.rating = "Please enter a star rating by clicking on the stars"
 
     setErrors(errors)

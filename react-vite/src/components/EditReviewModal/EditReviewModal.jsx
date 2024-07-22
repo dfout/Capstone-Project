@@ -19,6 +19,7 @@ const EditReviewModal = ({ reviewId }) => {
   const [beforeSubErrors, setBeforeSubErrors] = useState({})
   const { closeModal } = useModal();
   const ratings = [1, 2, 3, 4, 5];
+  const maxLength = 100;
 
   useEffect(() => {
     const errors = {};
@@ -29,7 +30,8 @@ const EditReviewModal = ({ reviewId }) => {
     }
 
     if(review.length < 10) errors.review = "Review must be at least 10 characters"
-    if(review.length >= 10) errors.review = ""
+    if(review.length >= 10 && review.length < 100) errors.review = ""
+    if (review.length >= maxLength) errors.review = "Review must be under 100 characters";
     if(!rating) errors.rating = "Please enter a star rating by clicking on the stars"
 
     setErrors(errors)
@@ -61,6 +63,9 @@ const EditReviewModal = ({ reviewId }) => {
     if(review.length >=10){
         errors.review = ""
     }
+    if (review.length >=100 && review.length < 100){
+      error.review = "Review must be under 100 characters"
+    }
     setBeforeSubErrors(errors)
     
   }
@@ -73,6 +78,7 @@ const EditReviewModal = ({ reviewId }) => {
           rows={3}
           cols={30}
           minLength="30"
+          maxLength="100"
           value={review}
           name="review"
           placeholder="Leave your review here..."
@@ -84,8 +90,11 @@ const EditReviewModal = ({ reviewId }) => {
           required
           onBlur={handleBlur}
         />
-        {beforeSubErrors.review && <p>{beforeSubErrors.review}</p>}
-        { hasSubmitted && errors.review && <p>{errors.review}</p>}
+         <p style={{ color: review.length < 10 || review.length === maxLength ? "red" : "black" }}>
+          {review.length}/{maxLength}
+        </p>
+        {beforeSubErrors.review && <p classname='Errors'>{beforeSubErrors.review}</p>}
+        {hasSubmitted && errors.review && <p className="errors">{errors.review}</p>}
         <div className="star-rating">
           {ratings.map((rating, index) => {
             let starRating = index + 1;
@@ -112,7 +121,7 @@ const EditReviewModal = ({ reviewId }) => {
             );
           })}
           <span>{rating} Stars</span>
-          {hasSubmitted && errors.rating && <p>{errors.rating}</p>}
+          {hasSubmitted && errors.rating && <p className='errors'>{errors.rating}</p>}
         </div>
         <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
       </form>
