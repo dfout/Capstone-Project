@@ -42,7 +42,7 @@ def all_items():
         print("COUNT COUNT COUNT COUNT COUNT COUNT",count)
         if(count != 0 or count ):
             for review in reviews:
-                total_rating+= review["rating"]
+                total_rating+= int(review["rating"])
             item['avgRating'] = round(total_rating / count, 2)
         else:
             item["avgRating"] = None
@@ -67,15 +67,15 @@ def get_item(id):
     item["Reviews"] = [x.to_dict() for x in Review.query.filter_by(id=id).all()]
     item_id=id
     item["Images"] = [image.to_dict() for image in StoreItemImage.query.filter_by(item_id=item_id).all()]
-    total_rating=0
-    count = len(item["Reviews"])
-    if count != 0 or count:
-        for review in item["Reviews"]:
-            total_rating +=review.review
+    # total_rating=0
+    # count = len(item["Reviews"])
+    # if count != 0 or count:
+    #     for review in item["Reviews"]:
+    #         total_rating +=int(review["review"])
             
-        item["avgRating"] = round(total_rating / count, 2)
-    else:
-        item['avgRating'] = None
+    #     item["avgRating"] = round(total_rating / count, 2)
+    # else:
+    #     item['avgRating'] = None
 
     return {"Item": item}
 

@@ -40,7 +40,7 @@ function ItemDetailPage(){
 
     },[dispatch,id])
 
-    let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.stars, 0)
+    let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.rating, 0)
     avgRating = (avgRating / numReviews).toFixed(2)
 
     useEffect(() => {
@@ -130,7 +130,7 @@ function ItemDetailPage(){
 
         <h2>{item.name}</h2>
         <span>{avgRating}</span>
-        <span>{item.price}</span>
+        <span>${item.price.toFixed(2)}</span>
         <p>{item.description}</p>
         {/* <button onClick={()=>handleAddToCart(item.id)}>Add to Cart</button> */}
         </div>
@@ -159,7 +159,7 @@ function ItemDetailPage(){
                 const monthName = monthNames[date.getMonth()];
                 const year = date.getFullYear();
 
-                console.log(User, "USER")
+                
 
                 return (
                     <li className='review-tile' key={id}>

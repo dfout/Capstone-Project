@@ -32,7 +32,7 @@ return(
            <div className='item-details'>
 
             <h3>{item.name}</h3>
-            <span>{item.price.toFixed(2)}</span>
+            <span>${item.price.toFixed(2)}</span>
             {item["avgRating"] && (
 
             <span>{`${item.avgRating.toFixed(2)}`}</span>
