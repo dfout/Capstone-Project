@@ -28,7 +28,7 @@ function ItemDetailPage(){
     // const orders = useSelector((state)=>state.orders)
 
     reviews = [...reviews].reverse();
-    // let numReviews = reviews.length
+    let numReviews = reviews.length
 
     const [timeCheck, setTimeCheck] = useState(true);
     const closeMenu = useModal();
@@ -40,8 +40,8 @@ function ItemDetailPage(){
 
     },[dispatch,id])
 
-    // let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.stars, 0)
-    // avgRating = (avgRating / numReviews).toFixed(2)
+    let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.stars, 0)
+    avgRating = (avgRating / numReviews).toFixed(2)
 
     useEffect(() => {
         let timeout;
@@ -129,7 +129,7 @@ function ItemDetailPage(){
         <div className='item-info'>
 
         <h2>{item.name}</h2>
-        <span>{item.avgRating}</span>
+        <span>{avgRating}</span>
         <span>{item.price}</span>
         <p>{item.description}</p>
         {/* <button onClick={()=>handleAddToCart(item.id)}>Add to Cart</button> */}

@@ -29,10 +29,15 @@ return(
                 <img id='store-preview-image'src={item.Images[0].url}/>
             </div>
                 
-           
+           <div className='item-details'>
+
             <h3>{item.name}</h3>
-            <span>{item.price}</span>
-            <span>{item.avgRating}</span>
+            <span>{item.price.toFixed(2)}</span>
+            {item["avgRating"] && (
+
+            <span>{`${item.avgRating.toFixed(2)}`}</span>
+            )}
+           </div>
             </NavLink>
         </div>
     ))}

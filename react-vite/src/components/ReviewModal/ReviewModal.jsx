@@ -4,6 +4,8 @@ import { useModal } from '../../context/Modal';
 import { postReviewThunk } from "../../redux/review";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import './ReviewModal.css'; // Ensure you import your CSS file
+import { IoStarSharp } from "react-icons/io5";
+import { IoStarOutline } from "react-icons/io5";
 
 const ReviewModal = ({ itemId }) => {
   const dispatch = useDispatch();
