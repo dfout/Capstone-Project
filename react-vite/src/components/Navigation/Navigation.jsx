@@ -1,12 +1,20 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
 
 function Navigation() {
 
   const member = useSelector((state)=>state.member)
   const sessionUser = useSelector((state)=>state.session.user)
+  const navigate=useNavigate()
+
+  const handleClick = ()=>{
+    navigate('/tickets')
+  }
+
+
   return (
     <>
     <div className='navbar'>
@@ -29,7 +37,7 @@ function Navigation() {
 
       
       
-      {/* <button className='archivo-black-regular' to='/memberships'id='tickets-button'>Tickets</button> */}
+      <button className='archivo-black-regular' onClick={handleClick}id='tickets-button'>Tickets</button>
       
 
       

@@ -10,6 +10,7 @@ import MembershipsPage from '../components/MembershipsPage';
 import ManageReviews from '../components/ManageReviews';
 import MembershipDetails from '../components/MembershipDetails';
 import Cart from '../components/Cart'
+import TicketsPage from '../components/TicketsPage/TicketsPage';
 
 
 export const router = createBrowserRouter([
@@ -58,6 +59,11 @@ export const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />
+      },
+      {
+        path: "tickets",
+        element: <TicketsPage/>
+
       },
     ],
   },
