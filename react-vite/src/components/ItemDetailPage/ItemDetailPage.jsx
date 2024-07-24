@@ -13,6 +13,7 @@ import { useModal } from '../../context/Modal';
 import { getOrdersThunk } from "../../redux/order"
 import LoginFormModal from "../LoginFormModal"
 import ReviewModal from "../ReviewModal"
+import { IoIosStar } from "react-icons/io";
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
@@ -165,6 +166,9 @@ function ItemDetailPage(){
                     <li className='review-tile' key={id}>
                         <h4>{User ? User.firstName : 'Anonymous'}</h4>
                         <p className='review-info'>{monthName} {year}</p>
+                        {Array.from({ length: rating }).map((_, index) => (
+          <IoIosStar key={index} />
+        ))}
                         <p className='review-info'>{rating} stars</p>
                         <p className='review-info'>{review}</p>
                         {sessionUser!= null && sessionUser.id === ownerId && 

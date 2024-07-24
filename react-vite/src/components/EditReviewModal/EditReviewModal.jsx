@@ -48,8 +48,8 @@ const EditReviewModal = ({ reviewId }) => {
     }
 
     const result = await dispatch(updateReviewThunk(reviewData, Review.id));
-
-    if (result.message) {
+    // console.log("RESULT",result)
+    if (!result) {
       setErrors(result);
     } else {
       closeModal();

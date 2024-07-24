@@ -9,6 +9,7 @@ import { DeleteReviewModal } from "../DeleteReviewModal/DeleteReviewModal"
 import OpenModalButton from "../OpenModalButton"
 import EditReviewModal from "../EditReviewModal";
 import './ManageReviews.css'
+import { IoIosStar } from "react-icons/io";
 
 function ManageReviews(){
     const dispatch = useDispatch()
@@ -59,6 +60,12 @@ function ManageReviews(){
                         <>
                             <h3><Link to={`/store/items/${review["Item"].id}`} className=' item-review archivo-black-regular'>{review["Item"].name}
                             </Link></h3>
+                            <div className='star-arr'>
+                                
+                            {Array.from({ length: review.rating }).map((_, index) => (
+          <IoIosStar key={index} />
+        ))}
+                            </div>
                             <span>{review.rating} stars</span>
                             <p className="review">{review.review}</p>
                             <span>Posted: {month} {day}, {year}</span>

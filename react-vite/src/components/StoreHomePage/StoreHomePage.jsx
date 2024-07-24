@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { getItemsThunk } from "../../redux/item"
 import { NavLink } from "react-router-dom"
 import './StoreHomePage.css'
+import { IoIosStar } from "react-icons/io";
 
 
 
@@ -33,10 +34,15 @@ return(
 
             <h3>{item.name}</h3>
             <span>${item.price.toFixed(2)}</span>
+            <div className='rating-previews'>
+                <IoIosStar/>
+                
+            
             {item["avgRating"] && (
 
             <span>{`${item.avgRating.toFixed(2)}`}</span>
             )}
+            </div>
            </div>
             </NavLink>
         </div>
