@@ -1,8 +1,17 @@
-
-
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { getAdmissionsThunk } from '../../redux/admission'
 import './TicketsPage.css'
 
 function TicketsPage(){
+    const dispatch = useDispatch()
+    const admissions = useSelector((state)=>state.admissions)
+
+    useEffect(()=>{
+        dispatch(getAdmissionsThunk())
+
+    },[dispatch])
 
 
     return(
@@ -11,7 +20,12 @@ function TicketsPage(){
 
         <div className='calendar-container'>Container
             <div className='calendar'>
-            Calendar
+                <div className='days-of-the-week'></div>
+            {Object.values(admissions)?.map((admission)=>(
+                <div key={admission.id} className='admission-tile'>
+                    <span>{admission.day}</span>
+                    </div>
+            ))}
             </div>
         </div>
         <div className='tickets-container'>

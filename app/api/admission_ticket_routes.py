@@ -8,7 +8,7 @@ from datetime import datetime
 ## Get all available admission ticket instances from db (includes max_particpants, day, month, day of week.)
 
 
-admission_ticket_routes = Blueprint('admission', __name__)
+admission_ticket_routes = Blueprint('admissions', __name__)
 
 ## Works on backend
 @admission_ticket_routes.route('/')
