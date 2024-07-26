@@ -187,24 +187,7 @@ const TicketsPage = () => {
       calendarDays.push(
         <div
           key={day}
-          className={`text-center py-2 border cursor-pointer ${
-            // logic here is:
-            // if year, month, and date match current
-            // year, month, date, then add this style. 
-
-            // instead I want, 
-            // starting from current month, date, year, 
-            // any months and years that are larger than the current month and year combination. 
-            // first check if year is larger. If it is, 
-            // then all dates get the style
-            // if the year is not larger, 
-            // Then check if the month is larger
-            // if the month is larger, 
-            // then all dates get that style. 
-            year === new Date().getFullYear() &&
-            month === new Date().getMonth() &&
-            day === new Date().getDate() ? 'bg-blue-500 text-white' : ''
-          } ${year > new Date().getFullYear() && 'bg-blue-500'} ${month > new Date().getMonth() && 'bg-blue-500'} ${day > new Date().getDate() && 'bg-blue-500'}`}
+          className={`text-center py-2 border cursor-pointer ${isCurrentOrFutureDay ? 'bg-blue-500': 'past'}`}
           onClick={isCurrentOrFutureDay? () => handleDayClick(day): undefined}
         >
           {day}

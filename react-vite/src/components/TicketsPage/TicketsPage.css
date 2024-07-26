@@ -2,6 +2,7 @@
 .flex{
     display:flex;
     flex-direction: row;
+    font-size: 2rem;
 }
 
 .grid-cols-7{
@@ -28,4 +29,8 @@
 
 .text-center{
     text-align: center;
+}
+
+.past{
+    color: lightgray;
 }
