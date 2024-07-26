@@ -45,7 +45,7 @@ const initialState = {}
 function admissionReducer(state=initialState, action){
 switch(action.type){
     case GET_ADMISSIONS:{
-        const newState = {}
+        const newState = {...state}
         action.payload.forEach((day)=> newState[day.id]= day)
         return newState
     }

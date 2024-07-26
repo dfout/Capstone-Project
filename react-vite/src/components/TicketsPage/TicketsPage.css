@@ -1,0 +1,31 @@
+
+.flex{
+    display:flex;
+    flex-direction: row;
+}
+
+.grid-cols-7{
+    grid-template-columns: repeat(7, minmax(0, 1fr))
+}
+.grid{
+    display:grid;
+}
+.gap-2{
+    gap: 0.5rem;
+}
+
+.p-4{
+    padding: 1rem;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.bg-blue-500{
+    border: 1px solid black;
+}
+
+.text-center{
+    text-align: center;
+}
