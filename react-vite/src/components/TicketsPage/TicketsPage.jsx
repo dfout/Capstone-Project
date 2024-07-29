@@ -160,7 +160,7 @@ const TicketsPage = () => {
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
-  }, [currentYear, currentMonth]);
+  }, [currentYear, currentMonth, selectedDate]);
 
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
@@ -168,40 +168,45 @@ const TicketsPage = () => {
   ];
 
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+ 
+      const generateCalendar = (year, month) => {
+        const firstDayOfMonth = new Date(year, month, 1);
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const firstDayOfWeek = firstDayOfMonth.getDay();
+    
+        const calendarDays = [];
+    
+        for (let i = 0; i < firstDayOfWeek; i++) {
+          calendarDays.push(<div key={`empty-${i}`} />);
+        }
+        const currentDate = new Date();
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateToCheck = new Date(year, month, day);
+            const isToday = dateToCheck.toDateString() === currentDate.toDateString();
+            const isCurrentOrFutureDay = dateToCheck >= currentDate || isToday;
+            const isSelectedDay = selectedDate && dateToCheck.toDateString() === selectedDate;
+            console.log(isSelectedDay, dateToCheck)
+          calendarDays.push(
+            <div
+              key={day}
+              className={`text-center py-2 border cursor-pointer ${isCurrentOrFutureDay ? 'bg-blue-500': 'past'} ${isSelectedDay ? 'bg-green-500 text-white' : ''}`}
+              onClick={isCurrentOrFutureDay? () => handleDayClick(day): undefined}
+            >
+              {day}
+            </div>
+          );
+        }
+    
+        return calendarDays;
+      };
 
-  const generateCalendar = (year, month) => {
-    const firstDayOfMonth = new Date(year, month, 1);
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDayOfWeek = firstDayOfMonth.getDay();
-
-    const calendarDays = [];
-
-    for (let i = 0; i < firstDayOfWeek; i++) {
-      calendarDays.push(<div key={`empty-${i}`} />);
-    }
-    const currentDate = new Date();
-    for (let day = 1; day <= daysInMonth; day++) {
-        const dateToCheck = new Date(year, month, day);
-        const isToday = dateToCheck.toDateString() === currentDate.toDateString();
-        const isCurrentOrFutureDay = dateToCheck >= currentDate || isToday;
-      calendarDays.push(
-        <div
-          key={day}
-          className={`text-center py-2 border cursor-pointer ${isCurrentOrFutureDay ? 'bg-blue-500': 'past'}`}
-          onClick={isCurrentOrFutureDay? () => handleDayClick(day): undefined}
-        >
-          {day}
-        </div>
-      );
-    }
-
-    return calendarDays;
-  };
 
   const handleDayClick = (day) => {
-    const selectedDate = new Date(currentYear, currentMonth, day);
+    const selected = new Date(currentYear, currentMonth, day);
+    console.log("SELECTED", selected)
+    setSelectedDate(selected)
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = selectedDate.toLocaleDateString(undefined, options);
+    const formattedDate = selected.toLocaleDateString(undefined, options);
     setSelectedDate(formattedDate);
     setModalVisible(true);
   };

@@ -3,65 +3,249 @@ import random
 from sqlalchemy.sql import text
 
 def seed_store_item_images():
-    urls = [
-        "https://musee4.s3.us-east-2.amazonaws.com/items/boston-public-library-YoK5pBcSY8s-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/brando-makes-branding-smTDI-z1rlY-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/diana-light-u_jt9A7FADk-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/nam-quach-AZPHz_5xc3Q-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/michael-soledad-B4GwdlgTh5Y-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/melanfolia-BX-xZAeYzQc-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/martin-pechy-iXHdGk8JVYU-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/markus-spiske-d_TY1dVTEQI-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/marcus-urbenz-Ky24fCpz1IE-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/library-of-congress-7QytS-1kuIA-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/library-of-congress-7QytS-1kuIA-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/kelly-sikkema-eLKb7DdiCbM-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jingyu-liu-RhPM8AE51f8-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-Zkw1u_F6Otw-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-yvsam13wnB8-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-Xff03SVhSrA-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-WnSu40IFycQ-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-vDLjmBwmTbI-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-lTQ4QG8N9J4-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-EPfBNIKZ0W8-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-AddxUGgVonQ-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/fons-heijnsbroek-abstract-art-0Ns8v-5550M-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/IMG_3454.HEIC",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jon-tyson-6I6kwRnRhIk-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jocelyn-morales-SvIYuIdUN8s-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jon-tyson-2Fu2HCWt-jo-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jingyu-liu-RhPM8AE51f8-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jingxi-lau-XYbcyeKEJWM-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jean-philippe-delberghe-HhAhlXc-ZP0-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jeet-dhanoa-nHH0ivMd9gw-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jeet-dhanoa-tGHkC5ntUGc-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/irene-strong-SQEP7N858_E-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/library-of-congress-7QytS-1kuIA-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/library-of-congress-UIj6zCF5nnE-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/library-of-congress-t6gqrQb3CL4-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/laura-adai-YlR_JL8mMio-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/laura-cleffmann-xN2QbcKtUEg-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/kari-shea-dC8NC2QBFyQ-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/koby-QnuXKSUodJc-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jon-tyson-KLdTPek0Poo-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jon-tyson-KYyj2DrjRnw-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/jon-tyson-dFFhFELNcDU-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/piotr-miazga-zYGtxp8H5sY-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/nordwood-themes-nDd3dIkkOLo-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/michael-soledad-B4GwdlgTh5Y-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/metin-ozer-20lYyolI8Ts-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/mcgill-library-Tf6aZ_QU6Yg-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/mcgill-library-_UVPhmEFMUQ-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/mathilde-langevin-uUxn6rDi7Kk-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/markus-spiske-d_TY1dVTEQI-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/loren-cutler-iOw8bQJQKvo-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/lara-john-6yQbd-Feahc-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/trew-xT4pNx4KyJY-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/the-blowup-IX0Zy52iG2I-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/surja-sen-das-raj-trZ5LUY10KE-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/shio-yang-wUcnlW5c19M-unsplash.jpg",
-        "https://musee4.s3.us-east-2.amazonaws.com/items/roman-kraft-sXKoi7ifLno-unsplash.jpg",
+    
+    item_images = [
+         {
+              "item_id":1,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.38.44.png'
+              
+         },
+         {
+              "item_id":2,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/sketchbook.png"
+              
+         },
+         {
+              "item_id":3,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/red+chair.png"
+              
+         },
+         {
+              "item_id":4,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/candle.png"
+              
+         },
+         {
+              "item_id": 5, 
+              "url": ""
+              
+         },
+         {
+              "item_id":6,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+10.46.16.png'
+              
+         },
+               {
+              "item_id": 7, 
+              "url": ""
+              
+         },
+        {
+              "item_id": 8, 
+              "url": ""
+              
+         },
+        {
+              "item_id":9,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.17.41.png'
+         },
+        {
+              "item_id":10,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+10.44.49.png"
+              
+         },
+        {
+              "item_id":11,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+10.07.51.png"
+              
+         },
+        {
+              "item_id": 12, 
+              "url": ""
+              
+         },
+         {
+              "item_id": 13,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+10.03.28.png'
+              
+         },
+         {
+              "item_id":13,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+10.03.57.png'
+              
+         },
+         {
+              "item_id": 13,
+              "url": 'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+10.03.34.png'
+              
+         },
+        {
+              "item_id": 14, 
+              "url": ""
+              
+         },
+        {
+              "item_id": 15, 
+              "url": ""
+              
+         },
+        {
+              "item_id": 16, 
+              "url": ""
+              
+         },
+         {
+              "item_id": 17,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.42.44.png"
+         },
+         {
+              "item_id": 17, 
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.42.59.png"
+              
+         },
+        {
+              "item_id": 18, 
+              "url": ""
+              
+         },
+        {
+              "item_id": 19, 
+              "url": ""
+              
+         },
+        # cubist sculpture needs to be changed
+        # Romare bearden ?
+        # Eames chair 
+        # pop art mug? 
+
+         {
+              "item_id":20,
+             "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/picasso+print2.png '
+         }, 
+         {
+              "item_id": 21,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/warhol-print.png"
+         },
+         {
+              "item_id": 22,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/pop+art+leavin.png"
+              
+         },
+         {
+              "item_id":23,
+
+         },
+         {
+              "item_id": 24,
+
+         },
+                  {
+              "item_id": 25,
+              
+         },
+                  {
+              "item_id": 26,
+              
+         },
+                  {
+              "item_id": 27,
+              
+         },
+                  {
+              "item_id": 28,
+              
+         },
+                  {
+              "item_id": 29,
+              
+         },
+                  {
+              "item_id": 30,
+              
+         },
+                  {
+              "item_id": 31,
+              
+         },
+         {
+              "item_id":32,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.42.20.png'
+         },
+                  {
+              "item_id": 33,
+              
+         },
+                  {
+              "item_id": 34,
+              
+         },
+         {
+              "item_id": 35, 
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/bd+toutes.png"
+         },
+                  {
+              "item_id": 36,
+              
+         },
+         {
+              "item_id": 37, 
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/magritte.png"
+              
+         },
+        {
+              "item_id": 38,
+              
+         },
+                  {
+              "item_id": 39,
+              
+         },
+                  {
+              "item_id": 40,
+              
+         },
+                  {
+              "item_id": 41,
+              
+         },
+                  {
+              "item_id": 42,
+              
+         },
+                  {
+              "item_id": 43,
+              
+         },
+                  {
+              "item_id": 44,
+              
+         },
+        {
+              "item_id": 45,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/helvetica.png"
+              
+         },
+
+         {
+              "item_id": 46, 
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/agnes+varda+book.png"
+         }, 
+         {
+              "item_id": 47, 
+              "url": ""
+              
+         },
+         {
+              "item_id": 48, 
+  
+         },
+         {
+              "item_id": 49,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/german+notebook.png"
+         }
     ]
+    
+
     if environment == "production":
         # Use SQLAlchemy declarative models (if applicable) for production
                 store_items = db.session.execute(text("SELECT id FROM musee_schema.store_items")).fetchall()

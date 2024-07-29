@@ -34,3 +34,9 @@
 .past{
     color: lightgray;
 }
+
+
+.bg-green-500{
+    color:white;
+    background-color: black;
+}
