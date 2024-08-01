@@ -9,11 +9,12 @@ const TicketsPage = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [calendar, setCalendar] = useState("");
-  const [adultQuantity, setAdultQuantity] = useState(0)
-  const [seniorQuantity, setSeniorQuantity] = useState(0)
-  const [disQuantity, setDisQuantity] = useState(0)
-  const [studentQuantity, setStudentQuantity] = useState(0)
-  const [childQuantity, setChildQuantity] = useState(0)
+  const [adultQuantity, setAdultQuantity] = useState(0);
+  const [seniorQuantity, setSeniorQuantity] = useState(0);
+  const [disQuantity, setDisQuantity] = useState(0);
+  const [studentQuantity, setStudentQuantity] = useState(0);
+  const [childQuantity, setChildQuantity] = useState(0);
+  const [checkoutModal, setCheckoutModal] = useState(false);
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
@@ -52,16 +53,16 @@ const TicketsPage = () => {
       const dateToCheck = new Date(year, month, day);
       const isToday = dateToCheck.toDateString() === currentDate.toDateString();
       const isCurrentOrFutureDay = dateToCheck >= currentDate || isToday;
-      console.log("Date to check", dateToCheck, "SELECTED DAY", selectedDate);
+      // console.log("Date to check", dateToCheck, "SELECTED DAY", selectedDate);
       const isSelectedDay =
         selectedDate && dateToCheck.toDateString() === selectedDate;
-      console.log(
-        "isSelected day: ",
-        isSelectedDay,
-        "date to check:",
-        dateToCheck.toLocaleDateString()
-      );
-      console.log("Selected Day", selectedDate);
+      // console.log(
+      //   "isSelected day: ",
+      //   isSelectedDay,
+      //   "date to check:",
+      //   dateToCheck.toLocaleDateString()
+      // );
+      // console.log("Selected Day", selectedDate);
       calendarDays.push(
         <div
           key={day}
@@ -121,57 +122,62 @@ const TicketsPage = () => {
     setModalVisible(false);
   };
 
-  const handleAdultClick = (operation) =>{
-    let currQuantity = adultQuantity 
+  const handleAdultClick = (operation) => {
+    let currQuantity = adultQuantity;
 
-    if(operation == 'plus'){
-
-     
-      setAdultQuantity(currQuantity + 1)
-    }else{
-      setAdultQuantity(currQuantity - 1)
-
+    if (operation == "plus") {
+      setAdultQuantity(currQuantity + 1);
+      setCheckoutModal(true);
+    } else {
+      setAdultQuantity(currQuantity - 1);
     }
-  }
+    // if (adultQuantity!= 0){
+    //   setCheckoutModal(true)
+    // }else{
+    //   setCheckoutModal(false)
+    // }
+  };
 
-  const handleSeniorClick = (operation)=>{
-    let currQuantity = seniorQuantity
-    if (operation == 'plus'){
-      
-      setSeniorQuantity(currQuantity + 1)
-    }else{
-      setSeniorQuantity(currQuantity - 1)
+  const handleSeniorClick = (operation) => {
+    let currQuantity = seniorQuantity;
+    if (operation == "plus") {
+      setSeniorQuantity(currQuantity + 1);
+      setCheckoutModal(true);
+    } else {
+      setSeniorQuantity(currQuantity - 1);
     }
-  }
+  };
 
-  const handleDisClick = (operation)=>{
-    let currQuantity = disQuantity
-    if (operation =='plus'){
-      setDisQuantity(currQuantity+ 1)
-    }else{
-      setDisQuantity(currQuantity - 1)
+  const handleDisClick = (operation) => {
+    let currQuantity = disQuantity;
+    if (operation == "plus") {
+      setDisQuantity(currQuantity + 1);
+      setCheckoutModal(true);
+    } else {
+      setDisQuantity(currQuantity - 1);
     }
-  }
+  };
 
-  const handleStudentClick = (operation) =>{
-    let currQuantity = studentQuantity
+  const handleStudentClick = (operation) => {
+    let currQuantity = studentQuantity;
 
-    if (operation == 'plus'){
-      setStudentQuantity(currQuantity + 1)
-    }else{
-      setStudentQuantity(currQuantity - 1)
+    if (operation == "plus") {
+      setStudentQuantity(currQuantity + 1);
+      setCheckoutModal(true);
+    } else {
+      setStudentQuantity(currQuantity - 1);
     }
+  };
 
-  }
-
-  const handleChildClick = (operation) =>{
-    let currQuantity = childQuantity
-    if(operation =='plus'){
-      setChildQuantity(currQuantity + 1)
-    }else{
-      setChildQuantity(currQuantity - 1)
+  const handleChildClick = (operation) => {
+    let currQuantity = childQuantity;
+    if (operation == "plus") {
+      setChildQuantity(currQuantity + 1);
+      setCheckoutModal(true);
+    } else {
+      setChildQuantity(currQuantity - 1);
     }
-  }
+  };
 
   return (
     <>
@@ -228,16 +234,27 @@ const TicketsPage = () => {
         <p>
           Tickets include admission to all galleries and special exhibitions
         </p>
-        <div  id="tickets-form">
+        <div id="tickets-form">
           <div className="ticket-row">
             <div className="ticket-left">
               <span className="ticket-type">Adult</span>
             </div>
             <div className="ticket-right">
               <span>$30</span>
-              <button className='quantity-button' onClick={()=>handleAdultClick('minus')} disabled={!adultQuantity}><FaMinus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleAdultClick("minus")}
+                disabled={!adultQuantity}
+              >
+                <FaMinus />
+              </button>
               <span>{adultQuantity}</span>
-              <button className='quantity-button' onClick={()=>handleAdultClick('plus')}><FaPlus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleAdultClick("plus")}
+              >
+                <FaPlus />
+              </button>
             </div>
           </div>
           <div className="ticket-row">
@@ -247,9 +264,20 @@ const TicketsPage = () => {
             </div>
             <div className="ticket-right">
               <span>$22</span>
-              <button className='quantity-button' onClick = {()=> handleSeniorClick('minus')} disabled={!seniorQuantity}><FaMinus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleSeniorClick("minus")}
+                disabled={!seniorQuantity}
+              >
+                <FaMinus />
+              </button>
               <span>{seniorQuantity}</span>
-              <button className='quantity-button' onClick = {()=>handleSeniorClick('plus')}><FaPlus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleSeniorClick("plus")}
+              >
+                <FaPlus />
+              </button>
             </div>
           </div>
           <div className="ticket-row">
@@ -262,9 +290,20 @@ const TicketsPage = () => {
             </div>
             <div className="ticket-right">
               <span>$22</span>
-              <button className='quantity-button' onClick = {()=> handleDisClick('minus')} disabled={!disQuantity}><FaMinus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleDisClick("minus")}
+                disabled={!disQuantity}
+              >
+                <FaMinus />
+              </button>
               <span>{disQuantity}</span>
-              <button className='quantity-button' onClick={()=> handleDisClick('plus')}><FaPlus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleDisClick("plus")}
+              >
+                <FaPlus />
+              </button>
             </div>
           </div>
           <div className="ticket-row">
@@ -274,26 +313,89 @@ const TicketsPage = () => {
             </div>
             <div className="ticket-right">
               <span>$17</span>
-              <button className='quantity-button' onClick = {()=> handleStudentClick('minus')} disabled={!studentQuantity}><FaMinus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleStudentClick("minus")}
+                disabled={!studentQuantity}
+              >
+                <FaMinus />
+              </button>
               <span>{studentQuantity}</span>
-              <button className='quantity-button' onClick = {()=> handleStudentClick('plus')}><FaPlus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleStudentClick("plus")}
+              >
+                <FaPlus />
+              </button>
             </div>
           </div>
           <div className="ticket-row">
             <div className="ticket-left">
               <span className="ticket-type">Child</span>
               <span>16 and under</span>
-
-              </div>
-              <div className="ticket-right">
+            </div>
+            <div className="ticket-right">
               <span>$0</span>
-              <button className='quantity-button' onClick = {()=> handleChildClick('minus')} disabled={!childQuantity}><FaMinus /></button>
+              <button
+                className="quantity-button"
+                onClick={() => handleChildClick("minus")}
+                disabled={!childQuantity}
+              >
+                <FaMinus />
+              </button>
               <span>{childQuantity}</span>
-              <button className='quantity-button' onClick = {()=> handleChildClick('plus')}><FaPlus /></button>
-              
+              <button
+                className="quantity-button"
+                onClick={() => handleChildClick("plus")}
+              >
+                <FaPlus />
+              </button>
             </div>
           </div>
         </div>
+        {checkoutModal &&
+        (adultQuantity ||
+          studentQuantity ||
+          seniorQuantity ||
+          disQuantity ||
+          childQuantity) ? (
+          <div className="ticket-checkout-modal">
+            {adultQuantity != 0 && (
+              <div className="ticket-info">
+                <span>Adult</span>
+                <span>{adultQuantity} x $30</span>
+              </div>
+            )}
+            {seniorQuantity != 0 && (
+              <div className="ticket-info">
+                <span>Senior</span>
+                <span>{seniorQuantity} x $22</span>
+              </div>
+            )}
+            {disQuantity != 0 && (
+              <div className="ticket-info">
+                <span>Visitor with Disability</span>
+                <span>{disQuantity} x $22</span>
+              </div>
+            )}
+            {studentQuantity != 0 && (
+              <div className="ticket-info">
+                <span>Student</span>
+                <span>{studentQuantity} x $17</span>
+              </div>
+            )}
+            {childQuantity != 0 && (
+              <div className="ticket-info">
+                <span>Child</span>
+                <span>{childQuantity} x $0</span>
+              </div>
+            )}
+
+            <button>Checkout</button>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
