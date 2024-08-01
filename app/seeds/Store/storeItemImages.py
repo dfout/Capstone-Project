@@ -10,6 +10,15 @@ def seed_store_item_images():
               "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.38.44.png'
               
          },
+            {
+              "item_id":1,
+              "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.38.37.png'
+              
+         },
+         {
+             "item_id": 1,
+             "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.35.27.png"
+         },
          {
               "item_id":2,
               "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/sketchbook.png"
@@ -27,7 +36,12 @@ def seed_store_item_images():
          },
          {
               "item_id": 5, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-30+at+10.44.25.png"
+              
+         },
+        {
+              "item_id": 5, 
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-30+at+10.44.33.png"
               
          },
          {
@@ -37,12 +51,18 @@ def seed_store_item_images():
          },
                {
               "item_id": 7, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/two+way+table+1.png"
               
          },
+         {
+             "item_id":7,
+             "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/two+way+table+2.png"
+         },
+
+        
         {
               "item_id": 8, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/grids-new.png"
               
          },
         {
@@ -61,8 +81,12 @@ def seed_store_item_images():
          },
         {
               "item_id": 12, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/coffee+table.png"
               
+         },
+         {
+             "item_id": 12,
+             "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/coffee+table+3+.png"
          },
          {
               "item_id": 13,
@@ -81,17 +105,18 @@ def seed_store_item_images():
          },
         {
               "item_id": 14, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/hilma.png"
               
          },
         {
               "item_id": 15, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/womb+chair.png"
               
          },
+         
         {
               "item_id": 16, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/flask-pantone.png"
               
          },
          {
@@ -105,18 +130,20 @@ def seed_store_item_images():
          },
         {
               "item_id": 18, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/modern+print.png"
               
          },
         {
               "item_id": 19, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/sunglasses.png"
               
          },
-        # cubist sculpture needs to be changed
-        # Romare bearden ?
-        # Eames chair 
-        # pop art mug? 
+         {
+             "item_id": 19, 
+             "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/haring-sunglasses.png"
+             
+         },
+        
 
          {
               "item_id":20,
@@ -124,7 +151,11 @@ def seed_store_item_images():
          }, 
          {
               "item_id": 21,
-              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/warhol-print.png"
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/gloopy1.png"
+         },
+         {
+             "item_id": 21, 
+             "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/gloopy2.png"
          },
          {
               "item_id": 22,
@@ -133,50 +164,82 @@ def seed_store_item_images():
          },
          {
               "item_id":23,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/espresso.png"
 
          },
          {
               "item_id": 24,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/eames+ele+2+.png"
 
          },
-                  {
-              "item_id": 25,
+         {
+              "item_id":24,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/eames+ele.png"
               
          },
                   {
+              "item_id": 25,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/lamy+pen+2.png"
+              
+         },
+         {
+              "item_id": 25, 
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/lamy+pen+1+.png"
+         },
+                  {
               "item_id": 26,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/pantone+notebook+1.png"
               
          },
                   {
               "item_id": 27,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/german+yellow+pen.png"
               
          },
                   {
               "item_id": 28,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/warhol-print.png"
               
          },
                   {
               "item_id": 29,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/designer+chair.png"
               
          },
-                  {
+        {
               "item_id": 30,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/new-keng.png"
+              
+         },
+                 {
+              "item_id": 30,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/kingston+2.png"
               
          },
                   {
               "item_id": 31,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/duchamp+print.png"
               
          },
          {
               "item_id":32,
               "url":'https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-21+at+09.42.20.png'
          },
-                  {
+
+         # "contemporary art puzzle " : 33 = Boiler
+        {
               "item_id": 33,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/saarin+table.png"
               
+         },
+         {
+             "item_id": 33,
+             "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/saarin+table+2.png"
+             
          },
                   {
               "item_id": 34,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/picasso+coloring+book.png"
               
          },
          {
@@ -185,6 +248,7 @@ def seed_store_item_images():
          },
                   {
               "item_id": 36,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/musee+print.png"
               
          },
          {
@@ -194,30 +258,56 @@ def seed_store_item_images():
          },
         {
               "item_id": 38,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/yayoi+book+3.png"
+              
+         },
+               {
+              "item_id": 38,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/yayoi+book.png"
+              
+         },
+               {
+              "item_id": 38,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/yayoi+book+2.png"
               
          },
                   {
               "item_id": 39,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/Screenshot+2024-07-22+at+15.02.15.png"
               
          },
                   {
               "item_id": 40,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/picasso+print.png"
               
          },
                   {
               "item_id": 41,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/toy+buzzle.png"
               
          },
                   {
               "item_id": 42,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/banan+toy.png"
               
          },
-                  {
+         {
+              "item_id": 42,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/banantoy1.png"
+         },
+            {
               "item_id": 43,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/skull+toys.png"
               
          },
-                  {
+        {
+              "item_id": 43,
+              "url":"https://musee4.s3.us-east-2.amazonaws.com/new-store-items/skull+toy.png"
+              
+         },
+        {
               "item_id": 44,
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/wright+puzzle.png"
               
          },
         {
@@ -232,11 +322,12 @@ def seed_store_item_images():
          }, 
          {
               "item_id": 47, 
-              "url": ""
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/yayoi+print.png"
               
          },
          {
               "item_id": 48, 
+              "url": "https://musee4.s3.us-east-2.amazonaws.com/new-store-items/bauhaus+print.png"
   
          },
          {
@@ -246,25 +337,14 @@ def seed_store_item_images():
     ]
     
 
-    if environment == "production":
-        # Use SQLAlchemy declarative models (if applicable) for production
-                store_items = db.session.execute(text("SELECT id FROM musee_schema.store_items")).fetchall()
-          # Assuming StoreItem model exists
-    else:
-        # Use raw SQL for development to avoid relying on existing models
-        store_items =StoreItem.query.all()
-
-    # Randomly assign images to each store item
-    for store_item in store_items:
-        selected_urls = random.sample(urls, k=2)  # Select 2 unique URLs for each item
-        for url in selected_urls:
-            image = StoreItemImage(
-                item_id=store_item.id,
-                url=url
-            )
-            db.session.add(image)
-
+    for image in item_images:
+        item_image = StoreItemImage(
+            item_id= image["item_id"],
+            url=image["url"]
+        )
+        db.session.add(item_image)
     db.session.commit()
+
 
 def undo_store_item_images():
     if environment == "production":

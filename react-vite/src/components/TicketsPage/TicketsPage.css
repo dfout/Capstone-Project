@@ -40,3 +40,7 @@
     color:white;
     background-color: black;
 }
+
+.text-white:hover{
+    cursor:pointer;
+}

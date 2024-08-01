@@ -1,153 +1,3 @@
-// import { useEffect, useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { getAdmissionsThunk } from '../../redux/admission';
-// import './TicketsPage.css';
-
-// function TicketsPage() {
-//   const dispatch = useDispatch();
-//   let admissions = useSelector((state) => state.admissions);
-  
-  
-//   const [currentMonth, setCurrentMonth] = useState(null);
-//   const [currentYear, setCurrentYear] = useState(null);
-//   const [dateSelected, setDateSelected] = useState('');
-//   const [timeCheck, setTimeCheck] = useState(true);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     dispatch(getAdmissionsThunk());
-//   }, [dispatch]);
-
-//   useEffect(() => {
-//     let timeout;
-
-
-
-//     if (admissions && admissions.length) {
-//         admissions = Object.values(admissions)
-//         console.log("ADMISSIONS HERE",admissions)
-//         const firstAdmissionDate = new Date(admissions[0].day);
-//         console.log('First Admission Date:', firstAdmissionDate);
-//         setCurrentMonth(firstAdmissionDate.getMonth());
-//         setCurrentYear(firstAdmissionDate.getFullYear());
-//         setLoading(false)
-//     }else{
-//         timeout = setTimeout(()=>setLoading(false),3000)
-//     }
-//     return ()=> clearTimeout(timeout)
-//   }, [admissions]);
-
-// // if (admissions) {
-// //     admissions = Object.values(admissions)
-// //     console.log("ADMISSIONS", admissions)
-// //     const firstAdmissionDate = new Date(admissions[0].day);
-// //     console.log('First Admission Date:', firstAdmissionDate);
-// //     setCurrentMonth(firstAdmissionDate.getMonth());
-// //     setCurrentYear(firstAdmissionDate.getFullYear());
-// // }
-
-//   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-//   const getDaysInMonth = (month, year) => {
-//     return new Date(year, month + 1, 0).getDate();
-//   };
-
-//   const firstDayOfMonth = currentMonth !== null ? new Date(currentYear, currentMonth, 1).getDay() : 0;
-//   const daysInMonth = currentMonth !== null ? getDaysInMonth(currentMonth, currentYear) : 0;
-
-//   const handlePrevMonth = () => {
-//     if (currentMonth === 0) {
-//       setCurrentMonth(11);
-//       setCurrentYear(currentYear - 1);
-//     } else {
-//       setCurrentMonth(currentMonth - 1);
-//     }
-//   };
-
-//   const handleNextMonth = () => {
-//     if (currentMonth === 11) {
-//       setCurrentMonth(0);
-//       setCurrentYear(currentYear + 1);
-//     } else {
-//       setCurrentMonth(currentMonth + 1);
-//     }
-//   };
-
-//   const handleDateClick = (date) => {
-//     setDateSelected(date);
-//   };
-
-//   const getAdmissionForDate = (date) => {
-//     admissions = Object.values(admissions)
-//     return admissions?.find((admission) => new Date(admission.day).toDateString() === new Date(currentYear, currentMonth, date).toDateString());
-//   };
-
-//   const renderCalendarDays = () => {
-//     const calendarDays = [];
-//     for (let i = 0; i < firstDayOfMonth; i++) {
-//       calendarDays.push(<div key={`empty-${i}`} className='calendar-day empty'></div>);
-//     }
-//     for (let i = 1; i <= daysInMonth; i++) {
-//       const admission = getAdmissionForDate(i);
-//       calendarDays.push(
-//         <div
-//           key={i}
-//           className={`calendar-day ${admission ? 'admission-day' : ''}`}
-//           onClick={() => handleDateClick(`${currentYear}-${currentMonth + 1}-${i}`)}
-//         >
-//           {i}
-//         </div>
-//       );
-//     }
-//     console.log(calendarDays)
-//     return calendarDays;
-//   };
-
-// //   if (currentMonth === null || currentYear === null) {
-// //     return <div>Loading...</div>;
-// //   }
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div className='tickets-page'>
-//       <h2>Purchase Tickets</h2>
-//       <div className='calendar-container'>
-//         <div className='calendar-header'>
-//           <button onClick={handlePrevMonth}>&lt;</button>
-//           <span>{`${new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long' })} ${currentYear}`}</span>
-//           <button onClick={handleNextMonth}>&gt;</button>
-//         </div>
-//         <div className='calendar'>
-//           <div className='calendar-row'>
-//             {daysOfWeek.map((day) => (
-//               <div key={day} className='calendar-day-header'>{day}</div>
-//             ))}
-//           </div>
-//           <div className='calendar-row'>
-//             {renderCalendarDays().map((day,index)=>(
-//                 <div key={index}>
-//                     {day}
-//                     </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//       <div className='tickets-container'>
-//         <h3>Ticket Types</h3>
-//       </div>
-//       <div className='purchase'>
-//         <span>Total Price</span>
-//         <span>Discount</span>
-//         <button>Purchase</button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default TicketsPage;
-
 
 import React, { useState, useEffect } from 'react';
 import './TicketsPage.css'
@@ -157,6 +7,7 @@ const TicketsPage = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [calendar, setCalendar] = useState('')
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
@@ -181,29 +32,34 @@ const TicketsPage = () => {
         }
         const currentDate = new Date();
         for (let day = 1; day <= daysInMonth; day++) {
+            // check if the currently admitted == max_admissions 
             const dateToCheck = new Date(year, month, day);
             const isToday = dateToCheck.toDateString() === currentDate.toDateString();
             const isCurrentOrFutureDay = dateToCheck >= currentDate || isToday;
+            console.log("Date to check",dateToCheck, "SELECTED DAY", selectedDate)
             const isSelectedDay = selectedDate && dateToCheck.toDateString() === selectedDate;
-            console.log(isSelectedDay, dateToCheck)
+            console.log("isSelected day: ",isSelectedDay, "date to check:",dateToCheck.toLocaleDateString())
+            console.log("Selected Day", selectedDate)
           calendarDays.push(
             <div
               key={day}
-              className={`text-center py-2 border cursor-pointer ${isCurrentOrFutureDay ? 'bg-blue-500': 'past'} ${isSelectedDay ? 'bg-green-500 text-white' : ''}`}
+              className={`text-center py-2 border cursor-pointer ${isCurrentOrFutureDay ? 'bg-blue-500': 'past'}
+             ${isSelectedDay ? 'bg-green-500 text-white' : ''}`}
               onClick={isCurrentOrFutureDay? () => handleDayClick(day): undefined}
             >
               {day}
             </div>
           );
         }
-    
+        // setCalendar(calendarDays)
         return calendarDays;
+        // set it into the []
       };
 
 
   const handleDayClick = (day) => {
     const selected = new Date(currentYear, currentMonth, day);
-    console.log("SELECTED", selected)
+    
     setSelectedDate(selected)
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = selected.toLocaleDateString(undefined, options);

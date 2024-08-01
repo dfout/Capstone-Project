@@ -41,9 +41,9 @@ def seed_store_items():
             "price": 195.00,
         },
         {
-            "name": "Modern Envelopes",
-            "description": "A set of 20 modern designed envelopes.",
-            "price": 10.00,
+            "name": "Grids & Guides: A Notebook for Visual Thinkers",
+            "description": "This deluxe, cloth-covered Grids & Guides Notebook offers 160 pages of varied graph paper (including some new grid designs) interspersed with engaging charts and infographics, this time in full color-from the human circulatory system to the geologic time scale. Grids & Guides is the perfect notebook to carry everywhere, for your sketches, plans, dreams, lists, and data.",
+            "price": 16.95,
         },
         {
             "name": "Jean-Michel Basquiat: Untitled, 1981 Framed Print",
@@ -78,21 +78,20 @@ Crafted from weighty, polished stainless steel yet visually airy, this bookend i
             "price": 89.00,
         },
         {
-            "name": "Pop Art Mug",
-            "description": "A colorful mug featuring pop art by Andy Warhol.",
-            "price": 18.00,
+            "name": "Hilma af Klint Adulthood Framed Print",
+            "description": """This print features a reproduction of The Ten Largest, No. 7., Adulthood, Group IV (1907) by Hilma af Klint, an artist with work in MoMA's collection. It’s mounted and laminated for protection from dust and UV rays, and floated in a hand-stained, natural, 2"-deep frame made from ash wood grown in sustainable forests. Hanging kit included. The Hilma af Klint Adulthood Framed Print measures 26h x 19.75w x 2”d.""",
+            "price": 300.00,
         },
         {
             "name": "Eero Saarinen: Womb Chair",
             "description": """"One of the most iconic and comfortable chairs of the modern furniture movement, the womb chair was born from Florence Knoll's request for Eero Saarinen to create her a chair that she could "curl up in like a basket of pillows.""""",
             "price": 5800.00,
         },
+       
         {
-            "name": "Keith Haring Sunglasses",
-            "description": """"“Art is for everybody” was a motto of artist Keith Haring—and these sunglasses live up to that philosophy. These minimalist sunglasses pay homage to the Pop art legend’s work with temple tips shaped like his famous line work. Inspired by glasses that Haring wore, these limited edition sunglasses have frames that are handmade from an eco-friendly cellulose acetate and come in a Keith Haring cork leather case with a custom cleaning cloth featuring Haring's artwork. Keith Haring is an artist represented in Musée 4's
-
-The Keith Haring Sunglasses have a cellulose acetate frame and Optical Class 1 nylon lenses with anti-reflective coating that provide 100% UVA/UVB protection. The riveted 5-barrel hinges have stainless steel temple cores for durability. """"",
-            "price": 65.00,
+            "name": "Pantone Flask",
+            "description": """"Bring some color to your favorite beverages with this Pantone Flask. Made from stainless steel and sporting a famous Pantone color, this sleek design can be used for both alcoholic and non-alcoholic drinks. The Pantone Flask measures 5.5h x 2.75w x 1.3”d and is dishwasher-safe. """"",
+            "price": 42.00,
         },
         {
             "name": "Yayoi Kusama Balloon Plush",
@@ -105,8 +104,10 @@ The Keith Haring Sunglasses have a cellulose acetate frame and Optical Class 1 n
             "price": 25.00,
         },
         {
-            "name": "Cubist Sculpture",
-            "description": "A small sculpture inspired by Cubism.",
+            "name": "Keith Haring Sunglasses",
+            "description": """These minimalist sunglasses pay homage to the Pop art legend’s work with temple tips shaped like his famous line work. Inspired by glasses that Haring wore, these limited edition sunglasses have frames that are handmade from an eco-friendly cellulose acetate and come in a Keith Haring cork leather case with a custom cleaning cloth featuring Haring's artwork. Keith Haring is an artist represented in MoMA’s collection. 
+
+The Keith Haring Sunglasses have a cellulose acetate frame and Optical Class 1 nylon lenses with anti-reflective coating that provide 100% UVA/UVB protection. The riveted 5-barrel hinges have stainless steel temple cores for durability. """,
             "price": 200.00,
         },
         {
@@ -116,9 +117,17 @@ This rare poster was produced in 1968 to promote an exhibition in Baltimore of P
             "price": 1000.00,
         },
         {
-            "name": "Andy Warhol: Everybody Should Print",
-            "description": "This print features a famous quote by Andy Warhol, whose work is featured in Musée 4's collection",
-            "price": 18.95,
+            "name": "Houseplant: Gloopy Ashtray by Seth in Red & Aqua",
+            "description": """• Limited edition of 490 featuring a unique gloopy glaze formulation invented by Seth
+• Hand-crafted in Westminster, CO by Hammerly Ceramics
+• Because of the way the gloops glob, each piece is entirely unique
+• Very fun to look at
+• A handy notch for resting things
+• Deep ash-catching well
+• Gloopier and globbier than any other ashtray
+• Comes with a certificate of authenticity.
+This product is not food safe.""",
+            "price": 285.00,
         },
         {
             "name": "John Baldesarri-Margo Leavin Pop-Art Gray Framed Poster",
@@ -192,9 +201,12 @@ Copenhagen Design is a Danish company that designs, develops and produces high-e
             "price": 319.00,
         },
         {
-            "name": "Contemporary Art Puzzle",
-            "description": "A puzzle featuring a contemporary art design.",
-            "price": 25.00,
+            "name": """Knoll Dining Table by Eero Saarinen - 35" """,
+            "description": """Designed in 1957 by Finnish-American architect and industrial designer Eero Saarinen, this dining table was conceived for Saarinen’s Pedestal Collection. The philosophy of this collection was to eliminate the unruliness found underneath tables and chairs—the legs—by placing seats and tabletops on a single, slender pedestal. Forever futuristic, Saarinen’s Dining Table is one of the designs that has come to define mid-century modernism. 
+
+
+The beveled-edge tabletop is made from a satin-smooth laminate. The base is made from a heavy molded cast aluminum with white paint. The Saarinen Dining Table is made for indoor use and can be accompanied with Saarinen Tulip Side Chairs, sold separately. Some assembly required""",
+            "price": 2929,
         },
         {
             "name": "Colorie l'art",
