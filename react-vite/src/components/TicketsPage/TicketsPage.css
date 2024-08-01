@@ -76,3 +76,19 @@
     cursor: pointer;
 }
 
+
+.checkout-info{
+    display:flex;
+    flex-direction:column;
+}
+
+
+.ticket-checkout-modal{
+    /* width: 30rem; */
+    /* height: 30rem; */
+}
+
+.ticket-purchase{
+    display:flex;
+    flex-direction: row;
+}

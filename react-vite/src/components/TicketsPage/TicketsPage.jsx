@@ -15,6 +15,7 @@ const TicketsPage = () => {
   const [studentQuantity, setStudentQuantity] = useState(0);
   const [childQuantity, setChildQuantity] = useState(0);
   const [checkoutModal, setCheckoutModal] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
@@ -127,9 +128,11 @@ const TicketsPage = () => {
 
     if (operation == "plus") {
       setAdultQuantity(currQuantity + 1);
+      setTotalPrice(totalPrice + 30)
       setCheckoutModal(true);
     } else {
       setAdultQuantity(currQuantity - 1);
+      setTotalPrice(totalPrice - 30)
     }
     // if (adultQuantity!= 0){
     //   setCheckoutModal(true)
@@ -142,9 +145,11 @@ const TicketsPage = () => {
     let currQuantity = seniorQuantity;
     if (operation == "plus") {
       setSeniorQuantity(currQuantity + 1);
+      setTotalPrice(totalPrice + 22)
       setCheckoutModal(true);
     } else {
       setSeniorQuantity(currQuantity - 1);
+      setTotalPrice(totalPrice - 22)
     }
   };
 
@@ -152,9 +157,11 @@ const TicketsPage = () => {
     let currQuantity = disQuantity;
     if (operation == "plus") {
       setDisQuantity(currQuantity + 1);
+      setTotalPrice(totalPrice + 22)
       setCheckoutModal(true);
     } else {
       setDisQuantity(currQuantity - 1);
+      setTotalPrice(totalPrice - 22)
     }
   };
 
@@ -163,9 +170,11 @@ const TicketsPage = () => {
 
     if (operation == "plus") {
       setStudentQuantity(currQuantity + 1);
+      setTotalPrice(totalPrice + 17)
       setCheckoutModal(true);
     } else {
       setStudentQuantity(currQuantity - 1);
+      setTotalPrice(totalPrice - 17)
     }
   };
 
@@ -234,6 +243,7 @@ const TicketsPage = () => {
         <p>
           Tickets include admission to all galleries and special exhibitions
         </p>
+        <div className='ticket-purchase'>
         <div id="tickets-form">
           <div className="ticket-row">
             <div className="ticket-left">
@@ -353,6 +363,7 @@ const TicketsPage = () => {
             </div>
           </div>
         </div>
+      <div className='modal-cont'>
         {checkoutModal &&
         (adultQuantity ||
           studentQuantity ||
@@ -390,12 +401,16 @@ const TicketsPage = () => {
                 <span>{childQuantity} x $0</span>
               </div>
             )}
-
+            <div className='checkout-info'>
+            <span>${totalPrice}.00</span>
             <button>Checkout</button>
+            </div>
           </div>
         ) : (
           ""
         )}
+        </div>
+        </div>
       </div>
     </>
   );
