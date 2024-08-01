@@ -44,3 +44,33 @@
 .text-white:hover{
     cursor:pointer;
 }
+
+.ticket-type{
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+#tickets-form{
+    display:flex;
+    flex-direction: column;
+    padding-left: 3rem;
+    padding-top: 1rem;
+}
+
+.ticket-row{
+    display:flex;
+    flex-direction: row;
+    padding-bottom: .5rem;
+}
+
+.ticket-left{
+    display:flex;
+    flex-direction: column;
+
+}
+
+.quantity-button{
+    padding: .5rem;
+    cursor: pointer;
+}
+
