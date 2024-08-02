@@ -5,7 +5,7 @@ const PURCHASE_ADMISSION = 'admissions/purchase'
 
 const purchaseAdmission = (admissionPurchase) =>({
     type: PURCHASE_ADMISSION, 
-    payload: admissionPurchse
+    payload: admissionPurchase
 })
 
 const getAdmissions =(admissions)=>({

@@ -10,15 +10,15 @@ import { useNavigate } from "react-router-dom";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [hasSubmitted, setHasSubmitted] = useState(false)
-  const [block, setBlock] = useState(false)
+  // const [block, setBlock] = useState(false)
 
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
  
 
 

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./TicketsPage.css";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { purchaseAdmissionsThunk } from "../../redux/admission";
+// import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { purchaseAdmissionsThunk } from "../../redux/admission";
 
 const TicketsPage = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  const [calendar, setCalendar] = useState("");
+  // const [calendar, setCalendar] = useState("");
   const [adultQuantity, setAdultQuantity] = useState(0);
   const [seniorQuantity, setSeniorQuantity] = useState(0);
   const [disQuantity, setDisQuantity] = useState(0);
@@ -21,8 +21,8 @@ const TicketsPage = () => {
   const [totalPrice, setTotalPrice] = useState(0)
   
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  // const dispatch = useDispatch()
+  // const navigate = useNavigate()
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
