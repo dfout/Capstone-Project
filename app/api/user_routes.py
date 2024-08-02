@@ -127,10 +127,15 @@ def get_membership_details():
     return {"Member": member_info}
 
 
-
-
-
-
+@user_routes.route('/admissions')
+@login_required
+def get_user_admissions():
+    user_id = current_user.id
+    admissions = [x.to_dict() for x in AdmissionTicketPurchase.query.filter_by(user_id=user_id).all()]
+    if not admissions or not len(admissions):
+        return {"messsage": "No Admission Purchases Found"}, 404
+    else:
+        return {"Admissions": admissions}
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['PUT'])
 @login_required

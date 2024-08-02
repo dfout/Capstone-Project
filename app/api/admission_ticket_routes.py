@@ -8,7 +8,7 @@ from datetime import datetime
 ## Get all available admission ticket instances from db (includes max_particpants, day, month, day of week.)
 
 
-admission_ticket_routes = Blueprint('admission', __name__)
+admission_ticket_routes = Blueprint('admissions', __name__)
 
 ## Works on backend
 @admission_ticket_routes.route('/')
@@ -22,25 +22,43 @@ def get_admissions():
 
 ## Create an admission ticket purchase based on information in the Ticket Form
 
-@admission_ticket_routes.route('/purchase', methods=['POST'])
+@admission_ticket_routes.route('/purchase', methods=['POST', 'PATCH'])
 def purchase_admission():
+    ## Form instance
     form = TicketForm()
-    
+
+   purchase_data = request.get_json()
+
+    ## Check the data once the user has submitted the form
     if form.validate_on_submit():
+        # Pull out the selected date from the form
         selected_date = form.selected_date.data
+        # Query the db for the admissions information on this particular date
+        ##! Current issue: There are more individual dates on the front end that the user is able to book than there is in the backend. 
+        ##? Potential solution. Create an admissions instance for the selected day if it does not exist. 
         admission_ticket = AdmissionTicket.query.get(selected_date)
         
         if not admission_ticket:
+            #? Implement that solution
             return jsonify({"message": "Selected admission date not found"}), 404
 
+        ## If the date exists in the db, initialize:
+        # a total_price for the users purchase
         total_price = 0
+        # the total ticket quantity
         total_quantity = 0
+        # a member discount if they are a member
         member_discount = 0.0
 
+        ## if the user is member
         if current_user.is_member:
+            ## find their membership information by their id
             member = Member.query.filter_by(user_id=current_user.id).first()
+            # If you find the member information
             if member:
+                # Grab out their membership type
                 membership_type = MembershipType.query.get(member.membership_type_id)
+                # Each membership type has a different discount 
                 if membership_type:
                     if membership_type.id == 1:
                         member_discount = 0.10
@@ -83,12 +101,25 @@ def purchase_admission():
         ticket_purchase.total_price = total_price
         ticket_purchase.ticket_quantity = total_quantity
 
-        # Update max_admissions
-        admission_ticket.max_admissions -= total_quantity
+        ## Check to see if there are enough available admission tickets for the user's purchase
+        # If max admissions is already capped, (0), then return "Sold Out"
+        if admission_ticket.max_admissions == 0:
+            return {"message": "Sorry, this day is sold out."}
+        # if the selected ticket quantity is greater than what is left for tickets for the day
+        # tell the user how many tickets are left for the day
+        elif total_quantity > admission_ticket.max_admissions:
+            num_tickets_left = admission_ticket.max_admissions
+            return {'message': f"Sorry, there are only ${num_tickets_left} tickets left for this day."}
+        # If there are enough admission tickets for their purchase, then subtract their tickets from the admissions total
+        else:
+            admission_ticket.max_admissions -= total_quantity
 
+        ## Commit the changed instance to the database. 
         db.session.commit()
-
+        ## Return the AdmissionTicketPurchase information to the user. 
         return {"AdmissionTicketPurchase": ticket_purchase.to_dict()}, 201
+    
+    ### Future Note: Would like to be able to hold tickets for users if they have them in their cart. 
 
     return jsonify({"message": "Invalid form data"}), 400
 

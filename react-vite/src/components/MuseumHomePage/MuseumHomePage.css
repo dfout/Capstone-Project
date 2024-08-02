@@ -47,6 +47,8 @@
     align-items: center; /* Center align vertically */
     /* width: 500px; */
     background-color: rgba(127, 255, 212);
+    /* background-color: rgb(77, 213, 168); */
+    /* background-color: rgb(7, 173, 151); */
     box-sizing:border-box;
     flex:1;
     padding-left:7%;
@@ -59,7 +61,7 @@
     justify-content: center; 
     align-items: center; /* Center align vertically */
     /* width: 500px; */
-    background-color: rgb(151, 81, 216);
+    background-color: rgb(127, 57, 193);
     flex:1;
 }
 
