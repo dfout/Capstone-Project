@@ -1,7 +1,12 @@
 const GET_ADMISSIONS = 'admissions/getDates'
 const GET_USER_ADMISSIONS = 'user/getAdmissions'
+const PURCHASE_ADMISSION = 'admissions/purchase'
 
 
+const purchaseAdmission = (admissionPurchase) =>({
+    type: PURCHASE_ADMISSION, 
+    payload: admissionPurchse
+})
 
 const getAdmissions =(admissions)=>({
     type:GET_ADMISSIONS, 
@@ -34,7 +39,18 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
         dispatch(getUserAdmissions(Admissions))
     }
     else{
-        const data = response.json()
+        const data = await response.json()
+        return data.errors
+    }
+}
+
+export const purchaseAdmissionsThunk = (purchase)=> async (dispatch) =>{
+    const response = await fetch('/api/admissions/purchase', {method: 'POST', body: purchase})
+    if (response.ok){
+        const {AdmissionTicketPurchase} = await response.json()
+        dispatch(purchaseAdmission(AdmissionTicketPurchase))
+    }  else{
+        const data = await response.json()
         return data.errors
     }
 }
@@ -54,6 +70,11 @@ switch(action.type){
         action.payload.forEach((purchase)=>newState[purchase.id]=purchase)
         return newState
 
+    }
+    case PURCHASE_ADMISSION:{
+        const newState = {}
+        newState[action.payload.id] = action.payload
+        return newState
     }
     default:
         return state

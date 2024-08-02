@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import "./TicketsPage.css";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { purchaseAdmissionsThunk } from "../../redux/admission";
 
 const TicketsPage = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -16,6 +19,10 @@ const TicketsPage = () => {
   const [childQuantity, setChildQuantity] = useState(0);
   const [checkoutModal, setCheckoutModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0)
+  
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
@@ -187,6 +194,28 @@ const TicketsPage = () => {
       setChildQuantity(currQuantity - 1);
     }
   };
+
+
+  // const handleSubmit = async() =>{
+  //   // const newPurchase = {
+  //   //   admission_id:
+  //   //   user_id: 
+  //   //   total_price:
+  //   //   ticket_quantity:
+  //   //   member_discount:
+  //   // }
+  //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase))
+  //   // wait for the purchase id:
+  //   // then check each type quantity
+  //   // if there is a quantity for a type
+  //   // create an object for each type that has a quantity:
+  //   // if (response.id){
+  //   //   if (adultQuantity!= 0){
+  //   //     const 
+  //   //   }
+
+  //   // }
+  // }
 
   return (
     <>
@@ -402,8 +431,8 @@ const TicketsPage = () => {
               </div>
             )}
             <div className='checkout-info'>
-            <span>${totalPrice}.00</span>
-            <button>Checkout</button>
+            <span>Total: ${totalPrice}.00</span>
+            <button type='submit'>Checkout</button>
             </div>
           </div>
         ) : (
