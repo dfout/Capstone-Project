@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import "./LoginForm.css";
 
@@ -61,11 +61,12 @@ function LoginFormPage() {
       if (serverResponse) {
         setErrors(serverResponse);
       } else {
-        navigate('/')
+        navigate('/memberships')
       }
     }
   };
   const demoUserLogIn = () =>{
+    navigate('/memberships')
     return dispatch(thunkLogin({email:'marnie@aa.io', password: 'password'}))
  }
 

@@ -13,6 +13,7 @@ import { useModal } from '../../context/Modal';
 // import { getOrdersThunk } from "../../redux/order"
 import LoginFormModal from "../LoginFormModal"
 import ReviewModal from "../ReviewModal"
+import { IoIosStar } from "react-icons/io";
 
 function ItemDetailPage(){
     const dispatch = useDispatch()
@@ -28,7 +29,7 @@ function ItemDetailPage(){
     // const orders = useSelector((state)=>state.orders)
 
     reviews = [...reviews].reverse();
-    // let numReviews = reviews.length
+    let numReviews = reviews.length
 
     const [timeCheck, setTimeCheck] = useState(true);
     const closeMenu = useModal();
@@ -40,8 +41,8 @@ function ItemDetailPage(){
 
     },[dispatch,id])
 
-    // let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.stars, 0)
-    // avgRating = (avgRating / numReviews).toFixed(2)
+    let avgRating = reviews.reduce((accumulator, currentItem)=> accumulator + currentItem.rating, 0)
+    avgRating = (avgRating / numReviews).toFixed(2)
 
     useEffect(() => {
         let timeout;
@@ -129,8 +130,8 @@ function ItemDetailPage(){
         <div className='item-info'>
 
         <h2>{item.name}</h2>
-        <span>{item.avgRating}</span>
-        <span>{item.price}</span>
+        <span>{avgRating}</span>
+        <span>${item.price.toFixed(2)}</span>
         <p>{item.description}</p>
         {/* <button onClick={()=>handleAddToCart(item.id)}>Add to Cart</button> */}
         </div>
@@ -159,12 +160,15 @@ function ItemDetailPage(){
                 const monthName = monthNames[date.getMonth()];
                 const year = date.getFullYear();
 
-                console.log(User, "USER")
+                
 
                 return (
                     <li className='review-tile' key={id}>
                         <h4>{User ? User.firstName : 'Anonymous'}</h4>
                         <p className='review-info'>{monthName} {year}</p>
+                        {Array.from({ length: rating }).map((_, index) => (
+          <IoIosStar key={index} />
+        ))}
                         <p className='review-info'>{rating} stars</p>
                         <p className='review-info'>{review}</p>
                         {sessionUser!= null && sessionUser.id === ownerId && 

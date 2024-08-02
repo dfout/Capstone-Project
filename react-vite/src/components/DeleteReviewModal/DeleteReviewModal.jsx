@@ -41,7 +41,7 @@ export const DeleteReviewModal = ({reviewId,review, rating, createdAt, itemName,
         
         console.log(reviewId)
         const response = await dispatch(deleteReviewThunk(reviewId))
-        alert("Review successfully deleted")
+       
         
         
         if(response == true){

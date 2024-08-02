@@ -11,6 +11,7 @@ const EditReviewModal = ({ reviewId }) => {
   const [review, setReview] = useState(Review.review);
   const [rating, setRating] = useState(Review.rating);
   const [disabled, setDisabled] = useState(true);
+  const [hasBlurred, setHasBlurred] = useState(false)
   const [errors, setErrors] = useState({});
 //   const [reviewErrors, setReviewErrors] = useState("")
   const [filled, setFilled] = useState(rating);
@@ -47,8 +48,8 @@ const EditReviewModal = ({ reviewId }) => {
     }
 
     const result = await dispatch(updateReviewThunk(reviewData, Review.id));
-
-    if (result.message) {
+    // console.log("RESULT",result)
+    if (!result) {
       setErrors(result);
     } else {
       closeModal();
@@ -57,17 +58,22 @@ const EditReviewModal = ({ reviewId }) => {
 
   const handleBlur = () =>{
     let errors ={}
+    setHasBlurred(true)
     if(review.length < 10){
         errors.review = ("Review must be at least 10 characters")
     }
-    if(review.length >=10){
+    if(review.length >=10 && review.length <100){
         errors.review = ""
     }
-    if (review.length >=100 && review.length < 100){
+    if (review.length >100){
       errors.review = "Review must be under 100 characters"
     }
-    setBeforeSubErrors(errors)
-    
+    if (!rating){
+      errors.rating = "Please enter a star rating by clicking on the stars"
+    }
+    // setBeforeSubErrors(errors)
+    setErrors(errors)
+  
   }
 
   return (
@@ -93,9 +99,10 @@ const EditReviewModal = ({ reviewId }) => {
          <p style={{ color: review.length < 10 || review.length === maxLength ? "red" : "black" }}>
           {review.length}/{maxLength}
         </p>
-        {beforeSubErrors.review && <p className='errors'>{beforeSubErrors.review}</p>}
-        {hasSubmitted && errors.review && <p className="errors">{errors.review}</p>}
+        {beforeSubErrors.review && <p className='Errors'>{beforeSubErrors.review}</p>}
+        {hasBlurred && errors.review && <p className="errors">{errors.review}</p>}
         <div className="star-rating">
+        <div className='stars-cont'>
           {ratings.map((rating, index) => {
             let starRating = index + 1;
             return (
@@ -120,8 +127,9 @@ const EditReviewModal = ({ reviewId }) => {
               </label>
             );
           })}
+          </div>
           <span>{rating} Stars</span>
-          {hasSubmitted && errors.rating && <p className='errors'>{errors.rating}</p>}
+          {hasBlurred && errors.rating && <p className='errors'>{errors.rating}</p>}
         </div>
         <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
       </form>

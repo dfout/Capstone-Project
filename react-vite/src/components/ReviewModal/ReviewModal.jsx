@@ -4,6 +4,8 @@ import { useModal } from '../../context/Modal';
 import { postReviewThunk } from "../../redux/review";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import './ReviewModal.css'; // Ensure you import your CSS file
+import { IoStarSharp } from "react-icons/io5";
+import { IoStarOutline } from "react-icons/io5";
 
 const ReviewModal = ({ itemId }) => {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const ReviewModal = ({ itemId }) => {
   const [filled, setFilled] = useState(0);
   const [active, setActive] = useState(0);
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [hasBlurred, setHasBlurred] = useState(false)
   const [beforeSubErrors, setBeforeSubErrors] = useState({})
   const { closeModal } = useModal();
   const ratings = [1, 2, 3, 4, 5];
@@ -37,11 +40,16 @@ const ReviewModal = ({ itemId }) => {
     setErrors(errors)
   }, [review, rating]);
 
+  console.log(errors)
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     setHasSubmitted(true);
     
     let review2={review,rating}
+    if (beforeSubErrors.review || beforeSubErrors.rating){
+      return beforeSubErrors
+    }
 
     const result = await dispatch(postReviewThunk(review2, itemId));
 
@@ -53,6 +61,7 @@ const ReviewModal = ({ itemId }) => {
   };
 
   const handleBlur = () =>{
+    setHasBlurred(true)
     let errors ={}
     if(review.length < 10){
         errors.review = ("Review must be at least 10 characters")
@@ -60,10 +69,14 @@ const ReviewModal = ({ itemId }) => {
     if(review.length >=10 && review.length < 100){
         errors.review = ""
     }
-    if (review.length >=100){
+    if (review.length > 100){
       errors.review = "Review must be under 100 characters"
     }
-    setBeforeSubErrors(errors)
+    if (!rating){
+      errors.rating = "Please enter a star rating by clicking on the stars"
+    }
+    // setBeforeSubErrors(errors)
+    setErrors(errors)
     
   }
 
@@ -92,11 +105,14 @@ const ReviewModal = ({ itemId }) => {
         </p>
 
         {beforeSubErrors.review && <p className='errors'>{beforeSubErrors.review}</p>}
-        {hasSubmitted && errors.review && <p className='errors'>{errors.review}</p>}
+        {hasBlurred && errors.review && <p className='errors'>{errors.review}</p>}
         <div className="star-rating">
+          <div className='stars-cont'>
+
           {ratings.map((rating, index) => {
             let starRating = index + 1;
             return (
+          
               <label key={starRating}>
                 <input 
                   type="radio" 
@@ -116,10 +132,14 @@ const ReviewModal = ({ itemId }) => {
                   {active >= starRating || starRating <= filled ? <FaStar /> : <FaRegStar />}
                 </i>
               </label>
+      
             );
           })}
+          </div>
           <span>{rating} Stars</span>
-          {hasSubmitted && errors.rating && <p className='errors'>{errors.rating}</p>}
+                  {beforeSubErrors.rating && <p className='errors'>{beforeSubErrors.rating}</p>}
+          
+          {hasBlurred && errors.rating && <p className='errors'>{errors.rating}</p>}
         </div>
         <button className="membership-button" disabled={disabled} type="submit">Submit Your Review</button>
       </form>

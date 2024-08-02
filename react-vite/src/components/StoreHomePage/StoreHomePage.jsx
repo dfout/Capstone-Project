@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { getItemsThunk } from "../../redux/item"
 import { NavLink } from "react-router-dom"
 import './StoreHomePage.css'
+import { IoIosStar } from "react-icons/io";
 
 
 
@@ -22,17 +23,27 @@ return(
     <>
 
     <div className='all-items'>
-    {Object.values(items).reverse().map((item)=>(
+    {Object.values(items).map((item)=>(
         <div key={item.id} className="item-tile">
             <NavLink className='item-link' to={`/store/items/${item.id}`}>
             <div className='item-image-container'>
                 <img id='store-preview-image'src={item.Images[0].url}/>
             </div>
                 
-           
+           <div className='item-details'>
+
             <h3>{item.name}</h3>
-            <span>{item.price}</span>
-            <span>{item.avgRating}</span>
+            <span>${item.price.toFixed(2)}</span>
+            <div className='rating-previews'>
+                <IoIosStar/>
+                
+            
+            {item["avgRating"] && (
+
+            <span>{`${item.avgRating.toFixed(2)}`}</span>
+            )}
+            </div>
+           </div>
             </NavLink>
         </div>
     ))}

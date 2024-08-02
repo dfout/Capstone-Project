@@ -21,5 +21,5 @@ class AdmissionTicket(db.Model):
             'id':self.id,
             'day':self.day,
             'max_admissions':self.max_admissions,
-            'day_of_week': self.day_of_week
+            'day_of_week': self.day_of_week,
         }

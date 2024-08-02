@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="footer" id='form-footer'>
     
             <div className="group-links">
-                <a  className ='archivo-black-regular' href="https://github.com/dfout">dfout</a>
+                <a  href="https://github.com/dfout">dfout</a>
             </div>
       
 

@@ -33,3 +33,9 @@
     text-decoration:none;
     color:black;
 }
+
+.item-details{
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+}

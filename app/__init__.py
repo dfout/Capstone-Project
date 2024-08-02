@@ -38,7 +38,7 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(item_routes, url_prefix='/api/store/items')
 app.register_blueprint(cart_routes, url_prefix='/api/store/cart')
 app.register_blueprint(event_routes, url_prefix='/api/events')
-app.register_blueprint(admission_ticket_routes, url_prefix='/api/admission')
+app.register_blueprint(admission_ticket_routes, url_prefix='/api/admissions')
 app.register_blueprint(exposition_routes, url_prefix='/api/exhibitions')
 app.register_blueprint(membership_routes, url_prefix='/api/memberships')
 
