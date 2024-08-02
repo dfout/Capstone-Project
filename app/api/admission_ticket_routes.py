@@ -27,7 +27,7 @@ def purchase_admission():
     ## Form instance
     form = TicketForm()
 
-   purchase_data = request.get_json()
+    # purchase_data = request.get_json()
 
     ## Check the data once the user has submitted the form
     if form.validate_on_submit():
