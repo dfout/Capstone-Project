@@ -73,17 +73,19 @@ const initialState = {}
 function admissionReducer(state=initialState, action){
 switch(action.type){
     case GET_ADMISSIONS:{
-        const newState = {...state}
+        const newState = {}
         action.payload.forEach((admission) => {
+            console.log(admission, "ADMISSION")
             const date = new Date(admission.day);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1; //JavaScript months are 0-11
-            const day = date.getDate();
+            const year = admission.year
+            const month = admission.month //JavaScript months are 0-11
+            const day = admission.date
             console.log(date, year, month, "day:",day)
 
             if (!newState[year]) newState[year] = {};
             if (!newState[year][month]) newState[year][month] = {};
-            newState[year][month][day] = admission;
+            if(!newState[year][month][day + 1])newState[year][month][day] = admission;
+            console.log(newState)
         });
         console.log(newState)
         return newState

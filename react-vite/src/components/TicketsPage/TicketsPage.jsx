@@ -29,7 +29,7 @@ const TicketsPage = () => {
   
   const sessionUser = useSelector((state)=> state.session.user)
   const admissions = useSelector((state)=>state.admissions)
-  console.log("ADMISSIONS", Object.values(admissions))
+  // console.log("ADMISSIONS", Object.values(admissions))
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const closeMenu = useModal()

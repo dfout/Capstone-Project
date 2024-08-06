@@ -3,7 +3,8 @@ from flask_login import login_required, current_user
 from app.models import User, Review, db, StoreItem, MembershipType, Member, Event, AdmissionTicket, AdmissionTicketPurchase, AdmissionTicketType, TicketTypePurchased
 from app.forms.review_form import ReviewForm
 from app.forms.ticket_form import TicketForm
-from datetime import datetime
+from datetime import datetime, date
+import os
 
 ## Get all available admission ticket instances from db (includes max_particpants, day, month, day of week.)
 
@@ -14,7 +15,19 @@ admission_ticket_routes = Blueprint('admissions', __name__)
 @admission_ticket_routes.route('/')
 def get_admissions():
     '''Grabs all available admission days'''
+    # if os.environ.get('FLASK_ENV') == 'production':
     admissions = [x.to_dict() for x in AdmissionTicket.query.all()]
+
+    # else:
+    #     admissions = [
+            
+    #         {"id": 1, "day":date(2024, 8, 6).strftime('%Y-%m-%d'), "day_of_week": "Tuesday", "max_admissions":500},
+    #         {"id": 2, "day":date(2024, 8, 7).strftime('%Y-%m-%d'), "day_of_week": "Wednesday", "max_admissions":500},
+
+        
+    #     ]
+
+    print("ADMIN---------------------------",admissions)
 
 
     return {"Admissions": admissions}
