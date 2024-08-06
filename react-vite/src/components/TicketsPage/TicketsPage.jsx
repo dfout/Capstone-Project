@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import "./TicketsPage.css";
+import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
+import OpenModalButton from "../OpenModalButton";
 // import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import { purchaseAdmissionsThunk } from "../../redux/admission";
+import { useNavigate } from "react-router-dom";
+import LoginFormModal from "../LoginFormModal";
+import {useModal} from '../../context/Modal'
+import { getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
+import { useDispatch } from "react-redux";
 
 const TicketsPage = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -19,14 +24,33 @@ const TicketsPage = () => {
   const [childQuantity, setChildQuantity] = useState(0);
   const [checkoutModal, setCheckoutModal] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0)
+  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [isSoldOut, setIsSoldOut] = useState(false)
   
-
-  // const dispatch = useDispatch()
-  // const navigate = useNavigate()
+  const sessionUser = useSelector((state)=> state.session.user)
+  const admissions = useSelector((state)=>state.admissions)
+  console.log("ADMISSIONS", Object.values(admissions))
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const closeMenu = useModal()
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
   }, [currentYear, currentMonth, selectedDate]);
+
+  // From the backend, get all the admissions
+  // Track the user's selected date
+  // if the user's selected date exists in the state obj, 
+  // then key into that obj
+  // grab out the information about max_admissions
+  // make sure the totalQuantity of the current user does not exceed the leftover max_admissions
+
+  // If the users' selected date does not exist in the state object
+  // Then, upon submission, create a new admission instance. 
+
+  useEffect(()=>{
+    dispatch(getAdmissionsThunk())
+  }, [dispatch])
 
   const monthNames = [
     "January",
@@ -132,14 +156,19 @@ const TicketsPage = () => {
 
   const handleAdultClick = (operation) => {
     let currQuantity = adultQuantity;
+    let total = totalQuantity
 
     if (operation == "plus") {
       setAdultQuantity(currQuantity + 1);
       setTotalPrice(totalPrice + 30)
       setCheckoutModal(true);
+      
+      setTotalQuantity(total+ 1)
+      
     } else {
       setAdultQuantity(currQuantity - 1);
       setTotalPrice(totalPrice - 30)
+      setTotalQuantity(total - 1)
     }
     // if (adultQuantity!= 0){
     //   setCheckoutModal(true)
@@ -150,51 +179,82 @@ const TicketsPage = () => {
 
   const handleSeniorClick = (operation) => {
     let currQuantity = seniorQuantity;
+    let total = totalQuantity
     if (operation == "plus") {
       setSeniorQuantity(currQuantity + 1);
       setTotalPrice(totalPrice + 22)
       setCheckoutModal(true);
+      setTotalQuantity(total + 1)
     } else {
       setSeniorQuantity(currQuantity - 1);
       setTotalPrice(totalPrice - 22)
+      setTotalQuantity(total - 1)
     }
   };
 
   const handleDisClick = (operation) => {
     let currQuantity = disQuantity;
+    let total = totalQuantity
     if (operation == "plus") {
       setDisQuantity(currQuantity + 1);
       setTotalPrice(totalPrice + 22)
       setCheckoutModal(true);
+      setTotalQuantity(total + 1)
     } else {
       setDisQuantity(currQuantity - 1);
       setTotalPrice(totalPrice - 22)
+      setTotalQuantity(total - 1)
     }
   };
 
   const handleStudentClick = (operation) => {
     let currQuantity = studentQuantity;
+    let total = totalQuantity
 
     if (operation == "plus") {
       setStudentQuantity(currQuantity + 1);
       setTotalPrice(totalPrice + 17)
       setCheckoutModal(true);
+      setTotalQuantity(total + 1)
     } else {
       setStudentQuantity(currQuantity - 1);
       setTotalPrice(totalPrice - 17)
+      setTotalQuantity(totalQuantity - 1)
     }
   };
 
   const handleChildClick = (operation) => {
     let currQuantity = childQuantity;
+    let total = totalQuantity
     if (operation == "plus") {
       setChildQuantity(currQuantity + 1);
       setCheckoutModal(true);
+      setTotalQuantity(total + 1)
     } else {
       setChildQuantity(currQuantity - 1);
+      setTotalQuantity(total - 1)
     }
   };
 
+  const handleSelect = () =>{
+
+    // a date has been selected by a user
+    // make sure the date is formatted the same as dates in the database
+    const parsedDate = new Date(selectedDate)
+    const formattedDate = parsedDate.toUTCString()
+
+    // See if that date exists in the admissions state
+    let admissionsList = Object.values(admissions)
+    //Organize the data better so that looking through it is much easier. Could organize by year, then month, then day. With key value pairs. 
+
+    
+
+
+    //if the max_admissions == 0, then: 
+      setIsSoldOut(false)
+      modalVisible(false)
+
+  }
 
   // const handleSubmit = async() =>{
   //   // const newPurchase = {
@@ -216,6 +276,37 @@ const TicketsPage = () => {
 
   //   // }
   // }
+  console.log(sessionUser, "SESSION")
+  console.log("SELECTED", selectedDate)
+
+  const handleCheckout = async() =>{
+    // need to query for the admission information
+    // if (!sessionUser){
+    //   navigate('/login')
+    // }
+  const parsedDate = new Date(selectedDate)
+
+  const formattedDate = parsedDate.toUTCString()
+  console.log(formattedDate)
+  // formatted date is the correct format. 
+      const newPurchase = {
+        user_id: sessionUser.id,
+        total_price: totalPrice, 
+        ticket_quantity: totalQuantity,
+      
+      }
+      // "Friday, August 23, 2024"
+      // instead of 
+      
+
+      const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
+       
+      console.log("RESPONSE",response)
+
+      //dispatch to the backend 
+
+      console.log(newPurchase)
+  }
 
   return (
     <>
@@ -243,8 +334,7 @@ const TicketsPage = () => {
             </div>
           </div>
         </div>
-
-        {modalVisible && (
+        {modalVisible && !isSoldOut && (
           <div
             id="myModal"
             className="modal fixed inset-0 flex items-center justify-center z-50"
@@ -267,6 +357,8 @@ const TicketsPage = () => {
           </div>
         )}
       </div>
+      {sessionUser ? (
+
       <div>
         <h2>Select Tickets</h2>
         <p>
@@ -432,7 +524,7 @@ const TicketsPage = () => {
             )}
             <div className='checkout-info'>
             <span>Total: ${totalPrice}.00</span>
-            <button type='submit'>Checkout</button>
+            <button type='submit' onClick={handleCheckout}>Checkout</button>
             </div>
           </div>
         ) : (
@@ -441,6 +533,7 @@ const TicketsPage = () => {
         </div>
         </div>
       </div>
+      ):(<OpenModalButton buttonText='Log in' onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>)}
     </>
   );
 };

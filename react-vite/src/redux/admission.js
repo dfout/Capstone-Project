@@ -1,6 +1,7 @@
 const GET_ADMISSIONS = 'admissions/getDates'
 const GET_USER_ADMISSIONS = 'user/getAdmissions'
 const PURCHASE_ADMISSION = 'admissions/purchase'
+const GET_ADMISSION = 'admission/get'
 
 
 const purchaseAdmission = (admissionPurchase) =>({
@@ -11,6 +12,11 @@ const purchaseAdmission = (admissionPurchase) =>({
 const getAdmissions =(admissions)=>({
     type:GET_ADMISSIONS, 
     payload: admissions
+})
+
+const getOneAdmission = (admission) =>({
+    type:GET_ADMISSION, 
+    payload: admission
 })
 
 const getUserAdmissions = (admissions)=>({
@@ -44,7 +50,9 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
     }
 }
 
-export const purchaseAdmissionsThunk = (purchase)=> async (dispatch) =>{
+export const purchaseAdmissionsThunk = (purchase, admission)=> async (dispatch) =>{
+    console.log("PURCHASE", purchase)
+    console.log("ADMISSION", admission)
     const response = await fetch('/api/admissions/purchase', {method: 'POST', body: purchase})
     if (response.ok){
         const {AdmissionTicketPurchase} = await response.json()
@@ -55,6 +63,10 @@ export const purchaseAdmissionsThunk = (purchase)=> async (dispatch) =>{
     }
 }
 
+export const getOneAdmissionThunk = (admissionDate) => async(dispatch) =>{
+    const response = await fetch('/api/')
+}
+
 
 const initialState = {}
 
@@ -62,7 +74,18 @@ function admissionReducer(state=initialState, action){
 switch(action.type){
     case GET_ADMISSIONS:{
         const newState = {...state}
-        action.payload.forEach((day)=> newState[day.id]= day)
+        action.payload.forEach((admission) => {
+            const date = new Date(admission.day);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1; //JavaScript months are 0-11
+            const day = date.getDate();
+            console.log(date, year, month, "day:",day)
+
+            if (!newState[year]) newState[year] = {};
+            if (!newState[year][month]) newState[year][month] = {};
+            newState[year][month][day] = admission;
+        });
+        console.log(newState)
         return newState
     }
     case GET_USER_ADMISSIONS:{

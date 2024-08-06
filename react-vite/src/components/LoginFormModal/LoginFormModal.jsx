@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useEffect } from "react";
 // import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./LoginFormModal.css";
 // import { useNavigate } from "react-router-dom";
@@ -74,6 +75,9 @@ function LoginFormModal() {
     }
   };
 
+  const handleSignUp = () =>{
+    closeModal()
+  }
  
   const demoUserLogIn = () =>{
     return dispatch(thunkLogin({email:'marnie@aa.io', password: 'password'})).then(closeModal)
@@ -110,6 +114,8 @@ function LoginFormModal() {
 
         </div>
       </form>
+      <span>Need an account?</span>
+      <Link to='/signup'onClick={handleSignUp}>Signup</Link>
     </div>
   );
 }
