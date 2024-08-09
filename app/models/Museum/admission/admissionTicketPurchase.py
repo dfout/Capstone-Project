@@ -17,8 +17,8 @@ class AdmissionTicketPurchase(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
 
-    admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
-    users = db.relationship("User", cascade='all,delete')
+    # admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
+    # users = db.relationship("User", cascade='all,delete')
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 

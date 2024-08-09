@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { getUserAdmissionsThunk } from "../../redux/admission"
+import { deleteAdmissionPurchaseThunk, getUserAdmissionsThunk } from "../../redux/admission"
 import { useEffect } from "react"
 
 import './PurchasesPage.css'
@@ -18,6 +18,10 @@ function PurchasesPage(){
         dispatch(getUserAdmissionsThunk())
     },[dispatch])
 
+
+    const handleDeletePurchase = async(purchase) =>{
+        const response = await dispatch(deleteAdmissionPurchaseThunk(purchase))
+    }
 
     return(
         <>
@@ -42,7 +46,7 @@ function PurchasesPage(){
                 {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
               <>
                 <button>Update Purchase</button>
-                <button>Cancel Purchase</button>
+                <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
               </>
             )}
 

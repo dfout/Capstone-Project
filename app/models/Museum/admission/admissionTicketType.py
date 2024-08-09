@@ -14,7 +14,7 @@ class AdmissionTicketType(db.Model):
     price = db.Column(db.Float, nullable=False)
 
 
-    admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
+    # admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
 
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")

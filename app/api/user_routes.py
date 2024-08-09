@@ -234,7 +234,7 @@ def cancel_admission_purchase(purchase_id):
     db.session.delete(ticket_purchase)
     db.session.commit()
 
-    return {"message": "Admission ticket purchase canceled successfully"}, 200
+    return {"id": ticket_purchase.id}, 200
 
 
 

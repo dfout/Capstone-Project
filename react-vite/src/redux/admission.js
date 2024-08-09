@@ -2,6 +2,7 @@ const GET_ADMISSIONS = 'admissions/getDates'
 const GET_USER_ADMISSIONS = 'user/getAdmissions'
 const PURCHASE_ADMISSION = 'admissions/purchase'
 const GET_ADMISSION = 'admission/get'
+const DELETE_PURCHASE = 'admission/delete'
 
 
 const purchaseAdmission = (admissionPurchase) =>({
@@ -24,6 +25,10 @@ const getUserAdmissions = (admissions)=>({
     payload: admissions
 })
 
+const deleteAdmissionPurchase = (id) =>({
+    type: DELETE_PURCHASE, 
+    payload:id
+})
 
 
 export const getAdmissionsThunk = ()=> async (dispatch)=>{
@@ -78,13 +83,25 @@ export const getOneAdmissionThunk = (admissionDate) => async(dispatch) =>{
     const response = await fetch('/api/')
 }
 
+export const deleteAdmissionPurchaseThunk = (purchase) => async(dispatch)=>{
+    const {id} = purchase
+    const response = await fetch(`/api/users/purchases/${id}`, {method: 'DELETE'})
+    if (response.ok){
+        const {id} = await response.json()
+        dispatch(deleteAdmissionPurchase(id))
+    }  else{
+        const data = await response.json()
+        return data.errors
+    }
+}
+
 
 const initialState = {}
 
 function admissionReducer(state=initialState, action){
 switch(action.type){
     case GET_ADMISSIONS:{
-        const newState = {}
+        const newState = {...state}
         action.payload.forEach((admission) => {
             console.log(admission, "ADMISSION")
             const date = new Date(admission.day);
@@ -110,6 +127,11 @@ switch(action.type){
     case PURCHASE_ADMISSION:{
         const newState = {}
         newState[action.payload.purchase] = action.payload
+        return newState
+    }
+    case DELETE_PURCHASE:{
+        const newState={...state}
+        delete newState[action.payload]
         return newState
     }
     default:
