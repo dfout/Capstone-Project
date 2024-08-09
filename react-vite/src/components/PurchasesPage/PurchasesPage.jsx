@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { deleteAdmissionPurchaseThunk, getUserAdmissionsThunk } from "../../redux/admission"
 import { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 import './PurchasesPage.css'
 
@@ -44,15 +45,15 @@ function PurchasesPage(){
                 <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
           
                 {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
-              <>
-                <button>Update Purchase</button>
-                <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
-              </>
-            )}
-
+                <>
+                    <button><Link to='/tickets' purchase={purchase}>Update Purchase</Link></button>
+                    <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
+                </>
+                )}
             </div>
+
             )
-})}
+        })}
         </div>
         <div className='refund-edit-container'>
             <h3>Cancellation</h3>

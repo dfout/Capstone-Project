@@ -11,6 +11,7 @@ import { getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admissi
 import { useDispatch } from "react-redux";
 
 const TicketsPage = () => {
+
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState("");
