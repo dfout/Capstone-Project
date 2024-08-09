@@ -1,0 +1,17 @@
+.list-purchases-info{
+    display:flex;
+    flex-direction:row;
+    gap: .5rem;
+}
+
+.list-purchases{
+    display:flex;
+    flex-direction:row;
+    gap: 2rem;
+}
+
+.purchases{
+    display:flex;
+    flex-direction:column;
+    gap: 2rem;
+}

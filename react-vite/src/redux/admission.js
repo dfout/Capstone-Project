@@ -53,7 +53,18 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
 export const purchaseAdmissionsThunk = (purchase, admission)=> async (dispatch) =>{
     console.log("PURCHASE", purchase)
     console.log("ADMISSION", admission)
-    const response = await fetch('/api/admissions/purchase', {method: 'POST', body: purchase})
+    if(purchase.member_discount == undefined || purchase.member_discount == null){
+        purchase["member_discount"] = 0
+    }
+    const body = JSON.stringify({...purchase, admission})
+
+    const response = await fetch('/api/admissions/purchase', {method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body
+
+    })
     if (response.ok){
         const {AdmissionTicketPurchase} = await response.json()
         dispatch(purchaseAdmission(AdmissionTicketPurchase))
@@ -98,7 +109,7 @@ switch(action.type){
     }
     case PURCHASE_ADMISSION:{
         const newState = {}
-        newState[action.payload.id] = action.payload
+        newState[action.payload.purchase] = action.payload
         return newState
     }
     default:

@@ -11,6 +11,7 @@ import ManageReviews from '../components/ManageReviews';
 import MembershipDetails from '../components/MembershipDetails';
 import Cart from '../components/Cart'
 import TicketsPage from '../components/TicketsPage/TicketsPage';
+import PurchasesPage from '../components/PurchasesPage/PurchasesPage';
 
 
 export const router = createBrowserRouter([
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
         path: "tickets",
         element: <TicketsPage/>
 
+      },
+      {
+        path: 'user/purchases',
+        element: <PurchasesPage />
       },
     ],
   },

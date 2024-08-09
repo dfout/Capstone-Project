@@ -135,6 +135,10 @@ def get_user_admissions():
     if not admissions or not len(admissions):
         return {"messsage": "No Admission Purchases Found"}, 404
     else:
+        for adminPurchase in admissions:
+            id=adminPurchase["admissionId"]
+            admission = AdmissionTicket.query.filter_by(id=id).first()
+            adminPurchase["Admission"]= admission.day
         return {"Admissions": admissions}
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['PUT'])

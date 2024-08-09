@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import OpenModalButton from "../OpenModalButton";
-// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import {useModal} from '../../context/Modal'
@@ -16,7 +15,6 @@ const TicketsPage = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [selectedDate, setSelectedDate] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-  // const [calendar, setCalendar] = useState("");
   const [adultQuantity, setAdultQuantity] = useState(0);
   const [seniorQuantity, setSeniorQuantity] = useState(0);
   const [disQuantity, setDisQuantity] = useState(0);
@@ -29,10 +27,15 @@ const TicketsPage = () => {
   const [maxAdmin, setMaxAdmin] = useState(5000000)
   const [isTooMany, setIsTooMany] = useState(false)
   const [tooMany, setTooMany] = useState(0)
+  const [admissionId, setAdmissionId] = useState(0)
+  const [freebie, setFreebie] = useState(0)
+  const [guestPrice, setGuestPrice] = useState(0)
+
+  const [timeCheck, setTimeCheck] = useState(true);
   
   const sessionUser = useSelector((state)=> state.session.user)
+  // const member = useSelector((state)=>state.member)
   const admissions = useSelector((state)=>state.admissions)
-  // console.log("ADMISSIONS", Object.values(admissions))
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const closeMenu = useModal()
@@ -40,24 +43,21 @@ const TicketsPage = () => {
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
   }, [currentYear, currentMonth, selectedDate]);
-
-  // From the backend, get all the admissions
-  // Track the user's selected date
-  // if the user's selected date exists in the state obj, 
-  // then key into that obj
-  // grab out the information about max_admissions
-  // make sure the totalQuantity of the current user does not exceed the leftover max_admissions
-
-  // If the users' selected date does not exist in the state object
-  // Then, upon submission, create a new admission instance. 
-
   useEffect(()=>{
     dispatch(getAdmissionsThunk())
   }, [dispatch])
+ 
+//   useEffect(() => {
+//     let timeout;
+   
+//     if (!member || !admissions) {
+//         timeout = setTimeout(() => setTimeCheck(false), 3000);
+        
+//     }
+//     return () => clearTimeout(timeout);
+// }, [member, admissions]);
 
   useEffect(()=>{
-
-    console.log(totalQuantity)
     if(totalQuantity > maxAdmin){
       setIsTooMany(true)
       setTooMany(maxAdmin)
@@ -65,7 +65,25 @@ const TicketsPage = () => {
     }else{
       setIsTooMany(false)
     }
-  },[selectedDate,totalQuantity])
+  },[totalQuantity, maxAdmin])
+
+
+// if (!member || !admissions && timeCheck) return <h1>Loading...</h1>;
+// else if (!member || !admissions && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+
+// if(member?.MembershipType?.id){
+//   const id = member.MembershipType.id
+//   if (id == 1){
+//     setFreebie(1)
+//     setGuestPrice(5)
+//   }else if (id== 2){
+//     setFreebie(2)
+//     setGuestPrice(5)
+//   }else if (id == 3){
+//     setFreebie(5)
+//     setGuestPrice(5)
+//   }
+// }
 
   const monthNames = [
     "January",
@@ -84,7 +102,7 @@ const TicketsPage = () => {
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const cannotPurchaseAmt = isTooMany || isSoldOut
+  const cannotPurchaseAmt = isTooMany || isSoldOut || !selectedDate
 
   const handleSelect = () =>{
 
@@ -120,6 +138,7 @@ const TicketsPage = () => {
 
     if (admissions[year] && admissions[year][month] && admissions[year][month][date]){
       const max = admissions[year][month][date].max_admissions
+      setAdmissionId(admissions[year][month][date].id)
       if (max==0){
         setIsSoldOut(true)
       }else{
@@ -315,9 +334,10 @@ const TicketsPage = () => {
 
   //   // }
   // }
-  console.log(sessionUser, "SESSION")
-  console.log("SELECTED", selectedDate)
+  // console.log(sessionUser, "SESSION")
+  // console.log("SELECTED", selectedDate)
 
+  //! CHECKOUT
   const handleCheckout = async() =>{
     // need to query for the admission information
     // if (!sessionUser){
@@ -329,6 +349,7 @@ const TicketsPage = () => {
   console.log(formattedDate)
   // formatted date is the correct format. 
       const newPurchase = {
+        admission_id: admissionId,
         user_id: sessionUser.id,
         total_price: totalPrice, 
         ticket_quantity: totalQuantity,
@@ -340,15 +361,16 @@ const TicketsPage = () => {
 
       const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
        
-      console.log("RESPONSE",response)
+      
 
       //dispatch to the backend 
 
-      console.log(newPurchase)
+     navigate('/user/purchases')
   }
 
-  console.log(maxAdmin)
-  console.log(isTooMany, "TOOMANY")
+
+  // const ticketHierarchy = [adultQuantity,]
+
 
   return (
     <>
@@ -394,12 +416,6 @@ const TicketsPage = () => {
               <div className="modal-content py-4 text-left px-6">
                 <div className="flex justify-between items-center pb-3">
                   <p className="text-2xl font-bold">Selected Date</p>
-                  <button
-                    className="modal-close px-3 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring"
-                    onClick={handleCloseModal}
-                  >
-                    ✕
-                  </button>
                 </div>
                 <div className="text-xl font-semibold">{selectedDate}</div>
                 {isTooMany && tooMany && (
@@ -411,7 +427,7 @@ const TicketsPage = () => {
         )}
         </div>
       </div>
-      {sessionUser ? (
+      {sessionUser && selectedDate && (
 
       <div>
         <h2>Select Tickets</h2>
@@ -578,6 +594,9 @@ const TicketsPage = () => {
             )}
             <div className='checkout-info'>
             <span>Total: ${totalPrice}.00</span>
+            {/* {member.MembershipType.id && (
+              <span>Member Discount: </span>
+            )} */}
             <button className='checkout-button' type='submit' onClick={handleCheckout} disabled={cannotPurchaseAmt}>Checkout</button>
             </div>
           </div>
@@ -587,7 +606,9 @@ const TicketsPage = () => {
         </div>
         </div>
       </div>
-      ):(<OpenModalButton buttonText='Log in' onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>)}
+      )}
+      {!sessionUser && (<OpenModalButton buttonText='Log in' onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>)}
+      {!selectedDate && sessionUser && (<h2>Select a date</h2>)}
     </>
   );
 };
