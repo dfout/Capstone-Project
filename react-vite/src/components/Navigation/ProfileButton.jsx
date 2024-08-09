@@ -50,11 +50,11 @@ function ProfileButton() {
       My account
       </button>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <ul className="profile-dropdown" ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
+              <li className='reg'>{user.username}</li>
+              <li className='reg'>{user.email}</li>
               <li>
                 <button className='membership-button archivo-black-regular' onClick={logout}>Log Out</button>
               </li>
@@ -65,6 +65,9 @@ function ProfileButton() {
               <li><NavLink to='/user/purchases' className='manage-link'>My Purchases</NavLink>
                 
               </li>
+              <li><NavLink to='/user/points' className='manage-link'>My Points</NavLink>
+                
+                </li>
               
             </>
           ) : (

@@ -5,25 +5,46 @@ import { NavLink } from "react-router-dom"
 import './StoreHomePage.css'
 import { IoIosStar } from "react-icons/io";
 
-
+import { useState } from "react"
 
 function StoreHomePage(){
 const dispatch= useDispatch()
 const items = useSelector((state)=>state.items)
-
+const [sortedLowToHigh, setSortedLowToHigh] = useState([])
+const [sortedHighToLow, setSortedHighToLow] = useState([])
+const[storeItems, setStoreItems] = useState(Object.values(items))
 
 useEffect(()=>{
 
     dispatch(getItemsThunk())
+   
 
 },[dispatch])
 
 
+const lowToHigh =()=>{
+    setStoreItems(Object.values(items).slice().sort((a, b) => a.price - b.price))
+}
+    
+
+const highToLow = () =>{
+    setStoreItems(Object.values(items).slice().sort((a, b) => b.price - a.price));
+}
+
+const bestRated = () =>{
+    setStoreItems(Object.values(items).slice().sort((a, b) => b.avgRating - a.avgRating))
+} 
+
+
+
 return(
     <>
+    <button onClick={lowToHigh}>Sort Low to High</button>
+    <button onClick={highToLow}>Sort High to Low</button>
+    <button onClick={bestRated}>Sort by Best Ratings</button>
 
     <div className='all-items'>
-    {Object.values(items).map((item)=>(
+    {storeItems?.map((item)=>(
         <div key={item.id} className="item-tile">
             <NavLink className='item-link' to={`/store/items/${item.id}`}>
             <div className='item-image-container'>

@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, request, session, redirect,jsonify
 from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
@@ -17,6 +17,13 @@ from .seeds import seed_commands
 from .config import Config
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
+
+# # Load model directly
+# from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# tokenizer = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3-8B")
+# model = AutoModelForCausalLM.from_pretrained("meta-llama/Meta-Llama-3-8B")
+
 
 # Setup login manager
 login = LoginManager(app)
