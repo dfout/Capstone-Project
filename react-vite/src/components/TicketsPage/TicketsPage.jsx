@@ -67,6 +67,8 @@ const TicketsPage = () => {
     }else{
       setIsTooMany(false)
     }
+
+    if(totalQuantity==0)setCheckoutModal(false)
   },[totalQuantity, maxAdmin])
 
 
@@ -375,18 +377,18 @@ const TicketsPage = () => {
 
 
   return (
-    <div id='tickets-page'>
+    <>
       <div className="bg-gray-100 flex items-center justify-center padding h-screen">
         <div className="lg:w-7/12 md:w-9/12 sm:w-10/12 mx-auto p-4">
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="flex items-center justify-between px-6 py-3 bg-gray-700">
-              <button className="text-white" onClick={handlePrevMonth}>
+              <button className="text-white membership-button" onClick={handlePrevMonth}>
                 Previous
               </button>
               <h2 className="text-white">
                 {monthNames[currentMonth]} {currentYear}
               </h2>
-              <button className="text-white" onClick={handleNextMonth}>
+              <button className="text-white membership-button" onClick={handleNextMonth}>
                 Next
               </button>
             </div>
@@ -438,7 +440,7 @@ const TicketsPage = () => {
       {sessionUser && selectedDate && (
 
       <div>
-        <h2 className='padding-left-3rem'>Select Tickets</h2>
+        <p className='padding-left-3rem font-2rem'>Select Tickets</p>
         <p className='padding-left-3rem'>
           Tickets include admission to all galleries and special exhibitions
         </p>
@@ -451,7 +453,7 @@ const TicketsPage = () => {
             <div className="ticket-right">
               <span>$30</span>
               <button
-                className="quantity-button"
+                className="quantity-button minus-button"
                 onClick={() => handleAdultClick("minus")}
                 disabled={!adultQuantity}
               >
@@ -459,7 +461,7 @@ const TicketsPage = () => {
               </button>
               <span>{adultQuantity}</span>
               <button
-                className="quantity-button"
+                className="quantity-button membership-button"
                 onClick={() => handleAdultClick("plus")}
               >
                 <FaPlus />
@@ -474,7 +476,7 @@ const TicketsPage = () => {
             <div className="ticket-right">
               <span>$22</span>
               <button
-                className="quantity-button"
+                className="quantity-button minus-button"
                 onClick={() => handleSeniorClick("minus")}
                 disabled={!seniorQuantity}
               >
@@ -482,7 +484,7 @@ const TicketsPage = () => {
               </button>
               <span>{seniorQuantity}</span>
               <button
-                className="quantity-button"
+                className="quantity-button membership-button"
                 onClick={() => handleSeniorClick("plus")}
               >
                 <FaPlus />
@@ -491,7 +493,7 @@ const TicketsPage = () => {
           </div>
           <div className="ticket-row">
             <div className="ticket-left">
-              <span className="ticket-type">Visitor with disability</span>
+              <span className="ticket-type" >Visitor with disability</span>
               <span>
                 Free admission for a care partner accompanying a visitor with a
                 disability
@@ -500,7 +502,7 @@ const TicketsPage = () => {
             <div className="ticket-right">
               <span>$22</span>
               <button
-                className="quantity-button"
+                className="quantity-button minus-button"
                 onClick={() => handleDisClick("minus")}
                 disabled={!disQuantity}
               >
@@ -508,7 +510,7 @@ const TicketsPage = () => {
               </button>
               <span>{disQuantity}</span>
               <button
-                className="quantity-button"
+                className="quantity-button membership-button"
                 onClick={() => handleDisClick("plus")}
               >
                 <FaPlus />
@@ -523,7 +525,7 @@ const TicketsPage = () => {
             <div className="ticket-right">
               <span>$17</span>
               <button
-                className="quantity-button"
+                className="quantity-button minus-button"
                 onClick={() => handleStudentClick("minus")}
                 disabled={!studentQuantity}
               >
@@ -531,7 +533,7 @@ const TicketsPage = () => {
               </button>
               <span>{studentQuantity}</span>
               <button
-                className="quantity-button"
+                className="quantity-button membership-button"
                 onClick={() => handleStudentClick("plus")}
               >
                 <FaPlus />
@@ -546,7 +548,7 @@ const TicketsPage = () => {
             <div className="ticket-right">
               <span>$0</span>
               <button
-                className="quantity-button"
+                className="quantity-button minus-button"
                 onClick={() => handleChildClick("minus")}
                 disabled={!childQuantity}
               >
@@ -554,7 +556,7 @@ const TicketsPage = () => {
               </button>
               <span>{childQuantity}</span>
               <button
-                className="quantity-button"
+                className="quantity-button membership-button"
                 onClick={() => handleChildClick("plus")}
               >
                 <FaPlus />
@@ -571,7 +573,7 @@ const TicketsPage = () => {
           seniorQuantity ||
           disQuantity ||
           childQuantity) ? (
-          <div className="ticket-checkout-modal">
+          <div className="ticket-checkout-modal"><p className="text-2xl font-bold padding-bottom font-2rem">Cart</p><hr></hr>
             {adultQuantity != 0 && (
               <div className="ticket-info">
                 <span>Adult</span>
@@ -607,7 +609,9 @@ const TicketsPage = () => {
             {/* {member.MembershipType.id && (
               <span>Member Discount: </span>
             )} */}
-            <button className='checkout-button' type='submit' onClick={handleCheckout} disabled={cannotPurchaseAmt}>Checkout</button>
+            <div class='flex center'>
+            <button className='membership-button' type='submit' onClick={handleCheckout} disabled={cannotPurchaseAmt}>Checkout</button>
+            </div>
             </div>
           </div>
         ) : (
@@ -620,7 +624,7 @@ const TicketsPage = () => {
       )}
       {!sessionUser && (<OpenModalButton buttonText='Log in' onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>)}
       {!selectedDate && sessionUser && (<h2>Select a date</h2>)}
-    </div>
+    </>
   );
 };
 

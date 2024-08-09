@@ -56,6 +56,7 @@
     padding-left: 3rem;
     padding-top: 1rem;
     width: 50vw;
+    gap:2rem;
 }
 
 .ticket-row{
@@ -68,7 +69,7 @@
 .ticket-left{
     display:flex;
     flex-direction: column;
-
+    justify-content: center;
 }
 
 .quantity-button{
@@ -190,6 +191,11 @@
     margin-left:auto;
 }
 
+.left-auto{
+    margin-left:auto;
+}
+
+
 /* .tickets-select{
     display:flex;
     flex-direction:row;
@@ -199,4 +205,43 @@
 
 .padding-left-3rem{
     padding-left:3rem;
+}
+
+.flex{
+    display:flex;
+}
+
+.center{
+  justify-content: center;
+}
+
+
+.justify-between{
+    justify-content: space-between;
+}
+
+.minus-button:not(:disabled){
+    max-width: fit-content;
+    min-height:30px;
+    color:white;
+    background-color: black;
+    border:none;
+    box-sizing: border-box;
+    font-size: 12pt;
+    margin-top:auto;
+    padding: .5rem;
+}
+
+.ticket-right{
+    display:flex;
+    flex-direction: row;
+    gap:1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.font-2rem{
+    font-size: 2rem;
 }
