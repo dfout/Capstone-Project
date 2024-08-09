@@ -26,9 +26,11 @@ function PurchasesPage(){
     useEffect(() => {
         let timeout;
        
-        if (!admissions) {
+        if (!admissions || !Object.values(admissions).length || !Object.values(admissions)[0]["TicketTypesPurchased"]) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
+        }else{
+            console.log(Object.values(admissions)[0])
         }
     
         return () => clearTimeout(timeout);

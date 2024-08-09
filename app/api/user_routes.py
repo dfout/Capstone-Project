@@ -139,6 +139,10 @@ def get_user_admissions():
             id=adminPurchase["admissionId"]
             admission = AdmissionTicket.query.filter_by(id=id).first()
             adminPurchase["Admission"]= admission.day
+            adminPurchase['TicketTypesPurchased'] = [x.to_dict() for x in TicketTypePurchased.query.filter_by(purchase_id=adminPurchase["id"]).all()]
+
+               
+            print("PRINTINGINGINGINGNGINGINGIGNGINGNGGNINGG_____________",adminPurchase['TicketTypesPurchased'])
         return {"Admissions": admissions}
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['PUT'])
