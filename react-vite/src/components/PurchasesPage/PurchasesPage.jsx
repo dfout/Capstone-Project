@@ -1,9 +1,12 @@
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { deleteAdmissionPurchaseThunk, getUserAdmissionsThunk } from "../../redux/admission"
+import { deleteAdmissionPurchaseThunk } from "../../redux/admission"
+import { getUserAdmissionsThunk } from "../../redux/purchase"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import EditAdmissionPurchase from "../EditAdmissionPurchase"
+import { useNavigate } from "react-router-dom"
 
 import './PurchasesPage.css'
 
@@ -14,10 +17,12 @@ import './PurchasesPage.css'
 function PurchasesPage(){
     const dispatch = useDispatch()
 
-    const admissions = useSelector((state)=>state.admissions)
+    const purchases = useSelector((state)=>state.purchases)
     const [showUpcoming, setShowUpComing] = useState(false)
     const [upcomings, setUpComings] = useState([])
     const [timeCheck, setTimeCheck] = useState(true);
+
+    const navigate = useNavigate()
 
     useEffect(()=>{
         dispatch(getUserAdmissionsThunk())
@@ -26,32 +31,32 @@ function PurchasesPage(){
     useEffect(() => {
         let timeout;
        
-        if (!admissions || !Object.values(admissions).length || !Object.values(admissions)[0]["TicketTypesPurchased"]) {
+        if (!purchases || !Object.values(purchases).length || !Object.values(purchases)[0]["TicketTypesPurchased"]) {
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }else{
-            console.log(Object.values(admissions)[0])
+            console.log(Object.values(purchases)[0])
         }
     
         return () => clearTimeout(timeout);
-    }, [admissions]);
+    }, [purchases]);
     
-    if (!admissions && timeCheck) return <h1>Loading...</h1>;
-    else if (!admissions && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+    if (!purchases && timeCheck) return <h1>Loading...</h1>;
+    else if (!purchases && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
 
     const handleDeletePurchase = async(purchase) =>{
         const response = await dispatch(deleteAdmissionPurchaseThunk(purchase))
     }
 
-    const upComingAdmissions = (admissions)=>{
+    const upComingAdmissions = (purchases)=>{
 
         const admissionDate = new Date(purchase.Admission);
         const currentDate = new Date();
         const diffInMs = admissionDate.getTime() - currentDate.getTime();
         const daysDifference = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
         if(showUpcoming == false){
-            console.log(Object.values(admissions))
+            console.log(Object.values(purchases))
 
             let upcoming = []
             for (let purchase of Object.values(admissions)){
@@ -76,7 +81,7 @@ function PurchasesPage(){
 
     const pastAdmissions = () =>{
         let past = []
-        for ( let purchase of Object.values(admissions)){
+        for ( let purchase of Object.values(purchases)){
             const admissionDate = new Date(purchase.Admission);
             const currentDate = new Date();
             if (admissionDate < currentDate){
@@ -89,6 +94,11 @@ function PurchasesPage(){
     const editableAdmissions = () =>{
 
 
+    }
+
+    const handleUpdate = () =>{
+        
+        navigate('/tickets')
     }
     return(
         <>
@@ -108,12 +118,12 @@ function PurchasesPage(){
                 </>
                 )}
             </div>) } */}
-        {!Object.values(admissions).length && (
+        {!Object.values(purchases).length && (
             <h2>No purchases</h2>
 
         )}
 
-        {Object.values(admissions)?.reverse().map((purchase)=>{
+        {Object.values(purchases)?.reverse().map((purchase)=>{
 
             const admissionDate = new Date(purchase.Admission);
             const currentDate = new Date();
@@ -130,7 +140,7 @@ function PurchasesPage(){
           
                 {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
                 <>
-                    <button><Link to='/tickets' purchase={purchase}>Update Purchase</Link></button>
+                    <button onClick={()=> handleUpdate()}>Update Purchase</button>
                     <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
                 </>
                 )}

@@ -161,12 +161,12 @@ switch(action.type){
         console.log(newState)
         return newState
     }
-    case GET_USER_ADMISSIONS:{
-        const newState = {}
-        action.payload.forEach((purchase)=>newState[purchase.id]=purchase)
-        return newState
+    // case GET_USER_ADMISSIONS:{
+    //     const newState = {}
+    //     action.payload.forEach((purchase)=>newState[purchase.id]=purchase)
+    //     return newState
 
-    }
+    // }
     case PURCHASE_ADMISSION:{
         const newState = {}
         newState[action.payload.purchase] = action.payload

@@ -8,7 +8,7 @@
 
 
 import { useState, useEffect } from "react";
-import "./TicketsPage.css";
+// import "./TicketsPage.css";
 import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
@@ -16,11 +16,11 @@ import OpenModalButton from "../OpenModalButton";
 import { useNavigate } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import {useModal} from '../../context/Modal'
-import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
+// import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-const EditAdmissionPurchase = ({admissionPurchase, selected}) => {
+const EditAdmissionPurchase = (admissionPurchase, admission) => {
     
 
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
