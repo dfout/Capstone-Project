@@ -17,21 +17,43 @@ function PurchasesPage(){
     const admissions = useSelector((state)=>state.admissions)
     const [showUpcoming, setShowUpComing] = useState(false)
     const [upcomings, setUpComings] = useState([])
+    const [timeCheck, setTimeCheck] = useState(true);
 
     useEffect(()=>{
         dispatch(getUserAdmissionsThunk())
     },[dispatch])
 
+    useEffect(() => {
+        let timeout;
+       
+        if (!admissions) {
+            timeout = setTimeout(() => setTimeCheck(false), 3000);
+            
+        }
+    
+        return () => clearTimeout(timeout);
+    }, [admissions]);
+    
+    if (!admissions && timeCheck) return <h1>Loading...</h1>;
+    else if (!admissions && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+
 
     const handleDeletePurchase = async(purchase) =>{
         const response = await dispatch(deleteAdmissionPurchaseThunk(purchase))
     }
-    
+
     const upComingAdmissions = (admissions)=>{
+
+        const admissionDate = new Date(purchase.Admission);
+        const currentDate = new Date();
+        const diffInMs = admissionDate.getTime() - currentDate.getTime();
+        const daysDifference = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
         if(showUpcoming == false){
+            console.log(Object.values(admissions))
 
             let upcoming = []
-            for (purchase of admissions){
+            for (let purchase of Object.values(admissions)){
+                console.log(purchase)
     
                 const admissionDate = new Date(purchase.Admission);
                 const currentDate = new Date();
@@ -52,7 +74,7 @@ function PurchasesPage(){
 
     const pastAdmissions = () =>{
         let past = []
-        for (purchase of admissions){
+        for ( let purchase of Object.values(admissions)){
             const admissionDate = new Date(purchase.Admission);
             const currentDate = new Date();
             if (admissionDate < currentDate){
@@ -70,8 +92,8 @@ function PurchasesPage(){
         <>
         <h2>Your Admission Purchases</h2>
         <div className='purchases'>
-        <h3 onClick={upComingAdmissions}><Link>Upcoming Admissions</Link></h3>
-        {showUpcoming && upcomings && Object.values(upcomings)?.map((purchase)=> <div key={purchase.id} className='list-purchases'>
+        {/* <h3 onClick={()=>upComingAdmissions(admissions)}><Link>Upcoming Admissions</Link></h3> */}
+        {/* {showUpcoming && upcomings && Object.values(upcomings)?.map((purchase)=> <div key={purchase.id} className='list-purchases'>
                 <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
                 <span> Cost: ${purchase.totalPrice}.00 </span>
                 <span> Ticket Quantity: {purchase.ticketQuantity}</span>
@@ -83,7 +105,7 @@ function PurchasesPage(){
                     <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
                 </>
                 )}
-            </div>) }
+            </div>) } */}
 
         {Object.values(admissions)?.reverse().map((purchase)=>{
 
