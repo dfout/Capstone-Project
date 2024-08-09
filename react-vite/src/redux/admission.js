@@ -3,6 +3,7 @@ const GET_USER_ADMISSIONS = 'user/getAdmissions'
 const PURCHASE_ADMISSION = 'admissions/purchase'
 const GET_ADMISSION = 'admission/get'
 const DELETE_PURCHASE = 'admission/delete'
+const CREATE_ADMISSION = 'admission/create'
 
 
 const purchaseAdmission = (admissionPurchase) =>({
@@ -30,6 +31,10 @@ const deleteAdmissionPurchase = (id) =>({
     payload:id
 })
 
+const createAdmission = (admission) =>({
+    type:CREATE_ADMISSION,
+    payload:admission
+})
 
 export const getAdmissionsThunk = ()=> async (dispatch)=>{
     const response = await fetch('/api/admissions/')
@@ -92,6 +97,23 @@ export const deleteAdmissionPurchaseThunk = (purchase) => async(dispatch)=>{
         const {id} = await response.json()
         dispatch(deleteAdmissionPurchase(id))
     }  else{
+        const data = await response.json()
+        return data.errors
+    }
+}
+
+export const createAdmissionThunk = (admission) => async(dispatch)=>{
+    const response = await fetch('api/admissions/create',{
+        method:'POST', 
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(admission)
+    })
+    if (response.ok){
+        const {Admission} = await response.json()
+        return Admission
+    }else{
         const data = await response.json()
         return data.errors
     }

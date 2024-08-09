@@ -7,7 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import { useNavigate } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import {useModal} from '../../context/Modal'
-import { createTicketTypePurchase, getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
+import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const TicketsPage = () => {
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalQuantity, setTotalQuantity] = useState(0)
   const [isSoldOut, setIsSoldOut] = useState(false)
-  const [maxAdmin, setMaxAdmin] = useState(5000000)
+  const [maxAdmin, setMaxAdmin] = useState(500)
   const [isTooMany, setIsTooMany] = useState(false)
   const [tooMany, setTooMany] = useState(0)
   const [admissionId, setAdmissionId] = useState(0)
@@ -120,7 +120,7 @@ const TicketsPage = () => {
 
   // }
 
-  const handleDayClick = (day) => {
+  const handleDayClick = async (day) => {
     const selected = new Date(currentYear, currentMonth, day);
     const year = selected.getFullYear()
     console.log("YEAR", year)
@@ -140,6 +140,24 @@ const TicketsPage = () => {
       }else{
         setMaxAdmin(max)
       }
+    }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
+      let day = selected
+      console.log("DAYYYYYY", selected.getDate())
+      const options = {'weekday':'long'}
+      const admission = {
+        day:selected,
+        date:day.getDate(),
+        month:day.getMonth() + 1,
+        year:day.getFullYear(),
+        max_admissions: maxAdmin,
+        day_of_week: day.toLocaleDateString('en-US', options),
+      }
+      console.log("BEFORE DISPATCHd")
+      const response = await dispatch(createAdmissionThunk(admission))
+      console.log(response, "GHERERERER")
+
+      setAdmissionId(response.id)
+      
     }
 
     setSelectedDate(selected);
@@ -316,11 +334,11 @@ const TicketsPage = () => {
     // if (!sessionUser){
     //   navigate('/login')
     // }
-    console.log(adultQuantity, seniorQuantity, childQuantity, disQuantity, studentQuantity)
+
   const parsedDate = new Date(selectedDate)
 
   const formattedDate = parsedDate.toUTCString()
-  console.log(formattedDate)
+
   // formatted date is the correct format. 
       const newPurchase = {
         admission_id: admissionId,
@@ -334,7 +352,7 @@ const TicketsPage = () => {
       
 
       const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
-      console.log(response)
+    
       let id = response.id
       
 

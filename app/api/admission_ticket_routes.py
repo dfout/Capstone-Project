@@ -11,6 +11,31 @@ import os
 
 admission_ticket_routes = Blueprint('admissions', __name__)
 
+@admission_ticket_routes.route('/create',methods=['POST'])
+def create_admission():
+    '''If the user selects a date that is not already in the database, they create a new instance an admission date'''
+    body = request.get_json()
+    print("BODYYYYYY-+++++++++++++++++++++", body)
+    date=datetime(body['year'], body['month'],body['date'])
+    month=body['month']
+    year=body['year']
+    # day_str = body['day']
+    # day = datetime()
+ 
+    new_admission = AdmissionTicket(
+        day=date,
+        date=body["date"],
+        month=body['month'],
+        year=body['year'],
+        day_of_week = body['day_of_week'],
+        max_admissions=body['max_admissions']
+    )
+    db.session.add(new_admission)
+    db.session.commit()
+
+    return {'Admission': new_admission.to_dict()},200
+
+
 ## Works on backend
 @admission_ticket_routes.route('/')
 def get_admissions():
