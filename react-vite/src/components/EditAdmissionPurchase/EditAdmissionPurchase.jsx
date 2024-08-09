@@ -13,30 +13,36 @@ import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa6";
 import OpenModalButton from "../OpenModalButton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import {useModal} from '../../context/Modal'
-// import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
+import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, getUserAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-const EditAdmissionPurchase = (admissionPurchase, admission) => {
+const EditAdmissionPurchase = () => {
     
+let {id} = useParams()
+const purchase = useSelector((state)=>state.purchases[id])
+const admission = purchase['AdmissionDetails']
+const ticketTypes = purchase['TicketTypesPurchased']
+const year = purchase['AdmissionDetails']['year']
+console.log(admission)
 
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentYear, setCurrentYear] = useState(year);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [selectedDate, setSelectedDate] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(admission.day);
+  const [modalVisible, setModalVisible] = useState(true);
   const [adultQuantity, setAdultQuantity] = useState(0);
   const [seniorQuantity, setSeniorQuantity] = useState(0);
   const [disQuantity, setDisQuantity] = useState(0);
   const [studentQuantity, setStudentQuantity] = useState(0);
   const [childQuantity, setChildQuantity] = useState(0);
-  const [checkoutModal, setCheckoutModal] = useState(false);
+  const [checkoutModal, setCheckoutModal] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalQuantity, setTotalQuantity] = useState(0)
   const [isSoldOut, setIsSoldOut] = useState(false)
-  const [maxAdmin, setMaxAdmin] = useState(500)
+  const [maxAdmin, setMaxAdmin] = useState(admission.max_admissions)
   const [isTooMany, setIsTooMany] = useState(false)
   const [tooMany, setTooMany] = useState(0)
   const [admissionId, setAdmissionId] = useState(0)
@@ -44,6 +50,8 @@ const EditAdmissionPurchase = (admissionPurchase, admission) => {
   const [guestPrice, setGuestPrice] = useState(0)
 
   const [timeCheck, setTimeCheck] = useState(true);
+
+
   
   const sessionUser = useSelector((state)=> state.session.user)
   // const member = useSelector((state)=>state.member)
@@ -57,9 +65,28 @@ const EditAdmissionPurchase = (admissionPurchase, admission) => {
   }, [currentYear, currentMonth, selectedDate]);
   useEffect(()=>{
     dispatch(getAdmissionsThunk())
+    dispatch(getUserAdmissionsThunk())
   }, [dispatch])
  
-
+  for (let ticketTypePurchased of ticketTypes){
+    console.log(ticketTypePurchased)
+    if(ticketTypePurchased.type_id == 1){
+        setAdultQuantity(ticketTypePurchased.quantity)
+    }
+    if(ticketTypePurchased.type_id == 2){
+        setSeniorQuantity(ticketTypePurchased.quantity)
+    }
+    if(ticketTypePurchased.type_id == 3){
+        setDisQuantity(ticketTypePurchased.quantity)
+    }
+    if(ticketTypePurchased.type_id == 4){
+        setStudentQuantity(ticketTypePurchased.quantity)
+    }
+    if(ticketTypePurchased.type_id == 5){
+        setChildQuantity(ticketTypePurchased.quantity)
+    }
+    
+  }
 
   useEffect(()=>{
     if(totalQuantity > maxAdmin){

@@ -96,9 +96,9 @@ function PurchasesPage(){
 
     }
 
-    const handleUpdate = () =>{
+    const handleUpdate = (id) =>{
         
-        navigate('/tickets')
+        navigate(`/user/purchases/${id}/edit`)
     }
     return(
         <>
@@ -140,7 +140,7 @@ function PurchasesPage(){
           
                 {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
                 <>
-                    <button onClick={()=> handleUpdate()}>Update Purchase</button>
+                    <button onClick={()=> handleUpdate(purchase.id)}>Update Purchase</button>
                     <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
                 </>
                 )}

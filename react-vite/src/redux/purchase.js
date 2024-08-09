@@ -30,7 +30,7 @@ function purchaseReducer(state=initialState, action){
             return newState
 
         }
-        default:;
+        default:
         return state
     }
 }

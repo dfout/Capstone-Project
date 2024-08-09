@@ -68,7 +68,7 @@ export const router = createBrowserRouter([
 
       },
       {
-        path:'user/purchases/edit',
+        path:'user/purchases/:id/edit',
         element: <EditAdmissionPurchase />
       },
       {
