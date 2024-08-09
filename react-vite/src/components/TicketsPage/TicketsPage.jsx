@@ -9,6 +9,7 @@ import LoginFormModal from "../LoginFormModal";
 import {useModal} from '../../context/Modal'
 import { getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const TicketsPage = () => {
 
@@ -374,8 +375,8 @@ const TicketsPage = () => {
 
 
   return (
-    <>
-      <div className="bg-gray-100 flex items-center justify-center h-screen">
+    <div id='tickets-page'>
+      <div className="bg-gray-100 flex items-center justify-center padding h-screen">
         <div className="lg:w-7/12 md:w-9/12 sm:w-10/12 mx-auto p-4">
           <div className="bg-white shadow-lg rounded-lg overflow-hidden">
             <div className="flex items-center justify-between px-6 py-3 bg-gray-700">
@@ -400,8 +401,6 @@ const TicketsPage = () => {
           </div>
         </div>
         <div className='selected-date-info'>
-
-
         {isSoldOut &&(
           <div style={{"color":"red"}}>Sorry, this day is sold out.</div>
         )}
@@ -416,9 +415,17 @@ const TicketsPage = () => {
             <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
               <div className="modal-content py-4 text-left px-6">
                 <div className="flex justify-between items-center pb-3">
-                  <p className="text-2xl font-bold">Selected Date</p>
+                  <p className="text-2xl font-bold padding-bottom">Selected Date:</p>
                 </div>
                 <div className="text-xl font-semibold">{selectedDate}</div>
+                <div className='date-info'>
+                <span id='amt'>{maxAdmin} available tickets</span>
+                <span>
+
+                <span id='amt'>Need to book for more than 20 people?</span>
+                <Link id='amt-two'>Contact us Here</Link>
+                </span>
+                </div>
                 {isTooMany && tooMany && (
           <div id='only'>Sorry, looks like there are only {tooMany} tickets left for this day</div>
         )}
@@ -431,8 +438,8 @@ const TicketsPage = () => {
       {sessionUser && selectedDate && (
 
       <div>
-        <h2>Select Tickets</h2>
-        <p>
+        <h2 className='padding-left-3rem'>Select Tickets</h2>
+        <p className='padding-left-3rem'>
           Tickets include admission to all galleries and special exhibitions
         </p>
         <div className='ticket-purchase'>
@@ -555,7 +562,9 @@ const TicketsPage = () => {
             </div>
           </div>
         </div>
-      <div className='modal-cont'>
+      {checkoutModal && (
+
+        <div className='modal-content checkout'>
         {checkoutModal &&
         (adultQuantity ||
           studentQuantity ||
@@ -594,7 +603,7 @@ const TicketsPage = () => {
               </div>
             )}
             <div className='checkout-info'>
-            <span>Total: ${totalPrice}.00</span>
+            <span id='total'>Total: ${totalPrice}.00</span>
             {/* {member.MembershipType.id && (
               <span>Member Discount: </span>
             )} */}
@@ -605,12 +614,13 @@ const TicketsPage = () => {
           ""
         )}
         </div>
+        )}
         </div>
       </div>
       )}
       {!sessionUser && (<OpenModalButton buttonText='Log in' onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>)}
       {!selectedDate && sessionUser && (<h2>Select a date</h2>)}
-    </>
+    </div>
   );
 };
 
