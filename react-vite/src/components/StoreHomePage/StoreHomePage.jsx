@@ -10,9 +10,11 @@ import { useState } from "react"
 function StoreHomePage(){
 const dispatch= useDispatch()
 const items = useSelector((state)=>state.items)
+const [storeItems, setStoreItems] = useState([])
 const [sortedLowToHigh, setSortedLowToHigh] = useState([])
 const [sortedHighToLow, setSortedHighToLow] = useState([])
-const[storeItems, setStoreItems] = useState(Object.values(items))
+const [timeCheck, setTimeCheck] = useState(true);
+
 
 useEffect(()=>{
 
@@ -21,7 +23,23 @@ useEffect(()=>{
 
 },[dispatch])
 
+useEffect(() => {
+    let timeout;
+   
+    if (!items) {
+        timeout = setTimeout(() => setTimeCheck(false), 3000);
+        
+    }else{
+        setStoreItems(Object.values(items))
+    }
 
+    return () => clearTimeout(timeout);
+}, [items]);
+
+if (!items && timeCheck) return <h1>Loading...</h1>;
+else if (!items && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+
+// console.log(sortedHighToLow,sortedLowToHigh)
 const lowToHigh =()=>{
     setStoreItems(Object.values(items).slice().sort((a, b) => a.price - b.price))
 }
@@ -35,7 +53,12 @@ const bestRated = () =>{
     setStoreItems(Object.values(items).slice().sort((a, b) => b.avgRating - a.avgRating))
 } 
 
+// if(items){
 
+//     setStoreItems(Object.values(items))
+// }
+
+// console.log(storeItems)
 
 return(
     <>
