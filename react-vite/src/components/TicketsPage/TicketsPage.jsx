@@ -26,6 +26,9 @@ const TicketsPage = () => {
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalQuantity, setTotalQuantity] = useState(0)
   const [isSoldOut, setIsSoldOut] = useState(false)
+  const [maxAdmin, setMaxAdmin] = useState(5000000)
+  const [isTooMany, setIsTooMany] = useState(false)
+  const [tooMany, setTooMany] = useState(0)
   
   const sessionUser = useSelector((state)=> state.session.user)
   const admissions = useSelector((state)=>state.admissions)
@@ -52,6 +55,18 @@ const TicketsPage = () => {
     dispatch(getAdmissionsThunk())
   }, [dispatch])
 
+  useEffect(()=>{
+
+    console.log(totalQuantity)
+    if(totalQuantity > maxAdmin){
+      setIsTooMany(true)
+      setTooMany(maxAdmin)
+      
+    }else{
+      setIsTooMany(false)
+    }
+  },[selectedDate,totalQuantity])
+
   const monthNames = [
     "January",
     "February",
@@ -69,6 +84,62 @@ const TicketsPage = () => {
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
+  const cannotPurchaseAmt = isTooMany || isSoldOut
+
+  const handleSelect = () =>{
+
+    // a date has been selected by a user
+    // make sure the date is formatted the same as dates in the database
+    const parsedDate = new Date(selectedDate)
+    const year = parsedDate.getFullYear()
+    console.log("YEAR", year)
+    // See if that date exists in the admissions state
+    let admissionsList = Object.values(admissions)
+    //Organize the data better so that looking through it is much easier. Could organize by year, then month, then day. With key value pairs. 
+
+    
+
+
+    //if the max_admissions == 0, then: 
+      setIsSoldOut(false)
+      modalVisible(false)
+
+  }
+
+  const handleDayClick = (day) => {
+    const selected = new Date(currentYear, currentMonth, day);
+    const year = selected.getFullYear()
+    console.log("YEAR", year)
+    const month = selected.getMonth() + 1
+    console.log("MONTH:",month)
+    const date = selected.getDate()
+    console.log("DAte",date)
+
+    // see if it exists in state: 
+    //! what if two users create a new instance? Check the backend just in case? and or have some handling in the front end where it handles this. But I think it might be okay becasue it will just overwrite the newest information I think. 
+
+    if (admissions[year] && admissions[year][month] && admissions[year][month][date]){
+      const max = admissions[year][month][date].max_admissions
+      if (max==0){
+        setIsSoldOut(true)
+      }else{
+        setMaxAdmin(max)
+      }
+    }
+
+    setSelectedDate(selected);
+  
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const formattedDate = selected.toLocaleDateString(undefined, options);
+  
+    setSelectedDate(formattedDate);
+    setModalVisible(true);
+  };
   const generateCalendar = (year, month) => {
     const firstDayOfMonth = new Date(year, month, 1);
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -113,20 +184,7 @@ const TicketsPage = () => {
     // set it into the []
   };
 
-  const handleDayClick = (day) => {
-    const selected = new Date(currentYear, currentMonth, day);
 
-    setSelectedDate(selected);
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const formattedDate = selected.toLocaleDateString(undefined, options);
-    setSelectedDate(formattedDate);
-    setModalVisible(true);
-  };
 
   const handlePrevMonth = () => {
     setCurrentMonth((prevMonth) => {
@@ -236,25 +294,6 @@ const TicketsPage = () => {
     }
   };
 
-  const handleSelect = () =>{
-
-    // a date has been selected by a user
-    // make sure the date is formatted the same as dates in the database
-    const parsedDate = new Date(selectedDate)
-    const formattedDate = parsedDate.toUTCString()
-
-    // See if that date exists in the admissions state
-    let admissionsList = Object.values(admissions)
-    //Organize the data better so that looking through it is much easier. Could organize by year, then month, then day. With key value pairs. 
-
-    
-
-
-    //if the max_admissions == 0, then: 
-      setIsSoldOut(false)
-      modalVisible(false)
-
-  }
 
   // const handleSubmit = async() =>{
   //   // const newPurchase = {
@@ -308,6 +347,9 @@ const TicketsPage = () => {
       console.log(newPurchase)
   }
 
+  console.log(maxAdmin)
+  console.log(isTooMany, "TOOMANY")
+
   return (
     <>
       <div className="bg-gray-100 flex items-center justify-center h-screen">
@@ -334,11 +376,19 @@ const TicketsPage = () => {
             </div>
           </div>
         </div>
+        <div className='selected-date-info'>
+
+
+        {isSoldOut &&(
+          <div style={{"color":"red"}}>Sorry, this day is sold out.</div>
+        )}
         {modalVisible && !isSoldOut && (
+          
           <div
             id="myModal"
             className="modal fixed inset-0 flex items-center justify-center z-50"
           >
+
             <div className="modal-overlay absolute inset-0 bg-black opacity-50"></div>
             <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
               <div className="modal-content py-4 text-left px-6">
@@ -352,10 +402,14 @@ const TicketsPage = () => {
                   </button>
                 </div>
                 <div className="text-xl font-semibold">{selectedDate}</div>
+                {isTooMany && tooMany && (
+          <div id='only'>Sorry, looks like there are only {tooMany} tickets left for this day</div>
+        )}
               </div>
             </div>
           </div>
         )}
+        </div>
       </div>
       {sessionUser ? (
 
@@ -524,7 +578,7 @@ const TicketsPage = () => {
             )}
             <div className='checkout-info'>
             <span>Total: ${totalPrice}.00</span>
-            <button type='submit' onClick={handleCheckout}>Checkout</button>
+            <button className='checkout-button' type='submit' onClick={handleCheckout} disabled={cannotPurchaseAmt}>Checkout</button>
             </div>
           </div>
         ) : (

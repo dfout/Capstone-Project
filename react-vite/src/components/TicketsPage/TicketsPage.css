@@ -93,3 +93,23 @@
     display:flex;
     flex-direction: row;
 }
+
+
+#only{
+    color:red;
+
+}
+
+.selected-date-info{
+    display:flex;
+    flex-direction:row;
+   
+}
+
+.flex{
+    display:flex;
+}
+
+.checkout-button:not(:disabled){
+    cursor: pointer;
+}
