@@ -106,6 +106,10 @@ function PurchasesPage(){
                 </>
                 )}
             </div>) } */}
+        {!Object.values(admissions).length && (
+            <h2>No purchases</h2>
+
+        )}
 
         {Object.values(admissions)?.reverse().map((purchase)=>{
 

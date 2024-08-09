@@ -7,7 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import { useNavigate } from "react-router-dom";
 import LoginFormModal from "../LoginFormModal";
 import {useModal} from '../../context/Modal'
-import { getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
+import { createTicketTypePurchase, getAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -49,15 +49,7 @@ const TicketsPage = () => {
     dispatch(getAdmissionsThunk())
   }, [dispatch])
  
-//   useEffect(() => {
-//     let timeout;
-   
-//     if (!member || !admissions) {
-//         timeout = setTimeout(() => setTimeCheck(false), 3000);
-        
-//     }
-//     return () => clearTimeout(timeout);
-// }, [member, admissions]);
+
 
   useEffect(()=>{
     if(totalQuantity > maxAdmin){
@@ -108,25 +100,25 @@ const TicketsPage = () => {
 
   const cannotPurchaseAmt = isTooMany || isSoldOut || !selectedDate
 
-  const handleSelect = () =>{
+  // const handleSelect = () =>{
 
-    // a date has been selected by a user
-    // make sure the date is formatted the same as dates in the database
-    const parsedDate = new Date(selectedDate)
-    const year = parsedDate.getFullYear()
-    console.log("YEAR", year)
-    // See if that date exists in the admissions state
-    let admissionsList = Object.values(admissions)
-    //Organize the data better so that looking through it is much easier. Could organize by year, then month, then day. With key value pairs. 
+  //   // a date has been selected by a user
+  //   // make sure the date is formatted the same as dates in the database
+  //   const parsedDate = new Date(selectedDate)
+  //   const year = parsedDate.getFullYear()
+  //   console.log("YEAR", year)
+  //   // See if that date exists in the admissions state
+  //   let admissionsList = Object.values(admissions)
+  //   //Organize the data better so that looking through it is much easier. Could organize by year, then month, then day. With key value pairs. 
 
     
 
 
-    //if the max_admissions == 0, then: 
-      setIsSoldOut(false)
-      modalVisible(false)
+  //   //if the max_admissions == 0, then: 
+  //     setIsSoldOut(false)
+  //     modalVisible(false)
 
-  }
+  // }
 
   const handleDayClick = (day) => {
     const selected = new Date(currentYear, currentMonth, day);
@@ -318,35 +310,13 @@ const TicketsPage = () => {
   };
 
 
-  // const handleSubmit = async() =>{
-  //   // const newPurchase = {
-  //   //   admission_id:
-  //   //   user_id: 
-  //   //   total_price:
-  //   //   ticket_quantity:
-  //   //   member_discount:
-  //   // }
-  //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase))
-  //   // wait for the purchase id:
-  //   // then check each type quantity
-  //   // if there is a quantity for a type
-  //   // create an object for each type that has a quantity:
-  //   // if (response.id){
-  //   //   if (adultQuantity!= 0){
-  //   //     const 
-  //   //   }
-
-  //   // }
-  // }
-  // console.log(sessionUser, "SESSION")
-  // console.log("SELECTED", selectedDate)
-
   //! CHECKOUT
   const handleCheckout = async() =>{
     // need to query for the admission information
     // if (!sessionUser){
     //   navigate('/login')
     // }
+    console.log(adultQuantity, seniorQuantity, childQuantity, disQuantity, studentQuantity)
   const parsedDate = new Date(selectedDate)
 
   const formattedDate = parsedDate.toUTCString()
@@ -364,11 +334,65 @@ const TicketsPage = () => {
       
 
       const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
+      console.log(response)
+      let id = response.id
+      
+
+    
+      if(adultQuantity){
+        let adult_ticket = {
+          purchase_id: id, 
+          type_id: 1, 
+          quantity: adultQuantity,
+          
+        }
+        const response = await dispatch(createTicketTypePurchase(adult_ticket))
+      }
+
+      if(seniorQuantity){
+        let senior_ticket = {
+          purchase_id: id, 
+          type_id: 2, 
+          quantity: seniorQuantity,
+          
+        }
+        const response = await dispatch(createTicketTypePurchase(senior_ticket))
+      }
+      if(disQuantity){
+        let disability_ticket = {
+          purchase_id: id, 
+          type_id: 3, 
+          quantity: disQuantity,
+        }
+        const response = await dispatch(createTicketTypePurchase(disability_ticket))
+      }
+      if(studentQuantity){
+        let student_ticket = {
+          purchase_id:id,
+          type_id:4,
+          quantity: studentQuantity
+        }
+        const response = await dispatch(createTicketTypePurchase(student_ticket))
+      }
+
+      if(childQuantity){
+       let child_ticket ={
+          purchase_id:id,
+          type_id:5,
+          quantity:childQuantity
+        }
+        const response = await dispatch(createTicketTypePurchase(child_ticket))
+      }
+
+      // need to pass in the quantity of each ticket type
+
+
+      //Create AdmissionTicketTypesPurchased instances
        
       
 
       //dispatch to the backend 
-
+      setAdultQuantity(0)
      navigate('/user/purchases')
   }
 
@@ -609,7 +633,7 @@ const TicketsPage = () => {
             {/* {member.MembershipType.id && (
               <span>Member Discount: </span>
             )} */}
-            <div class='flex center'>
+            <div className='flex center'>
             <button className='membership-button' type='submit' onClick={handleCheckout} disabled={cannotPurchaseAmt}>Checkout</button>
             </div>
             </div>

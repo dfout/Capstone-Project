@@ -51,7 +51,8 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
     }
     else{
         const data = await response.json()
-        return data.errors
+        console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
+        return data.message
     }
 }
 
@@ -73,6 +74,7 @@ export const purchaseAdmissionsThunk = (purchase, admission)=> async (dispatch) 
     if (response.ok){
         const {AdmissionTicketPurchase} = await response.json()
         dispatch(purchaseAdmission(AdmissionTicketPurchase))
+        return AdmissionTicketPurchase
     }  else{
         const data = await response.json()
         return data.errors
@@ -95,6 +97,25 @@ export const deleteAdmissionPurchaseThunk = (purchase) => async(dispatch)=>{
     }
 }
 
+
+export const createTicketTypePurchase = (purchase)=> async(dispatch) =>{
+    console.log(purchase,"PURCHASE")
+    const response = await fetch(`api/admissions/purchases/${purchase.purchase_id}/types/${purchase.type_id}`,{method:'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(purchase)
+    })
+
+    if(response.ok){
+        const {TicketTypePurchase} = await response.json()
+        console.log("here")
+        return TicketTypePurchase
+    } else{
+        const data = await response.json()
+        return data.errors
+    }
+}
 
 const initialState = {}
 

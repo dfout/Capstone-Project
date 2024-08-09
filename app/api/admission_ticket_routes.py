@@ -35,9 +35,36 @@ def get_admissions():
 
 ## Create an admission ticket purchase based on information in the Ticket Form
 
+@admission_ticket_routes.route('/purchases/<int:purchase_id>/types/<int:id>', methods=['POST'])
+def ticket_type_purchase(purchase_id,id):
+    print("ISSUE WHEREEEEEEEEEEEEEEEEEEEEEEEEEEE")
+    # id is the ticketType id
+
+    # purchase = AdmissionTicketPurchase.query.filter_by(id=purchase_id).first()
+    #general information
+
+    ticket = request.get_json()
+
+
+    new_ticket_type_purchase = TicketTypePurchased(
+        type_id=id,
+        purchase_id=purchase_id,
+        quantity=ticket["quantity"]
+    )
+
+    db.session.add(new_ticket_type_purchase)
+    db.session.commit()
+
+    ticket_type_purchase_dict = new_ticket_type_purchase.to_dict()
+
+    return {"TicketTypePurchase": ticket_type_purchase_dict}, 200
+
+    
+    
+
 @admission_ticket_routes.route('/purchase', methods=['POST'])
 def purchase_admission():
-    print('here')
+  
     ## Form instance
     # form = TicketForm()
 
@@ -160,4 +187,6 @@ def purchase_admission():
     # ### Future Note: Would like to be able to hold tickets for users if they have them in their cart. 
 
     # return jsonify({"message": "Invalid form data"}), 400
+
+
 
