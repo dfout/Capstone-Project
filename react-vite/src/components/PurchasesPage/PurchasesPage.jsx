@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { deleteAdmissionPurchaseThunk } from "../../redux/admission"
+import { deleteAdmissionPurchaseThunk } from "../../redux/purchase"
 import { getUserAdmissionsThunk } from "../../redux/purchase"
 import { useEffect } from "react"
 import { Link } from "react-router-dom"

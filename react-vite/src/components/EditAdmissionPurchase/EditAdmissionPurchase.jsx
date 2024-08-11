@@ -25,6 +25,7 @@ const EditAdmissionPurchase = () => {
 let {id} = useParams()
 
 const purchase = useSelector((state)=>state.purchases[id])
+console.log(purchase.day)
 const admission = purchase['AdmissionDetails']
 const ticketTypes = purchase['TicketTypesPurchased']
 
@@ -42,8 +43,8 @@ console.log(admission)
   const [studentQuantity, setStudentQuantity] = useState(0);
   const [childQuantity, setChildQuantity] = useState(0);
   const [checkoutModal, setCheckoutModal] = useState(true);
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(purchase.totalPrice)
+  const [totalQuantity, setTotalQuantity] = useState(purchase.ticket_quantity)
   const [isSoldOut, setIsSoldOut] = useState(false)
   const [maxAdmin, setMaxAdmin] = useState(admission.max_admissions)
   const [isTooMany, setIsTooMany] = useState(false)
@@ -51,17 +52,21 @@ console.log(admission)
   const [admissionId, setAdmissionId] = useState(0)
   const [freebie, setFreebie] = useState(0)
   const [guestPrice, setGuestPrice] = useState(0)
+  const [changed, setChanged] = useState([])
+  const [editError, setEditError] = useState({})
 
   const [timeCheck, setTimeCheck] = useState(true);
 
-
-  
   const sessionUser = useSelector((state)=> state.session.user)
-  // const member = useSelector((state)=>state.member)
   const admissions = useSelector((state)=>state.admissions)
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const closeMenu = useModal()
+
+  const addToChanged = (item) =>{
+    setChanged(prevChanged => [...prevChanged, item])
+  }
 
   useEffect(() => {
     generateCalendar(currentYear, currentMonth);
@@ -73,7 +78,6 @@ console.log(admission)
 
 
   useEffect(()=>{
-
 
       for (let ticketTypePurchased of ticketTypes){
         console.log(ticketTypePurchased)
@@ -98,6 +102,27 @@ console.log(admission)
       }
 
   },[ticketTypes])
+
+  // Attempt at a more efficient solution
+//   useEffect(()=>{
+//     console.log(changed.includes(1))
+//     if(!changed.includes(1)){
+
+//         addToChanged(1)
+//         console.log(changed, "CHANGED")
+//     }
+
+//   },[adultQuantity])
+  
+// useEffect(()=>{
+//     console.log(changed.includes(2))
+//     if(!changed.includes(2)){
+
+//         addToChanged(2)
+//         console.log(changed, "CHANGED")
+//     }
+
+// },[seniorQuantity])
  
 
   useEffect(()=>{
@@ -112,7 +137,7 @@ console.log(admission)
     if(totalQuantity==0)setCheckoutModal(false)
   },[totalQuantity, maxAdmin])
 
-
+// Was member discount attempt: 
 // if (!member || !admissions && timeCheck) return <h1>Loading...</h1>;
 // else if (!member || !admissions && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
@@ -148,26 +173,6 @@ console.log(admission)
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const cannotPurchaseAmt = isTooMany || isSoldOut || !selectedDate
-
-  // const handleSelect = () =>{
-
-  //   // a date has been selected by a user
-  //   // make sure the date is formatted the same as dates in the database
-  //   const parsedDate = new Date(selectedDate)
-  //   const year = parsedDate.getFullYear()
-  //   console.log("YEAR", year)
-  //   // See if that date exists in the admissions state
-  //   let admissionsList = Object.values(admissions)
-  //   //Organize the data better so that looking through it is much easier. Could organize by year, then month, then day. With key value pairs. 
-
-    
-
-
-  //   //if the max_admissions == 0, then: 
-  //     setIsSoldOut(false)
-  //     modalVisible(false)
-
-  // }
 
   const handleDayClick = async (day) => {
     const selected = new Date(currentYear, currentMonth, day);
@@ -247,13 +252,14 @@ console.log(admission)
       //   dateToCheck.toLocaleDateString()
       // );
       // console.log("Selected Day", selectedDate);
+     
       calendarDays.push(
         <div
           key={day}
           className={`text-center py-2 border cursor-pointer ${
             isCurrentOrFutureDay ? "bg-blue-500" : "past"
           }
-             ${isSelectedDay ? "bg-green-500 text-white" : ""}`}
+             ${isSelectedDay ? "bg-green-500 text-white" : ""} ${day == selectedDate && "black-background white-text" }`}
           onClick={isCurrentOrFutureDay ? () => handleDayClick(day) : undefined}
         >
           {day}
@@ -377,95 +383,118 @@ console.log(admission)
 
 
   //! CHECKOUT
+
+  // For editing: The changes we need to worry about are:
+  // - Date changes
+  // - ticket quantity changes 
+
+  // we start out with original information. We need to only track the information that differs from the original data. 
+  // so we should store the original data. I do not want to make unneccessary calls to the backend if a quantity did not change and we update it to the same value. 
+
+
+  // ? How to do that:
+    // Only keep track of the things that have changed. 
+    // Need a way to flag any changes
+  // ? For updating the purchase
+  // ? We need to update the purchase instance itself, 
+  // ? Then we need to update or create any new ticketTypePurchased instances. 
+  //! for this, we need to grab out all the ticket types purchased for this purchase 
+  // then, iterate through them, or organize them by typeId in objects
+  // so lets 
   const handleCheckout = async() =>{
-    // need to query for the admission information
-    // if (!sessionUser){
-    //   navigate('/login')
-    // }
-
-  const parsedDate = new Date(selectedDate)
-
-  const formattedDate = parsedDate.toUTCString()
-
-  // formatted date is the correct format. 
-      const newPurchase = {
-        admission_id: admissionId,
-        user_id: sessionUser.id,
-        total_price: totalPrice, 
-        ticket_quantity: totalQuantity,
-      
-      }
-      // "Friday, August 23, 2024"
-      // instead of 
-      
-
-      const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
     
-      let id = response.id
+
+    // Grab the purchase information. 
+    let originalDate = admission.day
+
+    const parsedDate = new Date(selectedDate)
+    // Compare the date to the new selected date (parsed Date)
+    const formattedDate = parsedDate.toUTCString()
+    console.log("ORIGINAL", originalDate, "SELECTED",parsedDate)
+
+    // If dates differ or if the ticketQuantity differs:
+        // Well, if they are updating we are assuming they are going to update something. So this would need to run regardless.
+        // Do the check anyway. 
+        const updatedPurchase = {
+            admission_id: admissionId,
+            user_id: sessionUser.id,
+            total_price: totalPrice, 
+            ticket_quantity: totalQuantity,
+        }
+        // const response = await dispatch(updatedPurchase(updatedPurchase, formattedDate))
+        let id = response.id
       
+        // For the time being, this is going to be not the most efficient solution. 
+        // Here, I am going to grab all the ticketTypes purchased on this purchase instance and organize them by type of the ticket
+        // I will look through every ticketType quantity that exists on this page,
+          // if the quantity exists, 
+              // then I will see if the key of its type exists in the data from the backend (the get request for all ticketTypesPurchased on this purchase instance.)
+              // if the key exists:
+                  // Compare the quantity of the state to the quantity of the type
+                  // if the quantity is not the same:
+                      // Call an update to TicketTypesPurchased
+  
+              // if the key does not exist:
+                  // create a new ticketTypePurchased instance
 
-    
-      if(adultQuantity){
-        let adult_ticket = {
-          purchase_id: id, 
-          type_id: 1, 
-          quantity: adultQuantity,
-          
-        }
-        const response = await dispatch(createTicketTypePurchase(adult_ticket))
-      }
+                  if(adultQuantity){
+                    let adult_ticket = {
+                      purchase_id: id, 
+                      type_id: 1, 
+                      quantity: adultQuantity,
+                      
+                    }
+                    const response = await dispatch(createTicketTypePurchase(adult_ticket))
+                  }
+            
+                  if(seniorQuantity){
+                    let senior_ticket = {
+                      purchase_id: id, 
+                      type_id: 2, 
+                      quantity: seniorQuantity,
+                      
+                    }
+                    const response = await dispatch(createTicketTypePurchase(senior_ticket))
+                  }
+                  if(disQuantity){
+                    let disability_ticket = {
+                      purchase_id: id, 
+                      type_id: 3, 
+                      quantity: disQuantity,
+                    }
+                    const response = await dispatch(createTicketTypePurchase(disability_ticket))
+                  }
+                  if(studentQuantity){
+                    let student_ticket = {
+                      purchase_id:id,
+                      type_id:4,
+                      quantity: studentQuantity
+                    }
+                    const response = await dispatch(createTicketTypePurchase(student_ticket))
+                  }
+            
+                  if(childQuantity){
+                   let child_ticket ={
+                      purchase_id:id,
+                      type_id:5,
+                      quantity:childQuantity
+                    }
+                    const response = await dispatch(createTicketTypePurchase(child_ticket))
+                  }
+  
+          // At the end: return the user to the purchases page. 
+          navigate('/user/purchases')
 
-      if(seniorQuantity){
-        let senior_ticket = {
-          purchase_id: id, 
-          type_id: 2, 
-          quantity: seniorQuantity,
-          
-        }
-        const response = await dispatch(createTicketTypePurchase(senior_ticket))
-      }
-      if(disQuantity){
-        let disability_ticket = {
-          purchase_id: id, 
-          type_id: 3, 
-          quantity: disQuantity,
-        }
-        const response = await dispatch(createTicketTypePurchase(disability_ticket))
-      }
-      if(studentQuantity){
-        let student_ticket = {
-          purchase_id:id,
-          type_id:4,
-          quantity: studentQuantity
-        }
-        const response = await dispatch(createTicketTypePurchase(student_ticket))
-      }
+    // If the dates do not differ or the ticketQuantity does not differ:
 
-      if(childQuantity){
-       let child_ticket ={
-          purchase_id:id,
-          type_id:5,
-          quantity:childQuantity
-        }
-        const response = await dispatch(createTicketTypePurchase(child_ticket))
-      }
+        // Set an Error Message: 
 
-      // need to pass in the quantity of each ticket type
-
-
-      //Create AdmissionTicketTypesPurchased instances
-       
-      
-
-      //dispatch to the backend 
-      setAdultQuantity(0)
-     navigate('/user/purchases')
+        setEditError({error: "No edits to the purchase have been made. Please make changes to the admission date or ticket quantities to edit your purchase."})
+            // "No edits to the purchase have been made"    
   }
 
-
+  // for member discounts
   // const ticketHierarchy = [adultQuantity,]
-
-  console.log(adultQuantity, studentQuantity, childQuantity, disQuantity, seniorQuantity)
 
 
   return (
@@ -656,6 +685,9 @@ console.log(admission)
             </div>
           </div>
         </div>
+        {editError.error &&  (
+            <h4 style={{"color":"red"}}>{editError.error}</h4>
+        )}
       {checkoutModal && (
 
         <div className='modal-content checkout'>

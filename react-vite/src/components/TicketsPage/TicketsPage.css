@@ -245,3 +245,12 @@
 .font-2rem{
     font-size: 2rem;
 }
+
+
+.black-background{
+    background-color: black;
+}
+
+.white-text{
+    color:white;
+}

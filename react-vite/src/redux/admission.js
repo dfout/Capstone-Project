@@ -90,17 +90,7 @@ export const getOneAdmissionThunk = (admissionDate) => async(dispatch) =>{
     const response = await fetch('/api/')
 }
 
-export const deleteAdmissionPurchaseThunk = (purchase) => async(dispatch)=>{
-    const {id} = purchase
-    const response = await fetch(`/api/users/purchases/${id}`, {method: 'DELETE'})
-    if (response.ok){
-        const {id} = await response.json()
-        dispatch(deleteAdmissionPurchase(id))
-    }  else{
-        const data = await response.json()
-        return data.errors
-    }
-}
+
 
 export const createAdmissionThunk = (admission) => async(dispatch)=>{
     const response = await fetch('api/admissions/create',{
@@ -172,11 +162,7 @@ switch(action.type){
         newState[action.payload.purchase] = action.payload
         return newState
     }
-    case DELETE_PURCHASE:{
-        const newState={...state}
-        delete newState[action.payload]
-        return newState
-    }
+
     default:
         return state
 }

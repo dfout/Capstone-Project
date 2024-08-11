@@ -1,10 +1,32 @@
 const GET_USER_ADMISSIONS = 'user/getAdmissions'
+const DELETE_PURCHASE = 'user/delete/purchase'
+const UPDATE_USER_ADMISSION = 'user/purchase/update'
 
 
 const getUserAdmissions = (admissions)=>({
     type: GET_USER_ADMISSIONS, 
     payload: admissions
 })
+
+const updateAdmissionPurchase = (purchase) =>({
+    type:UPDATE_USER_ADMISSION, 
+    payload: admission
+})
+
+
+const deleteAdmissionPurchase = (id) =>({
+    type: DELETE_PURCHASE, 
+    payload:id
+})
+
+// const updateTicketTypePurchase = (purchase) =>({
+//     type: UPDATE_USER_ADMISSION, 
+//     payload: purchase
+    
+// })
+
+
+// const 
 
 
 export const getUserAdmissionsThunk = () => async (dispatch)=>{
@@ -20,6 +42,19 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
     }
 }
 
+export const deleteAdmissionPurchaseThunk = (purchase) => async(dispatch)=>{
+    const {id} = purchase
+    const response = await fetch(`/api/users/purchases/${id}`, {method: 'DELETE'})
+    if (response.ok){
+        const {id} = await response.json()
+        dispatch(deleteAdmissionPurchase(id))
+    }  else{
+        const data = await response.json()
+        return data.errors
+    }
+}
+
+
 const initialState = {}
 
 function purchaseReducer(state=initialState, action){
@@ -29,6 +64,11 @@ function purchaseReducer(state=initialState, action){
             action.payload.forEach((purchase)=>newState[purchase.id]=purchase)
             return newState
 
+        }
+        case DELETE_PURCHASE:{
+            const newState={...state}
+            delete newState[action.payload]
+            return newState
         }
         default:
         return state
