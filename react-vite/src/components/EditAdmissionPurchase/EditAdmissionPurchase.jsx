@@ -23,9 +23,12 @@ import { Link } from "react-router-dom";
 const EditAdmissionPurchase = () => {
     
 let {id} = useParams()
+
 const purchase = useSelector((state)=>state.purchases[id])
 const admission = purchase['AdmissionDetails']
 const ticketTypes = purchase['TicketTypesPurchased']
+
+console.log(ticketTypes, "Ticket Types")
 const year = purchase['AdmissionDetails']['year']
 console.log(admission)
 
@@ -67,26 +70,35 @@ console.log(admission)
     dispatch(getAdmissionsThunk())
     dispatch(getUserAdmissionsThunk())
   }, [dispatch])
+
+
+  useEffect(()=>{
+
+
+      for (let ticketTypePurchased of ticketTypes){
+        console.log(ticketTypePurchased)
+        if(ticketTypePurchased.typeId == 1){
+            console.log(ticketTypePurchased.quantity, "QUAN")
+            setAdultQuantity(ticketTypePurchased.quantity)
+            console.log(adultQuantity)
+        }
+        if(ticketTypePurchased.typeId == 2){
+            setSeniorQuantity(ticketTypePurchased.quantity)
+        }
+        if(ticketTypePurchased.typeId == 3){
+            setDisQuantity(ticketTypePurchased.quantity)
+        }
+        if(ticketTypePurchased.typeId == 4){
+            setStudentQuantity(ticketTypePurchased.quantity)
+        }
+        if(ticketTypePurchased.typeId == 5){
+            setChildQuantity(ticketTypePurchased.quantity)
+        }
+        
+      }
+
+  },[ticketTypes])
  
-  for (let ticketTypePurchased of ticketTypes){
-    console.log(ticketTypePurchased)
-    if(ticketTypePurchased.type_id == 1){
-        setAdultQuantity(ticketTypePurchased.quantity)
-    }
-    if(ticketTypePurchased.type_id == 2){
-        setSeniorQuantity(ticketTypePurchased.quantity)
-    }
-    if(ticketTypePurchased.type_id == 3){
-        setDisQuantity(ticketTypePurchased.quantity)
-    }
-    if(ticketTypePurchased.type_id == 4){
-        setStudentQuantity(ticketTypePurchased.quantity)
-    }
-    if(ticketTypePurchased.type_id == 5){
-        setChildQuantity(ticketTypePurchased.quantity)
-    }
-    
-  }
 
   useEffect(()=>{
     if(totalQuantity > maxAdmin){
@@ -160,12 +172,11 @@ console.log(admission)
   const handleDayClick = async (day) => {
     const selected = new Date(currentYear, currentMonth, day);
     const year = selected.getFullYear()
-    console.log("YEAR", year)
+    
     const month = selected.getMonth() + 1
-    console.log("MONTH:",month)
+ 
     const date = selected.getDate()
-    console.log("DAte",date)
-
+   
     // see if it exists in state: 
     //! what if two users create a new instance? Check the backend just in case? and or have some handling in the front end where it handles this. But I think it might be okay becasue it will just overwrite the newest information I think. 
 
@@ -179,7 +190,7 @@ console.log(admission)
       }
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
-      console.log("DAYYYYYY", selected.getDate())
+
       const options = {'weekday':'long'}
       const admission = {
         day:selected,
@@ -189,9 +200,9 @@ console.log(admission)
         max_admissions: maxAdmin,
         day_of_week: day.toLocaleDateString('en-US', options),
       }
-      console.log("BEFORE DISPATCHd")
+
       const response = await dispatch(createAdmissionThunk(admission))
-      console.log(response, "GHERERERER")
+
 
       setAdmissionId(response.id)
       
@@ -453,6 +464,8 @@ console.log(admission)
 
 
   // const ticketHierarchy = [adultQuantity,]
+
+  console.log(adultQuantity, studentQuantity, childQuantity, disQuantity, seniorQuantity)
 
 
   return (

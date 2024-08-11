@@ -65,9 +65,9 @@ function ProfileButton() {
               <li><NavLink to='/user/purchases' className='manage-link'>My Purchases</NavLink>
                 
               </li>
-              <li><NavLink to='/user/points' className='manage-link'>My Points</NavLink>
+              {/* <li><NavLink to='/user/points' className='manage-link'>My Points</NavLink>
                 
-                </li>
+                </li> */}
               
             </>
           ) : (
