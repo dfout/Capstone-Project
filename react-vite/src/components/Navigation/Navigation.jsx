@@ -53,13 +53,16 @@ function Navigation() {
       {/* <NavLink className='nav-links archivo-black-regular underline'to='/exhibitions'>Exhibitions</NavLink> */}
       </li>
       <li>
-      <NavLink onClick={comingSoon}className='nav-links new underline'>Events</NavLink>
+      <NavLink onClick={comingSoon}className='nav-links new underline'>Events </NavLink>
       </li>
       <li>
-      <span onClick={comingSoon} className='nav-links new underline'>Art & Artists </span>
+      <NavLink onClick={comingSoon} className='nav-links new underline'>Art & Artists </NavLink>
       </li>
     <li>
       <NavLink className='nav-links  new underline'to='/store'>Store</NavLink>
+      </li>
+      <li>
+      <NavLink onClick={comingSoon} className='nav-links new underline'>Games & Community</NavLink>
       </li>
     </ul>
     </>
