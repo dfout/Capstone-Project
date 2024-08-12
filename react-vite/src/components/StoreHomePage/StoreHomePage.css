@@ -60,3 +60,12 @@
     display:flex;
     gap: 5px;
 }
+
+
+.suggestions{
+    position:relative;
+    background-color: rgb(231, 231, 231);
+    height: 5rem;
+    overflow-y: scroll;
+    width:fit-content;
+}
