@@ -102,6 +102,19 @@ function PurchasesPage(){
     }
     return(
         <>
+        <div className='refund-edit-container'>
+            <div className='box'>
+
+            <p id='edit'>Cancel Admission Purchase</p>
+            <p className='limited'>Cancelling any admissions purchases 24 hours prior to the admission date will result in a 100% refund.</p>
+            </div>
+            <div className='box'>
+            <p id='edit'>Change Admission Details</p>
+            <p>Updating ticket quanitity or type is available up to 24 hours in advance of admission date. Price adjustments will be made.</p>
+            </div>
+        </div>
+        <div className='purchases-cont'>
+
         <h2>Your Admission Purchases</h2>
         <div className='purchases'>
         {/* <h3 onClick={()=>upComingAdmissions(admissions)}><Link>Upcoming Admissions</Link></h3> */}
@@ -122,6 +135,14 @@ function PurchasesPage(){
             <h2>No purchases</h2>
 
         )}
+        {/* <div className='column-labels'>
+            <span>Admission Date</span>
+            <span>Cost</span>
+            <span>Ticket Quantity</span>
+            <span>Purchased On</span>
+            <span className='placeholder'>Here</span>
+            <span className='placeholder'>Here</span>
+        </div> */}
 
         {Object.values(purchases)?.reverse().map((purchase)=>{
 
@@ -129,32 +150,46 @@ function PurchasesPage(){
             const currentDate = new Date();
             const diffInMs = admissionDate.getTime() - currentDate.getTime();
             const daysDifference = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+            
+            if (daysDifference >=1){
 
-            return(
-
-            <div key={purchase.id} className='list-purchases'>
-                <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
-                <span> Cost: ${purchase.totalPrice}.00 </span>
-                <span> Ticket Quantity: {purchase.ticketQuantity}</span>
-                <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
-          
-                {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
-                <>
-                    <button onClick={()=> handleUpdate(purchase.id)}>Update Purchase</button>
-                    <button onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
-                </>
-                )}
-            </div>
-
-            )
+                return(
+                    
+                <div key={purchase.id} className='list-purchases space-between'>
+                    {/* <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
+                    <span> Cost: ${purchase.totalPrice}.00 </span>
+                    <span> Ticket Quantity: {purchase.ticketQuantity}</span>
+                    <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span> */}
+              
+                    {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
+                    <>
+                    <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
+                    <span> Cost: ${purchase.totalPrice}.00 </span>
+                    <span> Ticket Quantity: {purchase.ticketQuantity}</span>
+                    <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
+                        <button className='membership-button' id='manage' onClick={()=> handleUpdate(purchase.id)}>Update Purchase</button>
+                        <button className='membership-button' id='manage'  onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
+                    </>
+                    )}
+                </div>
+    
+                )
+            }else{
+                return(
+                    <div key={purchase.id} className='list-purchases'>
+               
+                    <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
+                    <span> Cost: ${purchase.totalPrice}.00 </span>
+                    <span> Ticket Quantity: {purchase.ticketQuantity}</span>
+                    <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
+                </div>
+                )
+            }
+            
         })}
         </div>
-        <div className='refund-edit-container'>
-            <h3>Cancellation</h3>
-            <p>Cancelling any admissions purchases 24 hours prior to the admission date will result in a 100% refund.</p>
-            <h3>Update</h3>
-            <p>Updating ticket quanitity or type is available up to 24 hours in advance of admission date. Price adjustments will be made.</p>
         </div>
+        
         </>
     )
 

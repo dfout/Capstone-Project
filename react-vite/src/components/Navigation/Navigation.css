@@ -30,10 +30,11 @@
   margin-right:auto;
   display:inline-flex;
   align-items: center;
-  flex:1;
+  flex:1.5;
   gap:.25rem;
   justify-content: space-between;
   height:fit-content;
+  /* width: 500px; */
   /* background-color: red; */
 
 }
