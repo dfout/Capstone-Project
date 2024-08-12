@@ -20,6 +20,7 @@
     overflow:hidden;
 }
 
+
 #preview-image {
    
     height:auto;
@@ -27,6 +28,9 @@
     overflow: hidden;
     /* border-radius: 10px; */
     cursor: pointer;
+}
+.hero-container{
+    padding: 2rem;
 }
 
 .exposition-link{
@@ -81,6 +85,10 @@
 
 #name{
     font-size: 24pt;
+    /* font-family: "indivisible", sans-serif;
+font-weight: 700;
+font-style: normal; */
+font-variant: small-caps;
     
 }
 

@@ -63,9 +63,44 @@
 
 
 .suggestions{
-    position:relative;
+    position:absolute;
+    z-index: 3;
     background-color: rgb(231, 231, 231);
     height: 5rem;
     overflow-y: scroll;
-    width:fit-content;
+    width:80%;
+}
+
+#suggestions{
+    cursor:pointer;
+}
+#suggestions:hover{
+    color: blue
+}
+
+.search-cont{
+    display:flex;
+    width: 100%;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+.searchBarVisual{
+    /* width:20rem; */
+    position:relative;
+    flex-grow: 2;
+    flex-shrink: 1;
+    max-width: 30rem;
+}
+.searchBar{
+    /* display:flex; */
+    /* flex:1; */
+    /* width: 100%; */
+    /* max-width: 80%; */
+    /* min-width: 30%; */
+    width: 80%;
+    height: 2rem;
+    font-size:12pt;
 }

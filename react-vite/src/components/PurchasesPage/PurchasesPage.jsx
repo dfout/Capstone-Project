@@ -103,15 +103,17 @@ function PurchasesPage(){
     return(
         <>
         <div className='refund-edit-container'>
-            <div className='box'>
-
-            <p id='edit'>Cancel Admission Purchase</p>
-            <p className='limited'>Cancelling any admissions purchases 24 hours prior to the admission date will result in a 100% refund.</p>
-            </div>
-            <div className='box'>
+        <div className='box'>
             <p id='edit'>Change Admission Details</p>
             <p>Updating ticket quanitity or type is available up to 24 hours in advance of admission date. Price adjustments will be made.</p>
             </div>
+
+            <div className='box'>
+            <p id='edit'>Cancel Admission Purchase</p>
+            <p className='limited'>Cancelling any admissions purchases 24 hours prior to the admission date will result in a 100% refund.</p>
+            </div>
+
+
         </div>
         <div className='purchases-cont'>
 

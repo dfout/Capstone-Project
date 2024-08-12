@@ -103,6 +103,7 @@ function StoreHomePage() {
 
     return (
         <div className='container'>
+            <div className='search-cont'>
             <div className='searchBarVisual'>
                 <IoIosSearch />
                 <input
@@ -118,12 +119,13 @@ function StoreHomePage() {
                 {!closed && suggestions?.length > 0 && (
                     <ul className='suggestions' ref={suggestionsRef}>
                         {suggestions?.map((item) => (
-                            <li key={item.id} onClick={() => handleSuggestionClick(item)}>
+                            <li id='suggestions' key={item.id} onClick={() => handleSuggestionClick(item)}>
                                 {item.name}
                             </li>
                         ))}
                     </ul>
                 )}
+            </div>
             </div>
             <div className='sort-by-cont'>
                 <form className='sort-by'>

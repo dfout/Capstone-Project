@@ -6,14 +6,17 @@
 
 }
 
+
+
 .footer{
-    height: 100px;
+    height: 300px;
     position: relative;
-    padding-top: 20px;
-    
+    /* padding-top: 20px;
+    padding-bottom: 20px; */
+    padding: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
 
     background-color: rgb(246, 246, 246);
     text-align: center;
@@ -52,4 +55,17 @@
 
 #tickets-page{
   height:100vh;
+}
+
+.ms-container{
+  position:relative;
+  width: 200px;
+  height: 133px;
+  border: 1px solid lightslategrey
+
+}
+
+#ms{
+  height:100%;
+  width:100%;
 }

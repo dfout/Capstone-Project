@@ -19,9 +19,9 @@
 
 }
 .navbar-links{
-  position:sticky;
-  top: 20px;
-  z-index: 2000; /* Ensure it's above other content */
+  /* position:sticky;
+  top: 20px; */
+  /* z-index: 2000;  */
   background-color: white; /* Adjust background color as needed */
   
   /* background-color: red; */
@@ -50,6 +50,36 @@
 
 #musee{
   font-size: 45pt;
+  font-family: "indivisible", sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+
+.app-description{
+  font-family: "indivisible", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  padding-top: 2rem;
+}
+
+.welcome{
+  /* font-family: "indivisible", sans-serif;
+font-weight: 400;
+font-style: normal; */
+font-family: "elza", sans-serif;
+font-weight: 50;
+font-style:oblique;
+/* font-family: "articulat-cf", sans-serif;
+font-weight: 500;
+font-style: italic; */
+font-size: 30pt;
+}
+
+.new{
+  font-family: "indivisible", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+
 }
 
 #tickets-button{
@@ -81,9 +111,9 @@
 
 
 .other-links{
-  position:sticky;
-  top: 0;
-  z-index: 1000; /* Ensure it's above other content */
+  /* position:sticky; */
+  /* top: 0; */
+  /* z-index: 1000; */
   background-color: white; /* Adjust background color as needed */
   padding-left: 7%;
   box-sizing: border-box;

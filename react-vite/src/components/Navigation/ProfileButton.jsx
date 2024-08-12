@@ -46,8 +46,8 @@ function ProfileButton() {
 
   return (
     <>
-      <button className='profile-button archivo-black-regular' onClick={toggleMenu}>
-      My account
+      <button className='profile-button new' onClick={toggleMenu}>
+      my account
       </button>
       {showMenu && (
         <ul className="profile-dropdown" ref={ulRef}>

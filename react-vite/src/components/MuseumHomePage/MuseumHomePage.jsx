@@ -18,6 +18,11 @@ function MuseumHomePage(){
     //2,
     return(
         <>
+        <div className='hero-container'>
+            
+        <span className='welcome'>Welcome to Museum Site</span>
+        <p className='app-description'>A place where users can book admission tickets, become members with perks, purchase and review merchandise, view current exhibitions and art, and book event reservations. An all-in-one museum management software system, bringing the museum to your fingertips. </p>
+        </div>
         <div className='home-exhibitions-container'>
             {expositions[3] && (
                 <div className='exposition-tile'>
