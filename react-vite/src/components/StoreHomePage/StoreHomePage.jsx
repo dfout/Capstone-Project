@@ -53,6 +53,10 @@ const bestRated = () =>{
     setStoreItems(Object.values(items).slice().sort((a, b) => b.avgRating - a.avgRating))
 } 
 
+const featured = () =>{
+    setStoreItems(Object.values(items))
+}
+
 // if(items){
 
 //     setStoreItems(Object.values(items))
@@ -60,11 +64,55 @@ const bestRated = () =>{
 
 // console.log(storeItems)
 
+function handleChange(event) {
+    const value = event.target.value;
+    switch (value) {
+        case 'lowToHigh':
+            lowToHigh();
+            break;
+        case 'highToLow':
+            highToLow();
+            break;
+        case 'bestRating':
+            // Handle France selection
+           bestRated()
+            break;
+
+        default:
+            // Handle default case or no selection
+            featured()
+            break;
+    }
+}
+
+// function updateSelectedOptionText(event){
+//     const selectElement = event.target;
+//     const target = event.value
+//     const selectedText = selectElement.options[selectElement.selectedIndex].text;
+
+//     if(target='lowToHigh'){
+
+//         selectElement.options[selectElement.selectedIndex].text = `Sort by: ${lowToHigh}`;
+//     }
+// }
+
 return(
-    <>
-    <button onClick={lowToHigh}>Sort Low to High</button>
-    <button onClick={highToLow}>Sort High to Low</button>
-    <button onClick={bestRated}>Sort by Best Ratings</button>
+    <div className='container'>
+    <div className='sort-by-cont'>
+
+    <form className='sort-by'>
+        <label>Sort by:</label>
+
+    <select onChange={(event)=>handleChange(event)} id="countries" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        
+        <option selected value='featured'>Featured</option>
+        <option value="lowToHigh">Low to High</option>
+        <option value="highToLow">High to Low</option>
+        <option value="bestRating">Best Rating</option>
+    </select>
+    </form>
+    </div>
+
 
     <div className='all-items'>
     {storeItems?.map((item)=>(
@@ -92,7 +140,7 @@ return(
         </div>
     ))}
     </div>
-    </>
+    </div>
 )
 
 }

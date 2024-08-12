@@ -39,3 +39,24 @@
     flex-direction: column;
     gap:5px;
 }
+
+#sort-by{
+   margin-right:auto;
+   
+}
+
+
+.sort-by-cont{
+    /* background-color: blue; */
+    margin-left:auto;
+    display:flex;
+    justify-content: flex-end;
+    padding-right: 2%;
+    padding-bottom: 2%;
+
+}
+
+.sort-by{
+    display:flex;
+    gap: 5px;
+}
