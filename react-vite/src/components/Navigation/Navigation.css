@@ -31,6 +31,7 @@
   display:inline-flex;
   align-items: center;
   flex:1;
+  gap:.25rem;
   justify-content: space-between;
   height:fit-content;
   /* background-color: red; */
@@ -103,4 +104,6 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+
 
