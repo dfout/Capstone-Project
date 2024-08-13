@@ -17,5 +17,43 @@
 
 .item-imgs-info{
     display:flex;
+    /* background-color: blue; */
     
+}
+.item-info{
+    padding-left: 2rem;
+}
+
+/*Slider*/
+
+/* .slick-slider {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.slick-next:before,.slick-prev:before {
+    color: #04ff00;
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: var(--ifm-color-primary)
+} */
+
+
+.itemDetail-cont{
+    padding-left: 2rem;
+    padding-right:2rem;
+    padding-top:1rem;
+    padding-bottom:1rem;
+}
+
+.description{
+    font-size:12pt;
+}
+
+.toggle-button{
+    font-weight:bold;
+    text-decoration: underline;
+    cursor:pointer;
 }
