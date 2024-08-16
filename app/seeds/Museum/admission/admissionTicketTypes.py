@@ -5,11 +5,14 @@
 ## vistor w disability = 22
 ##student = 17
 ##child = 0 
+from app.models import db, TicketTypePurchased, AdmissionTicketType, environment, SCHEMA
+from sqlalchemy.sql import text
 
 def seed_ticket_types():
     ticket_types=[
         {
             "type": "Adult",
+            "description":"",
             "price": 22,
 
         },
@@ -37,3 +40,20 @@ def seed_ticket_types():
 
         },
     ]
+
+    for ticket_type in ticket_types:
+        ticket_type_entry = AdmissionTicketType(
+            type=ticket_type["type"],
+            description=ticket_type["description"],
+            price=ticket_type["price"]
+        )
+        db.session.add(ticket_type_entry)
+    db.session.commit()
+
+def undo_ticket_types():
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.admission_ticket_types RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM admission_ticket_types"))
+
+    db.session.commit()

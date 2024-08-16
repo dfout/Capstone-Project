@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users import seed_users, undo_users
 from .Museum.artists import seed_artists, undo_artists
 from .Museum.admission.admissionTickets import seed_admission_tickets, undo_admission_tickets
+from .Museum.admission.admissionTicketTypes import seed_ticket_types, undo_ticket_types
 from .Store.storeItems import seed_store_items, undo_store_items
 from .Store.reviews import seed_reviews, undo_reviews
 from .Museum.galleries import seed_galleries, undo_galleries
@@ -29,6 +30,7 @@ def seed():
         # command, which will  truncate all tables prefixed with 
         # the schema name (see comment in users.py undo_users function).
         # Make sure to add all your other model's undo functions below
+        undo_ticket_types()
         undo_membership_types()
         undo_exposition_images()
         undo_expositions()
@@ -57,12 +59,14 @@ def seed():
     seed_expositions()
     seed_exposition_images()
     seed_membership_types()
+    seed_ticket_types()
     # Add other seed functions here
 
 
 # Creates the `flask seed undo` command
 @seed_commands.command('undo')
 def undo():
+    undo_ticket_types()
     undo_membership_types()
     undo_exposition_images()
     undo_expositions()

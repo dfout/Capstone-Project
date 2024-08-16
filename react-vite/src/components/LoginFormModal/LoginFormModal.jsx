@@ -3,10 +3,11 @@ import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./LoginFormModal.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -30,16 +31,16 @@ function LoginFormModal() {
 
 
     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-]/;
-    if (
-      email.length === 0 ||
-      email.length > 65 ||
-      !email.match(validRegex) ||
-      password.length < 6
-    ) {
-      setBlock(true);
-    } else {
-      setBlock(false);
-    }
+    // if (
+    //   email.length === 0 ||
+    //   email.length > 65 ||
+    //   !email.match(validRegex) ||
+    //   password.length < 6
+    // ) {
+    //   setBlock(true);
+    // } else {
+    //   setBlock(false);
+    // }
 
     if (email.length === 0) errObj.email = "Please provide a valid Email";
     if (email.length > 65) errObj.email = "Email must be 65 characters or less";
@@ -74,6 +75,9 @@ function LoginFormModal() {
     }
   };
 
+  const handleSignUp = () =>{
+    closeModal()
+  }
  
   const demoUserLogIn = () =>{
     return dispatch(thunkLogin({email:'marnie@aa.io', password: 'password'})).then(closeModal)
@@ -110,6 +114,8 @@ function LoginFormModal() {
 
         </div>
       </form>
+      <span>Need an account?</span>
+      <Link to='/signup'onClick={handleSignUp}>Signup</Link>
     </div>
   );
 }

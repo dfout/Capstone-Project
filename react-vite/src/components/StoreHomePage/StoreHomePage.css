@@ -39,3 +39,68 @@
     flex-direction: column;
     gap:5px;
 }
+
+#sort-by{
+   margin-right:auto;
+   
+}
+
+
+.sort-by-cont{
+    /* background-color: blue; */
+    margin-left:auto;
+    display:flex;
+    justify-content: flex-end;
+    padding-right: 2%;
+    padding-bottom: 2%;
+
+}
+
+.sort-by{
+    display:flex;
+    gap: 5px;
+}
+
+
+.suggestions{
+    position:absolute;
+    z-index: 3;
+    background-color: rgb(231, 231, 231);
+    height: 5rem;
+    overflow-y: scroll;
+    width:80%;
+}
+
+#suggestions{
+    cursor:pointer;
+}
+#suggestions:hover{
+    color: blue
+}
+
+.search-cont{
+    display:flex;
+    width: 100%;
+    /* align-items: center; */
+    justify-content: center;
+    flex-direction: row;
+}
+
+
+.searchBarVisual{
+    /* width:20rem; */
+    position:relative;
+    flex-grow: 2;
+    flex-shrink: 1;
+    max-width: 30rem;
+}
+.searchBar{
+    /* display:flex; */
+    /* flex:1; */
+    /* width: 100%; */
+    /* max-width: 80%; */
+    /* min-width: 30%; */
+    width: 80%;
+    height: 2rem;
+    font-size:12pt;
+}

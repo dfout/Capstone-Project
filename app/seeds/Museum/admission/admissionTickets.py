@@ -19,9 +19,15 @@ def seed_admission_tickets():
         day = start_date + timedelta(days=i)
         day_of_week = day.strftime('%A')
         max_admissions = 0 if day in holidays else 500
+        date = day.day
+        month = day.month
+        year = day.year
 
         ticket = AdmissionTicket(
-            day=day,
+            # day=day,
+            date=date,
+            month=month,
+            year=year,
             max_admissions=max_admissions,
             day_of_week=day_of_week
         )

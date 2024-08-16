@@ -12,6 +12,7 @@ function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
+  const member = useSelector((state)=>state.member)
   const ulRef = useRef();
   const navigate = useNavigate()
 
@@ -45,22 +46,28 @@ function ProfileButton() {
 
   return (
     <>
-      <button className='profile-button archivo-black-regular' onClick={toggleMenu}>
-      My account
+      <button className='profile-button new' onClick={toggleMenu}>
+      my account
       </button>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <ul className="profile-dropdown" ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
+              <li className='reg'>{user.username}</li>
+              <li className='reg'>{user.email}</li>
               <li>
                 <button className='membership-button archivo-black-regular' onClick={logout}>Log Out</button>
               </li>
               <li><NavLink className='manage-link' to='user/reviews'>Manage Reviews</NavLink></li>
-              {user.isMember && (
+              {member.id  && (
                 <li><NavLink className='manage-link' to='user/membership'>Manage Membership</NavLink></li>
               )}
+              <li><NavLink to='/user/purchases' className='manage-link'>My Purchases</NavLink>
+                
+              </li>
+              {/* <li><NavLink to='/user/points' className='manage-link'>My Points</NavLink>
+                
+                </li> */}
               
             </>
           ) : (

@@ -10,7 +10,7 @@ function LoginFormPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const [email, setEmail] = useState("");
-  const [block, setBlock] = useState(false)
+  // const [block, setBlock] = useState(false)
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [hasSubmitted, setHasSubmitted] = useState(false)
@@ -23,16 +23,16 @@ function LoginFormPage() {
 
 
     let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-]/;
-    if (
-      email.length === 0 ||
-      email.length > 65 ||
-      !email.match(validRegex) ||
-      password.length < 6
-    ) {
-      setBlock(true);
-    } else {
-      setBlock(false);
-    }
+    // if (
+    //   email.length === 0 ||
+    //   email.length > 65 ||
+    //   !email.match(validRegex) ||
+    //   password.length < 6
+    // ) {
+    //   setBlock(true);
+    // } else {
+    //   setBlock(false);
+    // }
 
     if (email.length === 0) errObj.email = "Please provide a valid Email";
     if (email.length > 65) errObj.email = "Email must be 65 characters or less";

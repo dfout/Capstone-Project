@@ -8,13 +8,12 @@ class AdmissionTicketType(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    admission_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admission_tickets.id')), nullable=True)
     type = db.Column(db.String(255), nullable=False)
     description = db.Column(db.String(255), nullable=True)
     price = db.Column(db.Float, nullable=False)
 
 
-    admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
+    # admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
 
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
