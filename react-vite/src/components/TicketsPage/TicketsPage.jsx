@@ -418,6 +418,9 @@ const TicketsPage = () => {
 
 
   // const ticketHierarchy = [adultQuantity,]
+  const comingSoon = () =>{
+    alert("Under construction, Thank you for your patience")
+  }
 
 
   return (
@@ -469,7 +472,7 @@ const TicketsPage = () => {
                 <span>
 
                 <span id='amt'>Need to book for more than 20 people?</span>
-                <Link id='amt-two'>Contact us Here</Link>
+                <Link id='amt-two' onClick={comingSoon}>Contact us Here</Link>
                 </span>
                 </div>
                 {isTooMany && tooMany && (
