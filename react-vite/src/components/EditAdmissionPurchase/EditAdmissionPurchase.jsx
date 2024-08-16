@@ -25,17 +25,26 @@ const EditAdmissionPurchase = () => {
 let {id} = useParams()
 
 const purchase = useSelector((state)=>state.purchases[id])
-console.log(purchase.day)
+// console.log(purchase.day)
 const admission = purchase['AdmissionDetails']
 const ticketTypes = purchase['TicketTypesPurchased']
-
+const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+const year = admission.year
+const month = admission.month
+const date  = admission.date
+const original = new Date(year, month - 1, date)
+const formattedDate = original.toLocaleDateString(undefined, options);
 console.log(ticketTypes, "Ticket Types")
-const year = purchase['AdmissionDetails']['year']
 console.log(admission)
 
   const [currentYear, setCurrentYear] = useState(year);
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
-  const [selectedDate, setSelectedDate] = useState(admission.day);
+  const [currentMonth, setCurrentMonth] = useState(month -1 );
+  const [selectedDate, setSelectedDate] = useState(formattedDate);
   const [modalVisible, setModalVisible] = useState(true);
   const [adultQuantity, setAdultQuantity] = useState(0);
   const [seniorQuantity, setSeniorQuantity] = useState(0);
