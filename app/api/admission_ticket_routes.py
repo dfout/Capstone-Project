@@ -23,7 +23,6 @@ def create_admission():
     # day = datetime()
  
     new_admission = AdmissionTicket(
-        day=date,
         date=body["date"],
         month=body['month'],
         year=body['year'],
@@ -97,11 +96,11 @@ def purchase_admission():
     print("PURCHASE----------------------------------------------------",purchase_data)
 
     admission_id = purchase_data.get("admission_id")
-    print("admission_id----- ----- ----- ----- ----- ---- ----- ----", admission_id)
+    print("admission_id IDDDDDDDDDDDDDDDDD HERE----- ----- ----- ----- ----- ---- ----- ----", admission_id) #! This works - shows ID of 45
     # return {'AdmissionTicketPurchase': AdmissionTicketPurchase}, 200
 
     admission = AdmissionTicket.query.filter_by(id=admission_id).first()
-    print(admission, "AMIDDDDISOSINSOINOINONINSNOINI")
+    print(admission, "AMIDDDDISOSINSOINOINONINSNOINI") ## Object instance
     maxAdmin = admission.max_admissions
     admission.max_admissions = maxAdmin - purchase_data["ticket_quantity"]
     db.session.commit()
@@ -117,6 +116,7 @@ def purchase_admission():
     db.session.commit()
 
     json_purchase = ticket_purchase.to_dict()
+    print("TICKET PURCHASE", json_purchase)
     return {'AdmissionTicketPurchase': json_purchase}, 200
 
     ## Check the data once the user has submitted the form

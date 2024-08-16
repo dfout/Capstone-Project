@@ -93,7 +93,7 @@ export const getOneAdmissionThunk = (admissionDate) => async(dispatch) =>{
 
 
 export const createAdmissionThunk = (admission) => async(dispatch)=>{
-    const response = await fetch('api/admissions/create',{
+    const response = await fetch('/api/admissions/create',{
         method:'POST', 
         headers:{
             'Content-Type': 'application/json'

@@ -139,6 +139,7 @@ const TicketsPage = () => {
         setIsSoldOut(true)
       }else{
         setMaxAdmin(max)
+        setIsSoldOut(false)
       }
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
@@ -339,6 +340,7 @@ const TicketsPage = () => {
 
   const formattedDate = parsedDate.toUTCString()
 
+
   // formatted date is the correct format. 
       const newPurchase = {
         admission_id: admissionId,
@@ -350,7 +352,7 @@ const TicketsPage = () => {
       // "Friday, August 23, 2024"
       // instead of 
       
-
+      console.log("Date that gets passed in", formattedDate)
       const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
     
       let id = response.id
@@ -479,7 +481,7 @@ const TicketsPage = () => {
         )}
         </div>
       </div>
-      {sessionUser && selectedDate && (
+      {sessionUser && selectedDate && !isSoldOut && (
 
       <div>
         <p className='padding-left-3rem font-2rem'>Select Tickets</p>

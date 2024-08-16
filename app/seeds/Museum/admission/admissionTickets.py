@@ -24,7 +24,7 @@ def seed_admission_tickets():
         year = day.year
 
         ticket = AdmissionTicket(
-            day=day,
+            # day=day,
             date=date,
             month=month,
             year=year,

@@ -41,10 +41,23 @@ function PurchasesPage(){
         return () => clearTimeout(timeout);
     }, [purchases]);
     
-    if (!purchases && timeCheck) return <h1>Loading...</h1>;
-    else if (!purchases && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
 
 
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+    
     const handleDeletePurchase = async(purchase) =>{
         const response = await dispatch(deleteAdmissionPurchaseThunk(purchase))
     }
@@ -100,6 +113,9 @@ function PurchasesPage(){
         
         navigate(`/user/purchases/${id}/edit`)
     }
+
+    if (!purchases && timeCheck) return <h1>Loading...</h1>;
+    else if (!purchases && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
     return(
         <>
         <div className='refund-edit-container'>
@@ -147,11 +163,18 @@ function PurchasesPage(){
         </div> */}
 
         {Object.values(purchases)?.reverse().map((purchase)=>{
-
-            const admissionDate = new Date(purchase.Admission);
+            const year = purchase.Admission.year
+            const day_of_week = purchase.Admission.day_of_week
+            const month = purchase.Admission.month
+            const monthName = monthNames[month - 1]
+            const date = purchase.Admission.date
+            const admissionDate = new Date(purchase.Admission.year, month - 1, purchase.Admission.date);
+            
+            console.log("ADMISSION DAY", admissionDate)
             const currentDate = new Date();
             const diffInMs = admissionDate.getTime() - currentDate.getTime();
             const daysDifference = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+            console.log("DAYS DIF",daysDifference)
             
             if (daysDifference >=1){
 
@@ -165,7 +188,7 @@ function PurchasesPage(){
               
                     {daysDifference >= 1 && ( // Show buttons only if at least 24 hours in advance
                     <>
-                    <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
+                    <span> Admission: {day_of_week} {monthName} {date}, {year}</span>
                     <span> Cost: ${purchase.totalPrice}.00 </span>
                     <span> Ticket Quantity: {purchase.ticketQuantity}</span>
                     <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
@@ -180,7 +203,7 @@ function PurchasesPage(){
                 return(
                     <div key={purchase.id} className='list-purchases'>
                
-                    <span> Admission: {new Date(purchase["Admission"]).toDateString()}</span>
+                    <span> Admission: {day_of_week} {monthName} {date}, {year}</span>
                     <span> Cost: ${purchase.totalPrice}.00 </span>
                     <span> Ticket Quantity: {purchase.ticketQuantity}</span>
                     <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
