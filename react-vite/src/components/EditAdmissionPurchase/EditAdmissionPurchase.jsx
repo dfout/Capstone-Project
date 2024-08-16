@@ -186,11 +186,12 @@ console.log(admission)
   const handleDayClick = async (day) => {
     const selected = new Date(currentYear, currentMonth, day);
     const year = selected.getFullYear()
-    
+    console.log("YEAR", year)
     const month = selected.getMonth() + 1
- 
+    console.log("MONTH:",month)
     const date = selected.getDate()
-   
+    console.log("DAte",date)
+
     // see if it exists in state: 
     //! what if two users create a new instance? Check the backend just in case? and or have some handling in the front end where it handles this. But I think it might be okay becasue it will just overwrite the newest information I think. 
 
@@ -204,7 +205,7 @@ console.log(admission)
       }
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
-
+      console.log("DAYYYYYY", selected.getDate())
       const options = {'weekday':'long'}
       const admission = {
         day:selected,
@@ -214,9 +215,9 @@ console.log(admission)
         max_admissions: maxAdmin,
         day_of_week: day.toLocaleDateString('en-US', options),
       }
-
+      console.log("BEFORE DISPATCHd")
       const response = await dispatch(createAdmissionThunk(admission))
-
+      console.log(response, "GHERERERER")
 
       setAdmissionId(response.id)
       
@@ -411,95 +412,89 @@ console.log(admission)
   // then, iterate through them, or organize them by typeId in objects
   // so lets 
   const handleCheckout = async() =>{
-    
+    // need to query for the admission information
+    // if (!sessionUser){
+    //   navigate('/login')
+    // }
 
-    // Grab the purchase information. 
-    let originalDate = new Date(admission.year, admission.month, admission.date)
+  const parsedDate = new Date(selectedDate)
 
-    const parsedDate = new Date(selectedDate)
-    // Compare the date to the new selected date (parsed Date)
-    const formattedDate = parsedDate.toUTCString()
-    console.log("ORIGINAL", originalDate, "SELECTED",parsedDate)
+  const formattedDate = parsedDate.toUTCString()
 
-    // If dates differ or if the ticketQuantity differs:
-        // Well, if they are updating we are assuming they are going to update something. So this would need to run regardless.
-        // Do the check anyway. 
-        const updatedPurchase = {
-            admission_id: admissionId,
-            user_id: sessionUser.id,
-            total_price: totalPrice, 
-            ticket_quantity: totalQuantity,
-        }
-        // const response = await dispatch(updatedPurchase(updatedPurchase, formattedDate))
-        let id = response.id
+
+  // formatted date is the correct format. 
+      const newPurchase = {
+        admission_id: admissionId,
+        user_id: sessionUser.id,
+        total_price: totalPrice, 
+        ticket_quantity: totalQuantity,
       
-        // For the time being, this is going to be not the most efficient solution. 
-        // Here, I am going to grab all the ticketTypes purchased on this purchase instance and organize them by type of the ticket
-        // I will look through every ticketType quantity that exists on this page,
-          // if the quantity exists, 
-              // then I will see if the key of its type exists in the data from the backend (the get request for all ticketTypesPurchased on this purchase instance.)
-              // if the key exists:
-                  // Compare the quantity of the state to the quantity of the type
-                  // if the quantity is not the same:
-                      // Call an update to TicketTypesPurchased
-  
-              // if the key does not exist:
-                  // create a new ticketTypePurchased instance
+      }
+      // "Friday, August 23, 2024"
+      // instead of 
+      
+      console.log("Date that gets passed in", formattedDate)
+      const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
+    
+      let id = response.id
+      
 
-                  if(adultQuantity){
-                    let adult_ticket = {
-                      purchase_id: id, 
-                      type_id: 1, 
-                      quantity: adultQuantity,
-                      
-                    }
-                    const response = await dispatch(createTicketTypePurchase(adult_ticket))
-                  }
-            
-                  if(seniorQuantity){
-                    let senior_ticket = {
-                      purchase_id: id, 
-                      type_id: 2, 
-                      quantity: seniorQuantity,
-                      
-                    }
-                    const response = await dispatch(createTicketTypePurchase(senior_ticket))
-                  }
-                  if(disQuantity){
-                    let disability_ticket = {
-                      purchase_id: id, 
-                      type_id: 3, 
-                      quantity: disQuantity,
-                    }
-                    const response = await dispatch(createTicketTypePurchase(disability_ticket))
-                  }
-                  if(studentQuantity){
-                    let student_ticket = {
-                      purchase_id:id,
-                      type_id:4,
-                      quantity: studentQuantity
-                    }
-                    const response = await dispatch(createTicketTypePurchase(student_ticket))
-                  }
-            
-                  if(childQuantity){
-                   let child_ticket ={
-                      purchase_id:id,
-                      type_id:5,
-                      quantity:childQuantity
-                    }
-                    const response = await dispatch(createTicketTypePurchase(child_ticket))
-                  }
-  
-          // At the end: return the user to the purchases page. 
-          navigate('/user/purchases')
+    
+      if(adultQuantity){
+        let adult_ticket = {
+          purchase_id: id, 
+          type_id: 1, 
+          quantity: adultQuantity,
+          
+        }
+        const response = await dispatch(createTicketTypePurchase(adult_ticket))
+      }
 
-    // If the dates do not differ or the ticketQuantity does not differ:
+      if(seniorQuantity){
+        let senior_ticket = {
+          purchase_id: id, 
+          type_id: 2, 
+          quantity: seniorQuantity,
+          
+        }
+        const response = await dispatch(createTicketTypePurchase(senior_ticket))
+      }
+      if(disQuantity){
+        let disability_ticket = {
+          purchase_id: id, 
+          type_id: 3, 
+          quantity: disQuantity,
+        }
+        const response = await dispatch(createTicketTypePurchase(disability_ticket))
+      }
+      if(studentQuantity){
+        let student_ticket = {
+          purchase_id:id,
+          type_id:4,
+          quantity: studentQuantity
+        }
+        const response = await dispatch(createTicketTypePurchase(student_ticket))
+      }
 
-        // Set an Error Message: 
+      if(childQuantity){
+       let child_ticket ={
+          purchase_id:id,
+          type_id:5,
+          quantity:childQuantity
+        }
+        const response = await dispatch(createTicketTypePurchase(child_ticket))
+      }
 
-        setEditError({error: "No edits to the purchase have been made. Please make changes to the admission date or ticket quantities to edit your purchase."})
-            // "No edits to the purchase have been made"    
+      // need to pass in the quantity of each ticket type
+
+
+      //Create AdmissionTicketTypesPurchased instances
+       
+      
+
+      //dispatch to the backend 
+      setAdultQuantity(0)
+     navigate('/user/purchases')
   }
 
   // for member discounts
