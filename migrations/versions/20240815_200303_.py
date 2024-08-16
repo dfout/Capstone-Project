@@ -25,9 +25,9 @@ def upgrade():
     with op.batch_alter_table('admission_tickets', schema=None) as batch_op:
         batch_op.drop_column('day')
 
-    # with op.batch_alter_table('ticket_types_purchased', schema=None) as batch_op:
-    #     batch_op.drop_constraint(None, type_='foreignkey')
-    #     batch_op.drop_constraint(None, type_='foreignkey')
+    with op.batch_alter_table('ticket_types_purchased', schema=None) as batch_op:
+        batch_op.drop_constraint(None, type_='foreignkey')
+        batch_op.drop_constraint(None, type_='foreignkey')
 
     # ### end Alembic commands ###
 

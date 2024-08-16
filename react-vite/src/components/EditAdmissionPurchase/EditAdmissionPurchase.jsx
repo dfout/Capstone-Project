@@ -1,12 +1,5 @@
 
 
-// This is the Tickets page
-
-// Except, the dispatches will be for PATCH requests
-
-// And the states will be what was passed in
-
-
 import { useState, useEffect } from "react";
 // import "./TicketsPage.css";
 import { useSelector } from "react-redux";
@@ -21,41 +14,38 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const EditAdmissionPurchase = () => {
-    
-let {id} = useParams()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const closeMenu = useModal()
 
-const purchase = useSelector((state)=>state.purchases[id])
-// console.log(purchase.day)
-const admission = purchase['AdmissionDetails']
-const ticketTypes = purchase['TicketTypesPurchased']
-const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-const year = admission.year
-const month = admission.month
-const date  = admission.date
-const original = new Date(year, month - 1, date)
-const formattedDate = original.toLocaleDateString(undefined, options);
-console.log(ticketTypes, "Ticket Types")
-console.log(admission)
+    let {id} = useParams()
 
-  const [currentYear, setCurrentYear] = useState(year);
-  const [currentMonth, setCurrentMonth] = useState(month -1 );
-  const [selectedDate, setSelectedDate] = useState(formattedDate);
-  const [modalVisible, setModalVisible] = useState(true);
+    const purchase = useSelector((state)=>state.purchases[id])
+    const admissions = useSelector((state)=>state.admissions)
+    const sessionUser = useSelector((state)=> state.session.user)
+
+
+
+
+    const [timeCheck, setTimeCheck] = useState(true);
+
+
+
+
+  const [currentYear, setCurrentYear] = useState("");
+  const [currentMonth, setCurrentMonth] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
   const [adultQuantity, setAdultQuantity] = useState(0);
   const [seniorQuantity, setSeniorQuantity] = useState(0);
   const [disQuantity, setDisQuantity] = useState(0);
   const [studentQuantity, setStudentQuantity] = useState(0);
   const [childQuantity, setChildQuantity] = useState(0);
-  const [checkoutModal, setCheckoutModal] = useState(true);
-  const [totalPrice, setTotalPrice] = useState(purchase.totalPrice)
-  const [totalQuantity, setTotalQuantity] = useState(purchase.ticket_quantity)
+  const [checkoutModal, setCheckoutModal] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalQuantity, setTotalQuantity] = useState(0)
   const [isSoldOut, setIsSoldOut] = useState(false)
-  const [maxAdmin, setMaxAdmin] = useState(admission.max_admissions)
+  const [maxAdmin, setMaxAdmin] = useState(500)
   const [isTooMany, setIsTooMany] = useState(false)
   const [tooMany, setTooMany] = useState(0)
   const [admissionId, setAdmissionId] = useState(0)
@@ -64,53 +54,126 @@ console.log(admission)
   const [changed, setChanged] = useState([])
   const [editError, setEditError] = useState({})
 
-  const [timeCheck, setTimeCheck] = useState(true);
+   useEffect(()=>{
+        dispatch(getAdmissionsThunk())
+        dispatch(getUserAdmissionsThunk())
+    }, [dispatch])
 
-  const sessionUser = useSelector((state)=> state.session.user)
-  const admissions = useSelector((state)=>state.admissions)
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const closeMenu = useModal()
+    useEffect(() => {
+        let timeout;
 
-  const addToChanged = (item) =>{
-    setChanged(prevChanged => [...prevChanged, item])
-  }
+        if (!purchase || !purchase["AdmissionDetails"] || !purchase["TicketTypesPurchased"] || !admissions) {
+            timeout = setTimeout(() => setTimeCheck(false), 3000);
+            // dispatch(getAdmissionsThunk())
+            // dispatch(getUserAdmissionsThunk())
+            
+        }else if (purchase && purchase["AdmissionDetails"] && purchase["TicketTypesPurchased"] && admissions){
+            const admission = purchase['AdmissionDetails']
+            const ticketTypes = purchase['TicketTypesPurchased']
+            const options = {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            };
+            const year = admission.year
+            setCurrentYear(year)
+            const month = admission.month
+            setCurrentMonth(month - 1)
+            const date  = admission.date
+            const original = new Date(year, month - 1, date)
+            const formattedDate = original.toLocaleDateString(undefined, options);
+            setSelectedDate(formattedDate)
+          
+ 
 
-  useEffect(() => {
+
+
+        for (let ticketTypePurchased of ticketTypes){
+            console.log(ticketTypePurchased)
+            if(ticketTypePurchased.typeId == 1){
+                console.log(ticketTypePurchased.quantity, "QUAN")
+                setAdultQuantity(ticketTypePurchased.quantity)
+                console.log(adultQuantity)
+            }
+            if(ticketTypePurchased.typeId == 2){
+                setSeniorQuantity(ticketTypePurchased.quantity)
+            }
+            if(ticketTypePurchased.typeId == 3){
+                setDisQuantity(ticketTypePurchased.quantity)
+            }
+            if(ticketTypePurchased.typeId == 4){
+                setStudentQuantity(ticketTypePurchased.quantity)
+            }
+            if(ticketTypePurchased.typeId == 5){
+                setChildQuantity(ticketTypePurchased.quantity)
+            }
+            
+        }
+       
+        setMaxAdmin(admission.max_admissions)
+        setModalVisible(true)
+        setTotalPrice(purchase.totalPrice)
+        setTotalQuantity(purchase.ticket_quantity)
+        setCheckoutModal(true)
+
+        }
+
+        return () => clearTimeout(timeout);
+    }, [purchase, admissions, dispatch]);
+
+
+    const generateCalendar = (year, month) => {
+        const firstDayOfMonth = new Date(year, month, 1);
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const firstDayOfWeek = firstDayOfMonth.getDay();
+    
+        const calendarDays = [];
+    
+        for (let i = 0; i < firstDayOfWeek; i++) {
+          calendarDays.push(<div key={`empty-${i}`} />);
+        }
+        const currentDate = new Date();
+        for (let day = 1; day <= daysInMonth; day++) {
+          // check if the currently admitted == max_admissions
+          const dateToCheck = new Date(year, month, day);
+          const isToday = dateToCheck.toDateString() === currentDate.toDateString();
+          const isCurrentOrFutureDay = dateToCheck >= currentDate || isToday;
+          // console.log("Date to check", dateToCheck, "SELECTED DAY", selectedDate);
+          const isSelectedDay =
+            selectedDate && dateToCheck.toDateString() === selectedDate;
+          // console.log(
+          //   "isSelected day: ",
+          //   isSelectedDay,
+          //   "date to check:",
+          //   dateToCheck.toLocaleDateString()
+          // );
+          // console.log("Selected Day", selectedDate);
+         
+          calendarDays.push(
+            <div
+              key={day}
+              className={`text-center py-2 border cursor-pointer ${
+                isCurrentOrFutureDay ? "bg-blue-500" : "past"
+              }
+                 ${isSelectedDay ? "bg-green-500 text-white" : ""} ${day == selectedDate && "black-background white-text" }`}
+              onClick={isCurrentOrFutureDay ? () => handleDayClick(day) : undefined}
+            >
+              {day}
+            </div>
+          );
+        }
+        // setCalendar(calendarDays)
+        return calendarDays;
+        // set it into the []
+    };
+    useEffect(() => {
     generateCalendar(currentYear, currentMonth);
-  }, [currentYear, currentMonth, selectedDate]);
-  useEffect(()=>{
-    dispatch(getAdmissionsThunk())
-    dispatch(getUserAdmissionsThunk())
-  }, [dispatch])
+    }, [currentYear, currentMonth, selectedDate]);
 
 
-  useEffect(()=>{
 
-      for (let ticketTypePurchased of ticketTypes){
-        console.log(ticketTypePurchased)
-        if(ticketTypePurchased.typeId == 1){
-            console.log(ticketTypePurchased.quantity, "QUAN")
-            setAdultQuantity(ticketTypePurchased.quantity)
-            console.log(adultQuantity)
-        }
-        if(ticketTypePurchased.typeId == 2){
-            setSeniorQuantity(ticketTypePurchased.quantity)
-        }
-        if(ticketTypePurchased.typeId == 3){
-            setDisQuantity(ticketTypePurchased.quantity)
-        }
-        if(ticketTypePurchased.typeId == 4){
-            setStudentQuantity(ticketTypePurchased.quantity)
-        }
-        if(ticketTypePurchased.typeId == 5){
-            setChildQuantity(ticketTypePurchased.quantity)
-        }
-        
-      }
-
-  },[ticketTypes])
 
   // Attempt at a more efficient solution
 //   useEffect(()=>{
@@ -202,9 +265,11 @@ console.log(admission)
         setIsSoldOut(true)
       }else{
         setMaxAdmin(max)
+        setIsSoldOut(false)
       }
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
+      setMaxAdmin(500)
       console.log("DAYYYYYY", selected.getDate())
       const options = {'weekday':'long'}
       const admission = {
@@ -236,50 +301,7 @@ console.log(admission)
     setSelectedDate(formattedDate);
     setModalVisible(true);
   };
-  const generateCalendar = (year, month) => {
-    const firstDayOfMonth = new Date(year, month, 1);
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDayOfWeek = firstDayOfMonth.getDay();
 
-    const calendarDays = [];
-
-    for (let i = 0; i < firstDayOfWeek; i++) {
-      calendarDays.push(<div key={`empty-${i}`} />);
-    }
-    const currentDate = new Date();
-    for (let day = 1; day <= daysInMonth; day++) {
-      // check if the currently admitted == max_admissions
-      const dateToCheck = new Date(year, month, day);
-      const isToday = dateToCheck.toDateString() === currentDate.toDateString();
-      const isCurrentOrFutureDay = dateToCheck >= currentDate || isToday;
-      // console.log("Date to check", dateToCheck, "SELECTED DAY", selectedDate);
-      const isSelectedDay =
-        selectedDate && dateToCheck.toDateString() === selectedDate;
-      // console.log(
-      //   "isSelected day: ",
-      //   isSelectedDay,
-      //   "date to check:",
-      //   dateToCheck.toLocaleDateString()
-      // );
-      // console.log("Selected Day", selectedDate);
-     
-      calendarDays.push(
-        <div
-          key={day}
-          className={`text-center py-2 border cursor-pointer ${
-            isCurrentOrFutureDay ? "bg-blue-500" : "past"
-          }
-             ${isSelectedDay ? "bg-green-500 text-white" : ""} ${day == selectedDate && "black-background white-text" }`}
-          onClick={isCurrentOrFutureDay ? () => handleDayClick(day) : undefined}
-        >
-          {day}
-        </div>
-      );
-    }
-    // setCalendar(calendarDays)
-    return calendarDays;
-    // set it into the []
-  };
 
 
 
@@ -500,6 +522,8 @@ console.log(admission)
   // for member discounts
   // const ticketHierarchy = [adultQuantity,]
 
+  if (!purchase || !purchase["AdmissionDetails"] || !purchase["TicketTypesPurchased"] || !admissions && timeCheck) return <h1>Loading...</h1>;
+  else if (!purchase || !purchase["AdmissionDetails"] || !purchase["TicketTypesPurchased"] || !admissions && !timeCheck) return <h1>Sorry, please refresh the page</h1>;  
 
   return (
     <>
@@ -562,7 +586,7 @@ console.log(admission)
         )}
         </div>
       </div>
-      {sessionUser && selectedDate && (
+      {sessionUser && selectedDate && !isSoldOut && (
 
       <div>
         <p className='padding-left-3rem font-2rem'>Select Tickets</p>

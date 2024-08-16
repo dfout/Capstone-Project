@@ -41,8 +41,7 @@ function PurchasesPage(){
         return () => clearTimeout(timeout);
     }, [purchases]);
     
-    if (!purchases && timeCheck) return <h1>Loading...</h1>;
-    else if (!purchases && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
+
 
     const monthNames = [
         "January",
@@ -114,6 +113,9 @@ function PurchasesPage(){
         
         navigate(`/user/purchases/${id}/edit`)
     }
+
+    if (!purchases && timeCheck) return <h1>Loading...</h1>;
+    else if (!purchases && !timeCheck) return <h1>Sorry, please refresh the page</h1>;
     return(
         <>
         <div className='refund-edit-container'>

@@ -139,6 +139,7 @@ const TicketsPage = () => {
         setIsSoldOut(true)
       }else{
         setMaxAdmin(max)
+        setIsSoldOut(false)
       }
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
@@ -480,7 +481,7 @@ const TicketsPage = () => {
         )}
         </div>
       </div>
-      {sessionUser && selectedDate && (
+      {sessionUser && selectedDate && !isSoldOut && (
 
       <div>
         <p className='padding-left-3rem font-2rem'>Select Tickets</p>

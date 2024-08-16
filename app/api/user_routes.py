@@ -132,12 +132,16 @@ def get_membership_details():
 def get_user_admissions():
     user_id = current_user.id
     admissions = [x.to_dict() for x in AdmissionTicketPurchase.query.filter_by(user_id=user_id).all()]
+    print("admissions",admissions)
     if not admissions or not len(admissions):
         return {"messsage": "No Admission Purchases Found"}, 404
     else:
         for adminPurchase in admissions:
+            print("ADMIN PURCHASE", adminPurchase)
             id=adminPurchase["admissionId"]
+            print("ADMISSION ID ON PURCHASE", id)
             admission = AdmissionTicket.query.filter_by(id=id).first()
+            print("ADMISSION INFORMATION", admission) ##! Showing as None
             # date_obj = date(admission.year, admission.month, admission.date)
             # print(date_obj, "DATEOBJJJJJJJJJ")
             adminPurchase["Admission"]= admission.to_dict()
