@@ -41,7 +41,9 @@ function PurchasesPage(){
         return () => clearTimeout(timeout);
     }, [purchases]);
     
-
+    const comingSoon = () =>{
+        alert("Under construction, Thank you for your patience")
+      }
 
     const monthNames = [
         "January",
@@ -192,7 +194,8 @@ function PurchasesPage(){
                     <span> Cost: ${purchase.totalPrice}.00 </span>
                     <span> Ticket Quantity: {purchase.ticketQuantity}</span>
                     <span> Purchased: {new Date(purchase.purchasedOn).toDateString()}</span>
-                        <button className='membership-button' id='manage' onClick={()=> handleUpdate(purchase.id)}>Update Purchase</button>
+                        {/* <button className='membership-button' id='manage' onClick={()=> handleUpdate(purchase.id)}>Update Purchase</button> */}
+                        <button className='membership-button' id='manage' onClick={comingSoon}>Update Purchase</button>
                         <button className='membership-button' id='manage'  onClick={()=>handleDeletePurchase(purchase)}>Cancel Purchase</button>
                     </>
                     )}
