@@ -339,6 +339,7 @@ const TicketsPage = () => {
 
   const formattedDate = parsedDate.toUTCString()
 
+
   // formatted date is the correct format. 
       const newPurchase = {
         admission_id: admissionId,
@@ -350,7 +351,7 @@ const TicketsPage = () => {
       // "Friday, August 23, 2024"
       // instead of 
       
-
+      console.log("Date that gets passed in", formattedDate)
       const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
     
       let id = response.id

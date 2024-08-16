@@ -8,8 +8,8 @@ class TicketTypePurchased(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    type_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admission_ticket_types.id')), nullable=False)
-    purchase_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admission_ticket_purchases.id')), nullable=False)
+    type_id = db.Column(db.Integer, nullable=False)
+    purchase_id = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
 
 

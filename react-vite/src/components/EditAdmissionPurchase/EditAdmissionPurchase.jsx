@@ -405,7 +405,7 @@ console.log(admission)
     
 
     // Grab the purchase information. 
-    let originalDate = admission.day
+    let originalDate = new Date(admission.year, admission.month, admission.date)
 
     const parsedDate = new Date(selectedDate)
     // Compare the date to the new selected date (parsed Date)

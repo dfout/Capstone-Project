@@ -57,3 +57,22 @@
     text-decoration: underline;
     cursor:pointer;
 }
+
+.review-tile{
+   border: 2px black solid;
+   padding: .5rem;
+   box-sizing: border-box;
+   width: 50%;
+   /* display:flex;
+   flex-direction: column;
+   flex-wrap: wrap; */
+   word-wrap: break-word;
+}
+
+/* .item-reviews{
+    background-color: blue;
+} */
+
+.revs{
+    padding-top: 2rem;
+}

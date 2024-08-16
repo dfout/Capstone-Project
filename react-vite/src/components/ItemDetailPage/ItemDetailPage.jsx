@@ -100,6 +100,17 @@ function ItemDetailPage() {
     const toggleDescription = () => {
       setIsDescriptionExpanded((prev) => !prev);
     };
+
+    // const amtOfStars = (nums) =>{
+        
+    //     return(
+    //         <>
+    //         <IoIosStar />
+    //         <IoIosStar />
+    //         </>
+    //     )
+
+    // }
   
     return (
       <div className="itemDetail-cont">
@@ -118,6 +129,7 @@ function ItemDetailPage() {
           </div>
           <div className="item-info">
             <h2>{item.name}</h2>
+            <IoIosStar/>
             <span>{avgRating}</span>
             <span>${item.price.toFixed(2)}</span>
             <p className="description">
@@ -133,7 +145,8 @@ function ItemDetailPage() {
             </p>
           </div>
         </div>
-        <section>
+        <section className='revs'>
+        <h2>Reviews</h2>
           <ul className="item-reviews">
             {!sessionUser && (
               <div id="post-your-review-button">
@@ -157,6 +170,7 @@ function ItemDetailPage() {
                 />
               </div>
             )}
+            
             {reviews.length !== 0 &&
               reviews.map(({ id, ownerId, User, rating, review, createdAt }) => {
                 const date = new Date(createdAt);

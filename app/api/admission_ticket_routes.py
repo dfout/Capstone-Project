@@ -23,7 +23,6 @@ def create_admission():
     # day = datetime()
  
     new_admission = AdmissionTicket(
-        day=date,
         date=body["date"],
         month=body['month'],
         year=body['year'],

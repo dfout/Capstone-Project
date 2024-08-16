@@ -8,7 +8,7 @@ class AdmissionTicket(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    day = db.Column(db.DateTime(timezone=True), nullable=True)
+    # day = db.Column(db.DateTime(timezone=True), nullable=True)
     date= db.Column(db.Integer, nullable=False)
     month = db.Column(db.Integer, nullable=False)
     year=db.Column(db.Integer, nullable=False)
@@ -22,7 +22,7 @@ class AdmissionTicket(db.Model):
     def to_dict(self):
         return {
             'id':self.id,
-            'day':self.day,
+            # 'day':self.day,
             'date': self.date, 
             'month': self.month,
             'year': self.year, 

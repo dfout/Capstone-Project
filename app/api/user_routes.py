@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, AdmissionTicketType, OrderedItem, StoreOrder
 from app.forms.review_form import ReviewForm
-from datetime import datetime
+from datetime import datetime, date
 
 user_routes = Blueprint('users', __name__)
 
@@ -138,12 +138,14 @@ def get_user_admissions():
         for adminPurchase in admissions:
             id=adminPurchase["admissionId"]
             admission = AdmissionTicket.query.filter_by(id=id).first()
-            adminPurchase["Admission"]= admission.day
+            # date_obj = date(admission.year, admission.month, admission.date)
+            # print(date_obj, "DATEOBJJJJJJJJJ")
+            adminPurchase["Admission"]= admission.to_dict()
             adminPurchase["AdmissionDetails"]= admission.to_dict()
             adminPurchase['TicketTypesPurchased'] = [x.to_dict() for x in TicketTypePurchased.query.filter_by(purchase_id=adminPurchase["id"]).all()]
 
                
-            print("PRINTINGINGINGINGNGINGINGIGNGINGNGGNINGG_____________",adminPurchase['TicketTypesPurchased'])
+            # print("PRINTINGINGINGINGNGINGINGIGNGINGNGGNINGG_____________",adminPurchase['TicketTypesPurchased'])
         return {"Admissions": admissions}
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['PUT'])
