@@ -84,7 +84,7 @@ function MembershipsPage(){
                                 );
                             })}
                         </ul>
-                        {user && user.isMember && memberships? (
+                        {member && member.id && memberships? (
                             member && member["membershipTypeId"] == membership.id ? (
                                 <button 
                                     onClick={() => handleCancel(member.id)} 

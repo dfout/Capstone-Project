@@ -13,13 +13,15 @@ function Navigation() {
   const handleClick = ()=>{
     navigate('/tickets')
   }
-
+  const comingSoon = () =>{
+    alert("Under construction, Thank you for your patience")
+  }
 
   return (
     <>
     <div className='navbar'>
         <div id='name-container'>
-        <NavLink to='/' className='nav-links archivo-black-regular' id='musee'>Musée 4</NavLink>
+        <NavLink to='/' className='nav-links' id='musee'>MUSEUM SITE</NavLink>
         </div>
       
       <div className='navbar-links'>
@@ -28,16 +30,16 @@ function Navigation() {
         )
         } */}
         {sessionUser == null && (
-                      <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Become a member</NavLink>
+                      <NavLink className='nav-links new underline' to='/memberships'>become a member</NavLink>
         ) }
       {sessionUser && !member["MembershipType"] &&
-            <NavLink className='nav-links archivo-black-regular underline' to='/memberships'>Become a member</NavLink>
+            <NavLink className='nav-links new underline' to='/memberships'>become a member</NavLink>
       
       }
 
       
       
-      <button className='archivo-black-regular' onClick={handleClick}id='tickets-button'>Tickets</button>
+      <button className='new ' onClick={handleClick}id='tickets-button'>tickets</button>
       
 
       
@@ -51,13 +53,16 @@ function Navigation() {
       {/* <NavLink className='nav-links archivo-black-regular underline'to='/exhibitions'>Exhibitions</NavLink> */}
       </li>
       <li>
-      {/* <NavLink className='nav-links archivo-black-regular underline'to='/events'>Events</NavLink> */}
+      <NavLink onClick={comingSoon}className='nav-links new underline'>Events </NavLink>
       </li>
       <li>
-      {/* <NavLink className='nav-links archivo-black-regular underline'to='/artists'>Art & Artists </NavLink> */}
+      <NavLink onClick={comingSoon} className='nav-links new underline'>Art & Artists </NavLink>
       </li>
     <li>
-      <NavLink className='nav-links archivo-black-regular underline'to='/store'>Store</NavLink>
+      <NavLink className='nav-links  new underline'to='/store'>Store</NavLink>
+      </li>
+      <li>
+      <NavLink onClick={comingSoon} className='nav-links new underline'>Games & Community</NavLink>
       </li>
     </ul>
     </>

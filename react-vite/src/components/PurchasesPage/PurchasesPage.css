@@ -1,0 +1,122 @@
+.list-purchases-info{
+    display:flex;
+    flex-direction:row;
+    gap: .5rem;
+}
+
+.list-purchases{
+    display:flex;
+    flex-direction:row;
+    gap: 2rem;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+.space-between{
+    justify-content: space-between;
+}
+.purchases{
+    display:flex;
+    flex-direction:column;
+    gap: 2rem;
+    padding-top: 1rem;
+}
+
+
+button{
+    cursor: pointer;
+}
+
+
+.refund-edit-container{
+    display:flex;
+    flex-direction:row;
+    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    padding-left: 4rem;
+    padding-right:4rem;
+    gap: 4rem;
+    border-left:none;
+    border-right:none;
+}
+
+
+#manage{
+    width:10rem;
+    /* height: 2rem; */
+    padding: 1%;
+}
+
+.purchases-cont{
+    padding: 2rem;
+}
+
+.column-labels{
+    display:flex;
+    flex-direction:row;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* .column-labels > span {
+align-self: center;
+justify-self:center;
+} */
+
+/* .placeholder{
+    display:none;
+} */
+
+
+.box{
+    /* height: 8rem; */
+    /* display:flex;
+    flex-direction:column; */
+    /* align-items: flex-start;
+    min-height: 8rem; */
+    /* justify-content: center; */
+    /* width: fit-content; */
+    
+
+}
+
+#edit{
+    /* font-size: 2rem;
+    font-weight: light;
+    padding-bottom: .5rem;
+    display:inline-block; */
+}
+
+.limited{
+    /* max-width: 100%;
+    width:fit-content; */
+}
+
+/* 
+#edit > p{
+    width: inherit;
+} */
+
+.box {
+    display: flex;
+    flex-direction: column;
+    min-height: 8rem;
+    justify-content: center;
+    max-width: fit-content; /* This ensures the box takes the width of its widest child */
+}
+
+#edit {
+    font-size: 2rem;
+    font-weight: light;
+    padding-bottom: .5rem;
+    display: inline-block;
+    width: fit-content; /* Ensures width is only as wide as the content */
+}
+
+.limited {
+    max-width: inherit; /* Inherit the max-width from the parent box */
+    width: inherit; /* Match the width of the #edit element */
+    overflow-wrap: break-word; /* Handles overflow text */
+}

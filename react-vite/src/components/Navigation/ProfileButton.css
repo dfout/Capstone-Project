@@ -13,7 +13,9 @@
 #profile-button:hover{
     cursor:pointer;
 }
-
+.small-caps{
+    font-variant: small-caps;
+}
 .profile-button{
    
     position:relative;
@@ -213,13 +215,29 @@ cursor: default;
     padding: 5px 10px;
     /* border-radius: 5px; */
     cursor: pointer;
-  }
+}
 
-  .profile-dropdown li:hover{
+/* .profile-dropdown li:hover{
     text-decoration: underline;
-  }
+} */
 
 
-  .profile-button:hover{
+/* .profile-button:hover{
     text-decoration: underline;
+} */
+
+
+.reg{
+    text-decoration: none;
+    
+}
+
+ul{
+    list-style: none;
+}
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
+  

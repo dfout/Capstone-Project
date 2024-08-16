@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, AdmissionTicketType, OrderedItem, StoreOrder
 from app.forms.review_form import ReviewForm
-from datetime import datetime
+from datetime import datetime, date
 
 user_routes = Blueprint('users', __name__)
 
@@ -132,9 +132,24 @@ def get_membership_details():
 def get_user_admissions():
     user_id = current_user.id
     admissions = [x.to_dict() for x in AdmissionTicketPurchase.query.filter_by(user_id=user_id).all()]
+    print("admissions",admissions)
     if not admissions or not len(admissions):
         return {"messsage": "No Admission Purchases Found"}, 404
     else:
+        for adminPurchase in admissions:
+            print("ADMIN PURCHASE", adminPurchase)
+            id=adminPurchase["admissionId"]
+            print("ADMISSION ID ON PURCHASE", id)
+            admission = AdmissionTicket.query.filter_by(id=id).first()
+            print("ADMISSION INFORMATION", admission) ##! Showing as None
+            # date_obj = date(admission.year, admission.month, admission.date)
+            # print(date_obj, "DATEOBJJJJJJJJJ")
+            adminPurchase["Admission"]= admission.to_dict()
+            adminPurchase["AdmissionDetails"]= admission.to_dict()
+            adminPurchase['TicketTypesPurchased'] = [x.to_dict() for x in TicketTypePurchased.query.filter_by(purchase_id=adminPurchase["id"]).all()]
+
+               
+            # print("PRINTINGINGINGINGNGINGINGIGNGINGNGGNINGG_____________",adminPurchase['TicketTypesPurchased'])
         return {"Admissions": admissions}
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['PUT'])
@@ -230,7 +245,7 @@ def cancel_admission_purchase(purchase_id):
     db.session.delete(ticket_purchase)
     db.session.commit()
 
-    return {"message": "Admission ticket purchase canceled successfully"}, 200
+    return {"id": ticket_purchase.id}, 200
 
 
 

@@ -8,8 +8,8 @@ class AdmissionTicketPurchase(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    admission_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('admission_tickets.id')), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    admission_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     ticket_quantity = db.Column(db.Integer, nullable=True)
     member_discount = db.Column(db.Float, nullable=False)
@@ -17,8 +17,8 @@ class AdmissionTicketPurchase(db.Model):
     updated_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now())
 
 
-    admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
-    users = db.relationship("User", cascade='all,delete')
+    # admissionTickets = db.relationship("AdmissionTicket", cascade='all, delete')
+    # users = db.relationship("User", cascade='all,delete')
     # tags = db.relationship('Topic', cascade= "all, delete")
     # saves = db.relationship('Save', cascade="all, delete")
 
