@@ -9,6 +9,10 @@
 .item-tile{
     width:215px;
     height:fit-content;
+    cursor:pointer;
+}
+#sort-by-hover{
+    cursor: pointer;
 }
 
 #store-preview-image {
