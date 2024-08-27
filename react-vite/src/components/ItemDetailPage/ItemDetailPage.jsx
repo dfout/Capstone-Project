@@ -138,7 +138,7 @@ function ItemDetailPage() {
                 : truncateText(item.description, 500)}
                 {item.description.length > 500 &&(
 
-              <span className="toggle-button" onClick={toggleDescription}>
+              <span id='pointer' className="toggle-button" onClick={toggleDescription}>
                 {isDescriptionExpanded ? "Read Less" : "More"}
               </span>
                 )}
