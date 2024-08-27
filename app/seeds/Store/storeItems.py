@@ -32,7 +32,7 @@ def seed_store_items():
         },
         {
             "name": "Georges Braque",
-            "description": """In this volume, Henry R. Hope of the University of Indiana and editor of the College Art Journal, faithfully and clearly traces Braque's life, his triumphs and failures, from the date of his birth-May 13, 1882- to the present. We see him as the adolescent who loves sailing, the awkward student of impressionism, the young fauve, the cubist master, the ballet designer, the sculptor, the gourmet and connoisseur to whom 'even the act of stopping his work to smoke a cigarette is something to be done with relish and enjoyment.' Changes of attitude, style, motive, friends, even of summer houses, are carefully documented and described in a succinct, lucid style. 170 pp.; 135 illus. Published in 1948 and edited by Henry R. Hope, this rare book from MoMA Publications is available in extremely limited quantities. Each book from this special selection has been stored for decades in MoMA’s warehouse. MoMA’s award-winning publications program has been an integral part of the Museum’s mission since its founding in 1929. These exhibition- and collection-related titles are renowned for their high production values. Please note that the cover photo is for reference only and does not reflect the actual condition of the book being sold.""",
+            "description": """In this volume, Henry R. Hope of the University of Indiana and editor of the College Art Journal, faithfully and clearly traces Braque's life, his triumphs and failures, from the date of his birth-May 13, 1882- to the present. We see him as the adolescent who loves sailing, the awkward student of impressionism, the young fauve, the cubist master, the ballet designer, the sculptor, the gourmet and connoisseur to whom 'even the act of stopping his work to smoke a cigarette is something to be done with relish and enjoyment.' Changes of attitude, style, motive, friends, even of summer houses, are carefully documented and described in a succinct, lucid style. 170 pp.; 135 illus. These exhibition- and collection-related titles are renowned for their high production values. Please note that the cover photo is for reference only and does not reflect the actual condition of the book being sold.""",
             "price": 25.00,
         },
         {
@@ -47,7 +47,7 @@ def seed_store_items():
         },
         {
             "name": "Jean-Michel Basquiat: Untitled, 1981 Framed Print",
-            "description": """"This framed print features a reproduction of Untitled, 1981 by Jean-Michel Basquiat, an artist whose work is featured in MoMA's collection. It's printed on heavy watercolor paper with a black wood frame, white acid-free mat and gallery acrylic finish and wired for hanging. Measures 23.25h x 28.5"w" """,
+            "description": """"This framed print features a reproduction of Untitled, 1981 by Jean-Michel Basquiat, an artist whose work is featured in our collection. It's printed on heavy watercolor paper with a black wood frame, white acid-free mat and gallery acrylic finish and wired for hanging. Measures 23.25h x 28.5"w" """,
             "price": 300.00,
         },
         {
@@ -67,7 +67,7 @@ Taken into production by the furniture company Knoll, which was co-owned by his 
         {
             "name": "Noguchi Coffee Table from Herman Miller",
             "description": """
-The Noguchi Coffee Table was originally designed in 1939 as a commission from the president of MoMA and is now featured in the Museum's collection. Noguchi modified the design in 1944 to accompany an article by designer George Nelson, entitled, "How to Make a Table." This design reflects the biomorphic imagery of Noguchi's contemporary sculpture. It consists of just three pieces: a free-form plate-glass top with flat polished edges, and a self-stabilizing tripod made of two interlocking curved legs of solid or ebonized walnut. With its successful balance of sculptural form and everyday function, this piece is one of Isamu Noguchi's best-known designs. Made by Herman Miller®. Some assembly required.""",
+The Noguchi Coffee Table was originally designed in 1939 as a commission from the president of Museum Site and is now featured in our Museum's collection. Noguchi modified the design in 1944 to accompany an article by designer George Nelson, entitled, "How to Make a Table." This design reflects the biomorphic imagery of Noguchi's contemporary sculpture. It consists of just three pieces: a free-form plate-glass top with flat polished edges, and a self-stabilizing tripod made of two interlocking curved legs of solid or ebonized walnut. With its successful balance of sculptural form and everyday function, this piece is one of Isamu Noguchi's best-known designs. Made by Herman Miller®. Some assembly required.""",
             "price": 2295,
         },
         {
@@ -79,7 +79,7 @@ Crafted from weighty, polished stainless steel yet visually airy, this bookend i
         },
         {
             "name": "Hilma af Klint Adulthood Framed Print",
-            "description": """This print features a reproduction of The Ten Largest, No. 7., Adulthood, Group IV (1907) by Hilma af Klint, an artist with work in MoMA's collection. It’s mounted and laminated for protection from dust and UV rays, and floated in a hand-stained, natural, 2"-deep frame made from ash wood grown in sustainable forests. Hanging kit included. The Hilma af Klint Adulthood Framed Print measures 26h x 19.75w x 2”d.""",
+            "description": """This print features a reproduction of The Ten Largest, No. 7., Adulthood, Group IV (1907) by Hilma af Klint, an artist with work in our collection. It’s mounted and laminated for protection from dust and UV rays, and floated in a hand-stained, natural, 2"-deep frame made from ash wood grown in sustainable forests. Hanging kit included. The Hilma af Klint Adulthood Framed Print measures 26h x 19.75w x 2”d.""",
             "price": 300.00,
         },
         {
@@ -95,17 +95,17 @@ Crafted from weighty, polished stainless steel yet visually airy, this bookend i
         },
         {
             "name": "Yayoi Kusama Balloon Plush",
-            "description": """Based on Yayoi Kusama’s polka-dot, soft balloon sculptures, this plush is a statement-making home accent that can live on your sofa, bed or floor. The Yayoi Kusama Balloon Plush is made from synthetic leather and measures 19.7l x 9.9”diam. Please note that the Plush is a decorative object and should not be used as a pillow or have pressure applied to it. Yayoi Kusama is an artist with work in MoMA’s collection.""",
+            "description": """Based on Yayoi Kusama’s polka-dot, soft balloon sculptures, this plush is a statement-making home accent that can live on your sofa, bed or floor. The Yayoi Kusama Balloon Plush is made from synthetic leather and measures 19.7l x 9.9”diam. Please note that the Plush is a decorative object and should not be used as a pillow or have pressure applied to it. Yayoi Kusama is an artist with work in our collection.""",
             "price": 199.95,
         },
         {
             "name": "Romare Bearden: In the Garden (from the Portfolio: Prevalence of Ritual), 1974 Framed Print",
-            "description":"""This print features a reproduction of In the Garden (1974) by Romare Bearden, an artist in MoMA's collection. It's mounted, laminated and floated in a 2"- deep black ash wood frame. Hanging kit included.  It measures 24.87h x 20.25w x 2"d.""",
+            "description":"""This print features a reproduction of In the Garden (1974) by Romare Bearden, an artist in our collection. It's mounted, laminated and floated in a 2"- deep black ash wood frame. Hanging kit included.  It measures 24.87h x 20.25w x 2"d.""",
             "price": 25.00,
         },
         {
             "name": "Keith Haring Sunglasses",
-            "description": """These minimalist sunglasses pay homage to the Pop art legend’s work with temple tips shaped like his famous line work. Inspired by glasses that Haring wore, these limited edition sunglasses have frames that are handmade from an eco-friendly cellulose acetate and come in a Keith Haring cork leather case with a custom cleaning cloth featuring Haring's artwork. Keith Haring is an artist represented in MoMA’s collection. 
+            "description": """These minimalist sunglasses pay homage to the Pop art legend’s work with temple tips shaped like his famous line work. Inspired by glasses that Haring wore, these limited edition sunglasses have frames that are handmade from an eco-friendly cellulose acetate and come in a Keith Haring cork leather case with a custom cleaning cloth featuring Haring's artwork. Keith Haring is an artist represented in our collection. 
 
 The Keith Haring Sunglasses have a cellulose acetate frame and Optical Class 1 nylon lenses with anti-reflective coating that provide 100% UVA/UVB protection. The riveted 5-barrel hinges have stainless steel temple cores for durability. """,
             "price": 200.00,
@@ -113,7 +113,7 @@ The Keith Haring Sunglasses have a cellulose acetate frame and Optical Class 1 n
         {
             "name": "Pablo Picasso Linocuts Framed Poster",
             "description": """
-This rare poster was produced in 1968 to promote an exhibition in Baltimore of Pablo Picasso’s linocut prints, produced between 1958 and 1963. Picasso’s work is represented in MoMA’s collection. This poster is in good vintage condition, mounted with a mat in a thin black aluminum frame. Wired for hanging. The poster is unmounted and archivally framed without glue or tape to avoid possible damage to the paper. Framing includes 99.9% UV acrylic glazing to protect from UV damage. Framed with acid-free foamcore backing to secure poster in frame. The framed poster measures 20 x 28.5”. Returns not accepted. Extremely limited quantities.""",
+This rare poster was produced in 1968 to promote an exhibition in Baltimore of Pablo Picasso’s linocut prints, produced between 1958 and 1963. Picasso’s work is represented in our collection. This poster is in good vintage condition, mounted with a mat in a thin black aluminum frame. Wired for hanging. The poster is unmounted and archivally framed without glue or tape to avoid possible damage to the paper. Framing includes 99.9% UV acrylic glazing to protect from UV damage. Framed with acid-free foamcore backing to secure poster in frame. The framed poster measures 20 x 28.5”. Returns not accepted. Extremely limited quantities.""",
             "price": 1000.00,
         },
         {
@@ -143,7 +143,7 @@ This rare poster, featuring the work of John Baldesarri, was produced to promote
         },
         {
             "name": "Eames Plywood Elephant",
-            "description": """This playful pachyderm was designed by Charles and Ray Eames in 1945 and exhibited in prototype form at MoMA in 1946 as an offshoot to the couple’s experiments in molded plywood. The Eameses were fascinated with elephants and they can be found in Charles’ photo documentation of India and the circus world. Creating the elephant was technically challenging due to its tight compound curves. Only two were made in Charles and Ray’s lifetime and were never mass produced. Made in Switzerland from maple plywood, the Eames Elephant makes a striking statement in your living room or as an object of whimsy in a child’s bedroom. It measures 16.5h x 31w x 16.25"d. Both Vitra and Charles and Ray Eames have work in MoMA’s collection. This special edition is produced by Vitra in a numbered series of 1,000 (Red and Natural) in limited quantities""",
+            "description": """This playful pachyderm was designed by Charles and Ray Eames in 1945 and exhibited in prototype form at Museum Site in 1946 as an offshoot to the couple’s experiments in molded plywood. The Eameses were fascinated with elephants and they can be found in Charles’ photo documentation of India and the circus world. Creating the elephant was technically challenging due to its tight compound curves. Only two were made in Charles and Ray’s lifetime and were never mass produced. Made in Switzerland from maple plywood, the Eames Elephant makes a striking statement in your living room or as an object of whimsy in a child’s bedroom. It measures 16.5h x 31w x 16.25"d. Both Vitra and Charles and Ray Eames have work in our collection. This special edition is produced by Vitra in a numbered series of 1,000 (Red and Natural) in limited quantities""",
             "price": 56.00,
         },
         {

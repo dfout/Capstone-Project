@@ -456,9 +456,11 @@ const EditAdmissionPurchase = () => {
       // instead of 
       
       console.log("Date that gets passed in", formattedDate)
-      const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
+    //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
     
+      const respone = await dispatch(up)
       let id = response.id
+
       
 
     
@@ -776,6 +778,7 @@ const EditAdmissionPurchase = () => {
       )}
       {!sessionUser && (<OpenModalButton buttonText='Log in' onButtonClick={closeMenu} modalComponent={<LoginFormModal/>}/>)}
       {!selectedDate && sessionUser && (<h2>Select a date</h2>)}
+
     </>
   );
 };
