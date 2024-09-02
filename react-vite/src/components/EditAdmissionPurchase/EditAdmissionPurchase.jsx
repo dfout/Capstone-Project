@@ -35,6 +35,11 @@ const EditAdmissionPurchase = () => {
   const [currentYear, setCurrentYear] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
+  // variables to keep track of orignal admission date and ticket quantities
+  const [originalDate, setOriginalDate] = useState("")
+  const [originalQuan, setOriginalQuan] = useState("")
+  const [originalTicketTypes, setOriginaTicketTypes] = useState({})
+
   const [modalVisible, setModalVisible] = useState(false);
   const [adultQuantity, setAdultQuantity] = useState(0);
   const [seniorQuantity, setSeniorQuantity] = useState(0);
@@ -84,13 +89,19 @@ const EditAdmissionPurchase = () => {
             const date  = admission.date
             const original = new Date(year, month - 1, date)
             const formattedDate = original.toLocaleDateString(undefined, options);
+
+            // After the data is collected from the state, 
+            // Set the appropriate information
             setSelectedDate(formattedDate)
-          
- 
+            // OriginalData and Original Quantity will be used to compare against any updates. 
+            setOriginalDate(formattedDate)
+            setOriginalQuan(purchase.ticketQuantity)
 
-
-
+            //* While iterating, create an object to store the values for the original quantities of each ticket type for the checkout. 
+            let ticketsQuan ={}
+            // Set the already purchased Ticket Types
         for (let ticketTypePurchased of ticketTypes){
+            ticketsQuan[ticketTypePurchased.typeId] = ticketTypePurchased.quantity
             console.log(ticketTypePurchased)
             if(ticketTypePurchased.typeId == 1){
                 console.log(ticketTypePurchased.quantity, "QUAN")
@@ -109,9 +120,11 @@ const EditAdmissionPurchase = () => {
             if(ticketTypePurchased.typeId == 5){
                 setChildQuantity(ticketTypePurchased.quantity)
             }
+
+            setOriginaTicketTypes(ticketsQuan)
             
         }
-       
+       // Set all other information. 
         setMaxAdmin(admission.max_admissions)
         setModalVisible(true)
         setTotalPrice(purchase.totalPrice)
@@ -413,6 +426,8 @@ const EditAdmissionPurchase = () => {
     }
   };
 
+  
+
 
   //! CHECKOUT
 
@@ -433,16 +448,53 @@ const EditAdmissionPurchase = () => {
   //! for this, we need to grab out all the ticket types purchased for this purchase 
   // then, iterate through them, or organize them by typeId in objects
   // so lets 
+
   const handleCheckout = async() =>{
+
+    // * If a user has not changed admission date or any ticket quantities, do not let the checkout feature go through. Show an error. 
+
+    if(originalDate == selectedDate && ticketQuantity == originalQuan){
+      setEditError({"error": "Please update admission date or ticket quantities"})
+      // exit this function. Error renders. 
+      return null
+    }
+
+
+    // For this checkout, 
+
+    // We need to input the updated admission information, and the ticket types. 
+    // We want to save some time on fetches to the backend. 
+
+    // We will have to edit the admission instance no matter what -- if the user makes changes to the ticket quantity or the admission date. 
+
+    // But, we don't want to have to rewrite a change that already was the same. I.e. if the user purchased one adult ticket but would like to add one senior ticket. 
+
+    // There would be no need to change the adult instance. 
+    // But we would add one senior ticket. 
+
+    // So we need a way to keep track of what tickettypes quantites have changed. And only dispatch changes to those ones. 
+
+
+  
+
     // need to query for the admission information
-    // if (!sessionUser){
-    //   navigate('/login')
-    // }
 
+  // Format the date
   const parsedDate = new Date(selectedDate)
-
   const formattedDate = parsedDate.toUTCString()
 
+
+  // * Now, we need to call the backend to make edits to the db instance of the admission purchase. 
+
+  let editResponse  = await dispatch()
+
+  //* Now query for all the ticket types purchased that. 
+  //* I only want to make calls to db if the user changed those specific instance. 
+
+
+  for (ticket of ticketTypes){
+
+  }
 
   // formatted date is the correct format. 
       const newPurchase = {
@@ -458,7 +510,7 @@ const EditAdmissionPurchase = () => {
       console.log("Date that gets passed in", formattedDate)
     //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
     
-      const respone = await dispatch(up)
+      const response = await dispatch(up)
       let id = response.id
 
       
