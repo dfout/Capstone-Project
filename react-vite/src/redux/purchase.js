@@ -26,7 +26,24 @@ const deleteAdmissionPurchase = (id) =>({
 // })
 
 
-// const 
+const updateAdmissionPurchaseThunk = (purchase_id, purchaseObj) => async (dispatch)=>{
+    const response = await fetch(`/api/users/purchases/${purchase_id}`, {
+        method: 'PATCH', 
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(purchaseObj)
+    })
+    if (response.ok){
+        // Don't actually think I need to do anything here. The user is navigated back to their purchases page which should then update the information by the get request. 
+        //* For now, We will print out a success message,
+        console.log("Successfully edited admission purchase instance")
+    } else{
+        const data = await response.json()
+        console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
+        return data.message
+    }
+}
 
 
 export const getUserAdmissionsThunk = () => async (dispatch)=>{
@@ -37,7 +54,6 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
     }
     else{
         const data = await response.json()
-        console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
         return data.message
     }
 }
