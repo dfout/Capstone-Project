@@ -19,14 +19,32 @@ const deleteAdmissionPurchase = (id) =>({
     payload:id
 })
 
-// const updateTicketTypePurchase = (purchase) =>({
-//     type: UPDATE_USER_ADMISSION, 
-//     payload: purchase
+const updateTicketTypePurchase = (purchase) =>({
+    type: UPDATE_USER_ADMISSION, 
+    payload: purchase
     
-// })
+})
 
 
-const updateAdmissionPurchaseThunk = (purchase_id, purchaseObj) => async (dispatch)=>{
+export const updateTicketTypesPurchasedThunk = (typeObj) = async(dispatch) =>{
+    let {type_id} = typeObj;
+    const response = await fetch(`/api/users/purchases/ticket/types/${type_id}`, {
+        method:'PATCH',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify(typeObj)
+    })
+    if (response.ok){
+        console.log(response.message)
+    }else{
+        const data = await response.json()
+        return data.message
+    }
+}
+
+
+export const updateAdmissionPurchaseThunk = (purchase_id, purchaseObj) => async (dispatch)=>{
     const response = await fetch(`/api/users/purchases/${purchase_id}`, {
         method: 'PATCH', 
         headers:{

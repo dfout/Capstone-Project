@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, AdmissionTicketType, OrderedItem, StoreOrder
+from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, TicketTypePurchased, AdmissionTicketType, OrderedItem, StoreOrder
 from app.forms.review_form import ReviewForm
 from datetime import datetime, date
 
@@ -152,10 +152,12 @@ def get_user_admissions():
             # print("PRINTINGINGINGINGNGINGINGIGNGINGNGGNINGG_____________",adminPurchase['TicketTypesPurchased'])
         return {"Admissions": admissions}
 
-@user_routes.route('/purchases/<int:purchase_id>', methods=['PUT'])
+@user_routes.route('/purchases/<int:purchase_id>', methods=['PATCH'])
 @login_required
 def edit_admission_purchase(purchase_id):
     '''A logged in user '''
+
+    # The request is the new purchaseObj body. 
     data = request.get_json()
     
     ticket_types = data.get('ticket_types', [])
@@ -222,6 +224,18 @@ def edit_admission_purchase(purchase_id):
     return {"AdmissionTicketPurchase": ticket_purchase.to_dict()}, 200
 
 
+
+@user_routes.rout('/purchases/ticket/types/<int:type_id>', method=["PATCH"])
+@login_required
+def edit_ticket_types_purchased(type_id):
+
+    data = request.get_json()
+
+    type_instance = TicketTypePurchased.query.filter_by(type_id=type_id).first()
+
+    type_instance.quantity = data['quantity']
+    db.session.commit()
+    return {"message": "Success"}, 200
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['DELETE'])
 @login_required

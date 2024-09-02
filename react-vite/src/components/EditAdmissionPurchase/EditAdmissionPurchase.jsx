@@ -12,6 +12,7 @@ import {useModal} from '../../context/Modal'
 import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, getUserAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { updateAdmissionPurchaseThunk, updateTicketTypesPurchasedThunk } from "../../redux/purchase";
 
 const EditAdmissionPurchase = () => {
     const dispatch = useDispatch()
@@ -458,8 +459,6 @@ const EditAdmissionPurchase = () => {
       // exit this function. Error renders. 
       return null
     }
-
-
     // For this checkout, 
 
     // We need to input the updated admission information, and the ticket types. 
@@ -474,27 +473,12 @@ const EditAdmissionPurchase = () => {
 
     // So we need a way to keep track of what tickettypes quantites have changed. And only dispatch changes to those ones. 
 
-
-  
-
     // need to query for the admission information
 
   // Format the date
   const parsedDate = new Date(selectedDate)
   const formattedDate = parsedDate.toUTCString()
 
-
-  // * Now, we need to call the backend to make edits to the db instance of the admission purchase. 
-
-  let editResponse  = await dispatch()
-
-  //* Now query for all the ticket types purchased that. 
-  //* I only want to make calls to db if the user changed those specific instance. 
-
-
-  for (ticket of ticketTypes){
-
-  }
 
   // formatted date is the correct format. 
       const newPurchase = {
@@ -510,13 +494,22 @@ const EditAdmissionPurchase = () => {
       console.log("Date that gets passed in", formattedDate)
     //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
     
-      const response = await dispatch(up)
-      let id = response.id
+
+      // * Now, we need to call the backend to make edits to the db instance of the admission purchase. 
+
+    let editResponse  = await dispatch(updateAdmissionPurchaseThunk(newPurchase))
+
+    //* Now query for all the ticket types purchased that. 
+    //* I only want to make calls to db if the user changed those specific instance. 
+
 
       
 
-    
-      if(adultQuantity){
+      // if the adultQuantity exits
+      // AND if the adult ticket is not already in the originalTickets obj
+      // * create a new ticketTypesPurchased. 
+      // OR if the adult ticket does exist in the originalTickets obj, but it has a different value...
+      if(adultQuantity && (! 1 in originalTicketTypes)){
         let adult_ticket = {
           purchase_id: id, 
           type_id: 1, 
@@ -524,9 +517,17 @@ const EditAdmissionPurchase = () => {
           
         }
         const response = await dispatch(createTicketTypePurchase(adult_ticket))
+      }else if(adultQuantity && originalTicketTypes[1] != adultQuantity){
+        let adult_ticket = {
+          purchase_id: id, 
+          type_id: 1, 
+          quantity: adultQuantity,
+        }
+        // * Call the editTicketTypesThunk
+        await dispatch(updateTicketTypesPurchasedThunk(adult_ticket))
       }
 
-      if(seniorQuantity){
+      if(seniorQuantity && (! 2 in originalTicketTypes)){
         let senior_ticket = {
           purchase_id: id, 
           type_id: 2, 
@@ -534,42 +535,68 @@ const EditAdmissionPurchase = () => {
           
         }
         const response = await dispatch(createTicketTypePurchase(senior_ticket))
+      }else if(seniorQuantity && originalTicketTypes[2] != seniorQuantity){
+        let senior_ticket = {
+          purchase_id: id, 
+          type_id: 2, 
+          quantity: seniorQuantity,
+        }
+        // * Call the editTicketTypesThunk 
+        await dispatch(updateTicketTypesPurchasedThunk(senior_ticket))
       }
-      if(disQuantity){
+
+      if(disQuantity && (! 3 in originalTicketTypes)){
         let disability_ticket = {
           purchase_id: id, 
           type_id: 3, 
           quantity: disQuantity,
         }
         const response = await dispatch(createTicketTypePurchase(disability_ticket))
+      }else if(disQuantity && originalTicketTypes[3] != disQuantity){
+        let disability_ticket = {
+          purchase_id: id, 
+          type_id: 3, 
+          quantity: disQuantity,
+        }
+        // * Call the editTicketTypesThunk 
+        await dispatch(updateTicketTypesPurchasedThunk(disability_ticket))
       }
-      if(studentQuantity){
+
+      if(studentQuantity && (!4 in originalTicketTypes)){
         let student_ticket = {
           purchase_id:id,
           type_id:4,
           quantity: studentQuantity
         }
         const response = await dispatch(createTicketTypePurchase(student_ticket))
+      }else if(studentQuantity && originalTicketTypes[4]!= studentQuantity){
+        let student_ticket = {
+          purchase_id:id,
+          type_id:4,
+          quantity: studentQuantity
+        }
+        // * Call the editTicketTypesThunk 
+        await dispatch(updateTicketTypesPurchasedThunk(student_ticket))
       }
 
-      if(childQuantity){
+      if(childQuantity && (!5 in originalTicketTypes)){
        let child_ticket ={
           purchase_id:id,
           type_id:5,
           quantity:childQuantity
         }
         const response = await dispatch(createTicketTypePurchase(child_ticket))
+      }else if (childQuantity && originalTicketTypes[5]!= childQuantity){
+        let child_ticket ={
+          purchase_id:id,
+          type_id:5,
+          quantity:childQuantity
+        }
+        // * Call the editTicketTypesThunk 
+        await dispatch(updateTicketTypesPurchasedThunk(child_ticket))
       }
 
-      // need to pass in the quantity of each ticket type
-
-
-      //Create AdmissionTicketTypesPurchased instances
-       
-      
-
-      //dispatch to the backend 
-      setAdultQuantity(0)
+      // Navigate back to the purchases
      navigate('/user/purchases')
   }
 
