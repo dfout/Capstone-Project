@@ -168,60 +168,27 @@ def edit_admission_purchase(purchase_id):
     if not ticket_purchase or ticket_purchase.user_id != current_user.id:
         return jsonify({"message": "Purchase not found or not authorized"}), 404
 
-    total_price = 0
-    total_quantity = 0
+    # Now, replace the ticket_purchase information
+    original_quantity = ticket_purchase.ticket_quantity
 
-    # Retrieve the user's membership discount
-    member_discount = ticket_purchase.member_discount
+    ticket_purchase.total_price = data['total_price']
+    ticket_purchase.ticket_quantity = data['ticket_quantity']
+    ticket_purchase.updated_at = datetime.datetime.now()
 
-    # Retrieve the original total quantity to update max_admissions correctly
-    original_total_quantity = ticket_purchase.ticket_quantity
-    
-    # Update the ticket types purchased
-    existing_tickets = {tp.type_id: tp for tp in TicketTypePurchased.query.filter_by(purchase_id=purchase_id).all()}
-    updated_tickets = {}
 
-    for ticket_type_data in ticket_types:
-        ticket_type_id = ticket_type_data['type_id']
-        quantity = ticket_type_data['quantity']
-        
-        if quantity < 0:
-            return jsonify({"message": "Quantity cannot be negative"}), 400
+    #* Edit the admisison instance to reflect the new amount of max admissions
 
-        ticket_type = AdmissionTicketType.query.get(ticket_type_id)
-        if not ticket_type:
-            return jsonify({"message": f"Ticket type {ticket_type_id} not found"}), 404
-        
-        if quantity > 0:
-            if ticket_type_id in existing_tickets:
-                existing_tickets[ticket_type_id].quantity = quantity
-            else:
-                new_ticket = TicketTypePurchased(
-                    type_id=ticket_type_id,
-                    purchase_id=purchase_id,
-                    quantity=quantity
-                )
-                db.session.add(new_ticket)
-            
-            total_price += ticket_type.price * quantity * (1 - member_discount)
-            total_quantity += quantity
-            updated_tickets[ticket_type_id] = quantity
+    admission_id = data.admission_id
 
-    # Delete ticket types that are no longer in the purchase
-    for ticket_type_id, ticket in existing_tickets.items():
-        if ticket_type_id not in updated_tickets:
-            db.session.delete(ticket)
+    admission_day = AdmissionTicket.query.filter_by(admission_id=admission_id)
+    admission_day.max_admissions += original_quantity
 
-    # Update max_admissions
-    admission_ticket = AdmissionTicket.query.get(ticket_purchase.admission_id)
-    admission_ticket.max_admissions += original_total_quantity - total_quantity
+    admission_day.max_admissions -= data['ticket_quantity']
 
-    ticket_purchase.total_price = total_price
-    ticket_purchase.ticket_quantity = total_quantity
-    ticket_purchase.updated_at = datetime.utcnow()
+    admission_day
     db.session.commit()
+    return {"message": "Successfully updated admission purchase"}
 
-    return {"AdmissionTicketPurchase": ticket_purchase.to_dict()}, 200
 
 
 
