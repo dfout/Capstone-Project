@@ -26,9 +26,22 @@ const updateTicketTypePurchase = (purchase) =>({
 })
 
 
+export const deleteTicketTypesPurchasedThunk = (type_id, purchase_id) => async(dispatch)=>{
+    const response = await fetch(`/api/users/purchases/${purchase_id}/${type_id}`, {
+        method: 'DELETE', 
+    })
+
+    if(response.ok){
+        console.log("Succesfully deleted ticketTypeInstance")
+    }else{
+        const data = await response.json()
+        return data.error
+    }
+}
+
 export const updateTicketTypesPurchasedThunk = (typeObj) = async(dispatch) =>{
-    let {type_id} = typeObj;
-    const response = await fetch(`/api/users/purchases/ticket/types/${type_id}`, {
+    let {type_id, purchase_id} = typeObj;
+    const response = await fetch(`/api/users/purchases/${purchase_id}/${type_id}`, {
         method:'PATCH',
         headers:{
             'Content-Type':'application/json'

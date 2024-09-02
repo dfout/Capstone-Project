@@ -12,7 +12,7 @@ import {useModal} from '../../context/Modal'
 import { createAdmissionThunk, createTicketTypePurchase, getAdmissionsThunk, getUserAdmissionsThunk, purchaseAdmissionsThunk } from "../../redux/admission";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { updateAdmissionPurchaseThunk, updateTicketTypesPurchasedThunk } from "../../redux/purchase";
+import { deleteTicketTypesPurchasedThunk, updateAdmissionPurchaseThunk, updateTicketTypesPurchasedThunk } from "../../redux/purchase";
 
 const EditAdmissionPurchase = () => {
     const dispatch = useDispatch()
@@ -527,6 +527,9 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(adult_ticket))
       }else if(!adultQuantity && originalTicketTypes[1]){
         // ! Delete the ticket instance. 
+        let purchase_id = id
+        let type_id = 1
+        await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
       if(seniorQuantity && (! 2 in originalTicketTypes)){
@@ -547,6 +550,9 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(senior_ticket))
       }else if(!seniorQuantity && originalTicketTypes[2]){
         // ! Delete the ticket instance. 
+        let purchase_id = id
+        let type_id = 2
+        await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
       if(disQuantity && (! 3 in originalTicketTypes)){
@@ -566,6 +572,9 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(disability_ticket))
       }else if(!disQuantity && originalTicketTypes[3]){
         // ! Delete the ticket instance. 
+        let purchase_id = id
+        let type_id = 3
+        await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
       if(studentQuantity && (!4 in originalTicketTypes)){
@@ -585,6 +594,9 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(student_ticket))
       }else if(!studentQuantity && originalTicketTypes[4]){
         // ! Delete the ticket instance. 
+        let purchase_id = id
+        let type_id = 4
+        await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
       if(childQuantity && (!5 in originalTicketTypes)){
@@ -604,6 +616,9 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(child_ticket))
       }else if(!childQuantity && originalTicketTypes[5]){
         //! Delete ticketType instance
+        let purchase_id = id
+        let type_id = 5
+        await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
       // Navigate back to the purchases

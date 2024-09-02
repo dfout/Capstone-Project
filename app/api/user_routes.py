@@ -160,9 +160,9 @@ def edit_admission_purchase(purchase_id):
     # The request is the new purchaseObj body. 
     data = request.get_json()
     
-    ticket_types = data.get('ticket_types', [])
-    if not ticket_types:
-        return jsonify({"message": "No ticket types provided"}), 400
+    # ticket_types = data.get('ticket_types', [])
+    # if not ticket_types:
+    #     return jsonify({"message": "No ticket types provided"}), 400
     
     ticket_purchase = AdmissionTicketPurchase.query.get(purchase_id)
     if not ticket_purchase or ticket_purchase.user_id != current_user.id:
@@ -225,13 +225,13 @@ def edit_admission_purchase(purchase_id):
 
 
 
-@user_routes.rout('/purchases/ticket/types/<int:type_id>', method=["PATCH"])
+@user_routes.rout('/purchases/<int:purchase_id>/<int:type_id>', method=["PATCH"])
 @login_required
-def edit_ticket_types_purchased(type_id):
+def edit_ticket_types_purchased(type_id, purchase_id):
 
     data = request.get_json()
 
-    type_instance = TicketTypePurchased.query.filter_by(type_id=type_id).first()
+    type_instance = TicketTypePurchased.query.filter_by(type_id=type_id,purchase_id=purchase_id).first()
 
     type_instance.quantity = data['quantity']
     db.session.commit()
@@ -278,3 +278,19 @@ def get_orders():
         order_id = order["id"]
         order["OrderedItems"]= [x.to_dict() for x in OrderedItem.query.filter_by(order_id=order_id).all()]
     return {"Orders": orders}
+
+
+
+@user_routes.route('/purchases/<int:purchase_id>/<int:type_id>', methods=['DELETE'])
+def delete_instance(type_id, purchase_id):
+    # Get the ticketType instance associated....
+    
+    typeInstance = TicketTypePurchased.query.filter_by(type_id=type_id, purchase_id=purchase_id).first()
+
+    if(typeInstance):
+        db.session.delete(typeInstance)
+
+        db.session.commit()
+        return {"message": "Successfully deleted ticketTypeInstance"}, 200
+    else:
+        return {"error": "Ticket type on this purchase could not be found"}, 404
