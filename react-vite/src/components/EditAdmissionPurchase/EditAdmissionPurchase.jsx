@@ -525,6 +525,8 @@ const EditAdmissionPurchase = () => {
         }
         // * Call the editTicketTypesThunk
         await dispatch(updateTicketTypesPurchasedThunk(adult_ticket))
+      }else if(!adultQuantity && originalTicketTypes[1]){
+        // ! Delete the ticket instance. 
       }
 
       if(seniorQuantity && (! 2 in originalTicketTypes)){
@@ -543,6 +545,8 @@ const EditAdmissionPurchase = () => {
         }
         // * Call the editTicketTypesThunk 
         await dispatch(updateTicketTypesPurchasedThunk(senior_ticket))
+      }else if(!seniorQuantity && originalTicketTypes[2]){
+        // ! Delete the ticket instance. 
       }
 
       if(disQuantity && (! 3 in originalTicketTypes)){
@@ -560,6 +564,8 @@ const EditAdmissionPurchase = () => {
         }
         // * Call the editTicketTypesThunk 
         await dispatch(updateTicketTypesPurchasedThunk(disability_ticket))
+      }else if(!disQuantity && originalTicketTypes[3]){
+        // ! Delete the ticket instance. 
       }
 
       if(studentQuantity && (!4 in originalTicketTypes)){
@@ -577,6 +583,8 @@ const EditAdmissionPurchase = () => {
         }
         // * Call the editTicketTypesThunk 
         await dispatch(updateTicketTypesPurchasedThunk(student_ticket))
+      }else if(!studentQuantity && originalTicketTypes[4]){
+        // ! Delete the ticket instance. 
       }
 
       if(childQuantity && (!5 in originalTicketTypes)){
@@ -594,6 +602,8 @@ const EditAdmissionPurchase = () => {
         }
         // * Call the editTicketTypesThunk 
         await dispatch(updateTicketTypesPurchasedThunk(child_ticket))
+      }else if(!childQuantity && originalTicketTypes[5]){
+        //! Delete ticketType instance
       }
 
       // Navigate back to the purchases
