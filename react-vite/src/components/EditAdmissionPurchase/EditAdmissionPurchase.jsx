@@ -40,6 +40,11 @@ const EditAdmissionPurchase = () => {
   const [originalDate, setOriginalDate] = useState("")
   const [originalQuan, setOriginalQuan] = useState("")
   const [originalTicketTypes, setOriginaTicketTypes] = useState({})
+  const [originalAdult, setOriginalAdult] = useState(0)
+  const [originalSenior, setOriginalSenior] = useState(0)
+  const [originalStudent, setOriginalStudent] = useState(0)
+  const [originalDis, setOriginalDis] = useState(0)
+  const [originalChild, setOriginalChild] = useState(0)
 
   const [modalVisible, setModalVisible] = useState(false);
   const [adultQuantity, setAdultQuantity] = useState(0);
@@ -59,6 +64,9 @@ const EditAdmissionPurchase = () => {
   const [guestPrice, setGuestPrice] = useState(0)
   const [changed, setChanged] = useState([])
   const [editError, setEditError] = useState({})
+  const [purchaseId, setPurchaseId] = useState(0)
+
+  console.log(totalQuantity)
 
    useEffect(()=>{
         dispatch(getAdmissionsThunk())
@@ -85,6 +93,7 @@ const EditAdmissionPurchase = () => {
             };
             const year = admission.year
             setCurrentYear(year)
+            setPurchaseId(purchase.id)
             const month = admission.month
             setCurrentMonth(month - 1)
             const date  = admission.date
@@ -107,19 +116,24 @@ const EditAdmissionPurchase = () => {
             if(ticketTypePurchased.typeId == 1){
                 console.log(ticketTypePurchased.quantity, "QUAN")
                 setAdultQuantity(ticketTypePurchased.quantity)
+                setOriginalAdult(ticketTypePurchased.quantity)
                 console.log(adultQuantity)
             }
             if(ticketTypePurchased.typeId == 2){
                 setSeniorQuantity(ticketTypePurchased.quantity)
+                setOriginalSenior(ticketTypePurchased.quantity)
             }
             if(ticketTypePurchased.typeId == 3){
                 setDisQuantity(ticketTypePurchased.quantity)
+                setOriginalDis(ticketTypePurchased.quantity)
             }
             if(ticketTypePurchased.typeId == 4){
                 setStudentQuantity(ticketTypePurchased.quantity)
+                setOriginalStudent(ticketTypePurchased.quantity)
             }
             if(ticketTypePurchased.typeId == 5){
                 setChildQuantity(ticketTypePurchased.quantity)
+                setOriginalChild(ticketTypePurchased.quantity)
             }
 
             setOriginaTicketTypes(ticketsQuan)
@@ -129,7 +143,9 @@ const EditAdmissionPurchase = () => {
         setMaxAdmin(admission.max_admissions)
         setModalVisible(true)
         setTotalPrice(purchase.totalPrice)
-        setTotalQuantity(purchase.ticket_quantity)
+        setAdmissionId(admission.id)
+
+        setTotalQuantity(purchase.ticketQuantity)
         setCheckoutModal(true)
 
         }
@@ -212,6 +228,9 @@ const EditAdmissionPurchase = () => {
  
 
   useEffect(()=>{
+    if(editError.error){
+      setEditError({})
+    }
     if(totalQuantity > maxAdmin){
       setIsTooMany(true)
       setTooMany(maxAdmin)
@@ -454,10 +473,17 @@ const EditAdmissionPurchase = () => {
 
     // * If a user has not changed admission date or any ticket quantities, do not let the checkout feature go through. Show an error. 
 
-    if(originalDate == selectedDate && ticketQuantity == originalQuan){
+    // if any quantities differ, or if the date differs
+
+    // if all current quantities == the original quantities, =
+    // if the original quantities are the same, then throw the error. 
+
+    if((adultQuantity== originalAdult && seniorQuantity == originalSenior && originalDis == disQuantity && studentQuantity == originalStudent && childQuantity == originalChild)){
       setEditError({"error": "Please update admission date or ticket quantities"})
       // exit this function. Error renders. 
       return null
+    }else{
+      setEditError({})
     }
     // For this checkout, 
 
@@ -493,11 +519,13 @@ const EditAdmissionPurchase = () => {
       
       console.log("Date that gets passed in", formattedDate)
     //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
-    
+   
 
       // * Now, we need to call the backend to make edits to the db instance of the admission purchase. 
 
-    let editResponse  = await dispatch(updateAdmissionPurchaseThunk(newPurchase))
+    let editResponse  = await dispatch(updateAdmissionPurchaseThunk(purchaseId,newPurchase))
+
+    console.log(editResponse, "EDIT REPSONSE")
 
     //* Now query for all the ticket types purchased that. 
     //* I only want to make calls to db if the user changed those specific instance. 

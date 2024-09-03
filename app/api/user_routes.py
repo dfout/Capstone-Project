@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, Review, db, StoreItem, MembershipType, Member, TicketTypePurchased, AdmissionTicket, AdmissionTicketPurchase, TicketTypePurchased, AdmissionTicketType, OrderedItem, StoreOrder
 from app.forms.review_form import ReviewForm
-from datetime import datetime, date
+from datetime import datetime as my_datetime
 
 user_routes = Blueprint('users', __name__)
 
@@ -157,8 +157,12 @@ def get_user_admissions():
 def edit_admission_purchase(purchase_id):
     '''A logged in user '''
 
+    print("PURCHASE ID PURRRRRRCHASEE", purchase_id)
+
     # The request is the new purchaseObj body. 
     data = request.get_json()
+
+    print(data, "DATTTTTTAAAAAA")
     
     # ticket_types = data.get('ticket_types', [])
     # if not ticket_types:
@@ -173,14 +177,16 @@ def edit_admission_purchase(purchase_id):
 
     ticket_purchase.total_price = data['total_price']
     ticket_purchase.ticket_quantity = data['ticket_quantity']
-    ticket_purchase.updated_at = datetime.datetime.now()
+    ticket_purchase.updated_at = my_datetime.now()
 
 
     #* Edit the admisison instance to reflect the new amount of max admissions
 
-    admission_id = data.admission_id
+    id = data["admission_id"]
+    print(id, "ADMISSION ID")
 
-    admission_day = AdmissionTicket.query.filter_by(admission_id=admission_id)
+    admission_day = AdmissionTicket.query.filter_by(id=id).first()
+    print("DAY OF ADMISSIONNNNN", admission_day)
     admission_day.max_admissions += original_quantity
 
     admission_day.max_admissions -= data['ticket_quantity']
@@ -192,12 +198,13 @@ def edit_admission_purchase(purchase_id):
 
 
 
-@user_routes.rout('/purchases/<int:purchase_id>/<int:type_id>', method=["PATCH"])
+@user_routes.route('/purchases/<int:purchase_id>/<int:type_id>', methods=["PATCH"])
 @login_required
 def edit_ticket_types_purchased(type_id, purchase_id):
 
     data = request.get_json()
-
+    print("TYPE DATA", data)
+    
     type_instance = TicketTypePurchased.query.filter_by(type_id=type_id,purchase_id=purchase_id).first()
 
     type_instance.quantity = data['quantity']

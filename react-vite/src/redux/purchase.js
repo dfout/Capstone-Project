@@ -39,7 +39,7 @@ export const deleteTicketTypesPurchasedThunk = (type_id, purchase_id) => async(d
     }
 }
 
-export const updateTicketTypesPurchasedThunk = (typeObj) = async(dispatch) =>{
+export const updateTicketTypesPurchasedThunk = (typeObj) => async(dispatch) =>{
     let {type_id, purchase_id} = typeObj;
     const response = await fetch(`/api/users/purchases/${purchase_id}/${type_id}`, {
         method:'PATCH',
@@ -57,7 +57,7 @@ export const updateTicketTypesPurchasedThunk = (typeObj) = async(dispatch) =>{
 }
 
 
-export const updateAdmissionPurchaseThunk = (purchase_id, purchaseObj) => async (dispatch)=>{
+export const updateAdmissionPurchaseThunk = (purchase_id,purchaseObj) => async (dispatch)=>{
     const response = await fetch(`/api/users/purchases/${purchase_id}`, {
         method: 'PATCH', 
         headers:{
