@@ -40,7 +40,7 @@ const ReviewModal = ({ itemId }) => {
     setErrors(errors)
   }, [review, rating]);
 
-  console.log(errors)
+  // console.log(errors)
 
   const handleSubmit = async(e) => {
     e.preventDefault();

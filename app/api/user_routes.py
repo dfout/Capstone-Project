@@ -198,18 +198,30 @@ def edit_admission_purchase(purchase_id):
 
 
 
-@user_routes.route('/purchases/<int:purchase_id>/<int:type_id>', methods=["PATCH"])
+@user_routes.route('/purchases/<int:purchase_id>/edit/type/<int:type_id>', methods=["PATCH"])
 @login_required
 def edit_ticket_types_purchased(type_id, purchase_id):
-
+    print("TYPEID", type_id, "PURCHASE ID", purchase_id)
     data = request.get_json()
     print("TYPE DATA", data)
-    
+    ## Could do the create a ticket type here in the backend....
+    # Body has these keys: purchase_id, type_id, quantity
     type_instance = TicketTypePurchased.query.filter_by(type_id=type_id,purchase_id=purchase_id).first()
+    ##! None Type Error!
+    if(type_instance != None):
 
-    type_instance.quantity = data['quantity']
-    db.session.commit()
-    return {"message": "Success"}, 200
+        print("TYPE INSTANCE", type_instance)
+
+        type_instance.quantity = data['quantity']
+        db.session.commit()
+        return {"message": "Success"}, 200
+    # else:
+    #     print("type-data",data)
+    #     new_instance = TicketTypePurchased(data)
+    #     db.session.add(new_instance)
+    #     db.session.commit()
+    #     return {"message": "Created new instance"}, 200
+
 
 @user_routes.route('/purchases/<int:purchase_id>', methods=['DELETE'])
 @login_required
@@ -268,3 +280,28 @@ def delete_instance(type_id, purchase_id):
         return {"message": "Successfully deleted ticketTypeInstance"}, 200
     else:
         return {"error": "Ticket type on this purchase could not be found"}, 404
+    
+
+@user_routes.route('/purchases/<int:purchase_id>/types/<int:type_id>', methods=['POST'])
+def ticket_type_purchase(purchase_id,type_id):
+   
+    # id is the ticketType id
+
+    # purchase = AdmissionTicketPurchase.query.filter_by(id=purchase_id).first()
+    #general information
+
+    ticket = request.get_json()
+    print("TICKET HERE", ticket)
+
+    new_ticket_type_purchase = TicketTypePurchased(
+        type_id=id,
+        purchase_id=purchase_id,
+        quantity=ticket["quantity"]
+    )
+
+    db.session.add(new_ticket_type_purchase)
+    db.session.commit()
+
+    ticket_type_purchase_dict = new_ticket_type_purchase.to_dict()
+
+    return {"TicketTypePurchase": ticket_type_purchase_dict}, 200

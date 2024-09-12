@@ -9,7 +9,7 @@ import './DeleteReviewModal.css'
 import { deleteReviewThunk } from "../../redux/review"
 
 export const DeleteReviewModal = ({reviewId,review, rating, createdAt, itemName, itemId})=>{
-    console.log("REVIEW ID",reviewId, review)
+   
     const dispatch = useDispatch();
     const {closeModal} = useModal()
 
@@ -39,7 +39,7 @@ export const DeleteReviewModal = ({reviewId,review, rating, createdAt, itemName,
 
     const handleDelete = async(reviewId) =>{
         
-        console.log(reviewId)
+       
         const response = await dispatch(deleteReviewThunk(reviewId))
        
         

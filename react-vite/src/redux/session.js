@@ -23,7 +23,7 @@ export const thunkAuthenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
 		const data = await response.json();
-    console.log(data, "DATAAA_------------")
+    // console.log(data, "DATAAA_------------")
     dispatch(setUser(data))
 	}
   else{
@@ -44,7 +44,7 @@ export const thunkLogin = (credentials) => async dispatch => {
     dispatch(setUser(data));
   } else if (response.status < 500) {
     const errorMessages = await response.json();
-    console.log(errorMessages, "ERRORRRSSSSSS")
+    // console.log(errorMessages, "ERRORRRSSSSSS")
     return errorMessages
   } else {
     return { server: "Something went wrong. Please try again" }

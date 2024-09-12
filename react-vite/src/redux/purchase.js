@@ -41,7 +41,7 @@ export const deleteTicketTypesPurchasedThunk = (type_id, purchase_id) => async(d
 
 export const updateTicketTypesPurchasedThunk = (typeObj) => async(dispatch) =>{
     let {type_id, purchase_id} = typeObj;
-    const response = await fetch(`/api/users/purchases/${purchase_id}/${type_id}`, {
+    const response = await fetch(`/api/users/purchases/${purchase_id}/edit/type/${type_id}`, {
         method:'PATCH',
         headers:{
             'Content-Type':'application/json'
@@ -49,7 +49,7 @@ export const updateTicketTypesPurchasedThunk = (typeObj) => async(dispatch) =>{
         body: JSON.stringify(typeObj)
     })
     if (response.ok){
-        console.log(response.message)
+        // console.log(response.message)
     }else{
         const data = await response.json()
         return data.message
@@ -71,7 +71,7 @@ export const updateAdmissionPurchaseThunk = (purchase_id,purchaseObj) => async (
         console.log("Successfully edited admission purchase instance")
     } else{
         const data = await response.json()
-        console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
+        // console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
         return data.message
     }
 }

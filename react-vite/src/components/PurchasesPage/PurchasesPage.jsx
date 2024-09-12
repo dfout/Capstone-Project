@@ -35,7 +35,7 @@ function PurchasesPage(){
             timeout = setTimeout(() => setTimeCheck(false), 3000);
             
         }else{
-            console.log(Object.values(purchases)[0])
+            // console.log(Object.values(purchases)[0])
         }
     
         return () => clearTimeout(timeout);
@@ -71,11 +71,11 @@ function PurchasesPage(){
         const diffInMs = admissionDate.getTime() - currentDate.getTime();
         const daysDifference = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
         if(showUpcoming == false){
-            console.log(Object.values(purchases))
+            // console.log(Object.values(purchases))
 
             let upcoming = []
             for (let purchase of Object.values(admissions)){
-                console.log(purchase)
+                // console.log(purchase)
     
                 const admissionDate = new Date(purchase.Admission);
                 const currentDate = new Date();
@@ -86,7 +86,7 @@ function PurchasesPage(){
             }
             setShowUpComing(true)
             setUpComings(upcoming)
-            console.log(upcoming)
+            // console.log(upcoming)
             return upcoming
         }else{
             setShowUpComing(false)
@@ -172,11 +172,11 @@ function PurchasesPage(){
             const date = purchase.Admission.date
             const admissionDate = new Date(purchase.Admission.year, month - 1, purchase.Admission.date);
             
-            console.log("ADMISSION DAY", admissionDate)
+            // console.log("ADMISSION DAY", admissionDate)
             const currentDate = new Date();
             const diffInMs = admissionDate.getTime() - currentDate.getTime();
             const daysDifference = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-            console.log("DAYS DIF",daysDifference)
+            // console.log("DAYS DIF",daysDifference)
             
             if (daysDifference >=1){
 

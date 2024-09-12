@@ -55,15 +55,15 @@ export const getUserAdmissionsThunk = () => async (dispatch)=>{
         dispatch(getUserAdmissions(Admissions))
     }
     else{
-        const data = await response.json()
-        console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
+        // const data = await response.json()
+        // console.log(data, "DAKLFJALKSDJLASJLDJSKAJJ")
         return data.message
     }
 }
 
 export const purchaseAdmissionsThunk = (purchase, admission)=> async (dispatch) =>{
-    console.log("PURCHASE", purchase)
-    console.log("ADMISSION", admission)
+    // console.log("PURCHASE", purchase)
+    // console.log("ADMISSION", admission)
     if(purchase.member_discount == undefined || purchase.member_discount == null){
         purchase["member_discount"] = 0
     }
@@ -111,8 +111,29 @@ export const createAdmissionThunk = (admission) => async(dispatch)=>{
 
 
 export const createTicketTypePurchase = (purchase)=> async(dispatch) =>{
-    console.log(purchase,"PURCHASE")
-    const response = await fetch(`api/admissions/purchases/${purchase.purchase_id}/types/${purchase.type_id}`,{method:'POST',
+    // console.log(purchase,"PURCHASE")
+    const response = await fetch(`/api/admissions/purchases/${purchase.purchase_id}/types/${purchase.type_id}`,{method:'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body:JSON.stringify(purchase)
+    })
+
+
+
+    if(response.ok){
+        const {TicketTypePurchase} = await response.json()
+        // console.log("here")
+        return TicketTypePurchase
+    } else{
+        const data = await response.json()
+        return data.errors
+    }
+}
+
+export const createTicketTypePurchaseOnEdit = (purchase) => async (dispatch) => {
+    // console.log(purchase,"PURCHASE")
+    const response = await fetch(`/api/users/purchases/${purchase.purchase_id}/edit/type/${purchase.type_id}`,{method:'POST',
         headers:{
             'Content-Type': 'application/json'
         },
@@ -121,12 +142,13 @@ export const createTicketTypePurchase = (purchase)=> async(dispatch) =>{
 
     if(response.ok){
         const {TicketTypePurchase} = await response.json()
-        console.log("here")
+        // console.log("here")
         return TicketTypePurchase
     } else{
         const data = await response.json()
         return data.errors
     }
+
 }
 
 const initialState = {}
@@ -136,19 +158,19 @@ switch(action.type){
     case GET_ADMISSIONS:{
         const newState = {...state}
         action.payload.forEach((admission) => {
-            console.log(admission, "ADMISSION")
+            // console.log(admission, "ADMISSION")
             const date = new Date(admission.day);
             const year = admission.year
             const month = admission.month //JavaScript months are 0-11
             const day = admission.date
-            console.log(date, year, month, "day:",day)
+            // console.log(date, year, month, "day:",day)
 
             if (!newState[year]) newState[year] = {};
             if (!newState[year][month]) newState[year][month] = {};
             if(!newState[year][month][day + 1])newState[year][month][day] = admission;
-            console.log(newState)
+            // console.log(newState)
         });
-        console.log(newState)
+        // console.log(newState)
         return newState
     }
     // case GET_USER_ADMISSIONS:{

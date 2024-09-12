@@ -32,7 +32,7 @@ const EditAdmissionPurchase = () => {
 
 
 
-
+  // const [purchaseId, setPurchaseId] = useState(id)
   const [currentYear, setCurrentYear] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -64,9 +64,9 @@ const EditAdmissionPurchase = () => {
   const [guestPrice, setGuestPrice] = useState(0)
   const [changed, setChanged] = useState([])
   const [editError, setEditError] = useState({})
-  const [purchaseId, setPurchaseId] = useState(0)
+  const [purchaseId, setPurchaseId] = useState(id)
 
-  console.log(totalQuantity)
+ 
 
    useEffect(()=>{
         dispatch(getAdmissionsThunk())
@@ -112,12 +112,12 @@ const EditAdmissionPurchase = () => {
             // Set the already purchased Ticket Types
         for (let ticketTypePurchased of ticketTypes){
             ticketsQuan[ticketTypePurchased.typeId] = ticketTypePurchased.quantity
-            console.log(ticketTypePurchased)
+            
             if(ticketTypePurchased.typeId == 1){
-                console.log(ticketTypePurchased.quantity, "QUAN")
+
                 setAdultQuantity(ticketTypePurchased.quantity)
                 setOriginalAdult(ticketTypePurchased.quantity)
-                console.log(adultQuantity)
+               
             }
             if(ticketTypePurchased.typeId == 2){
                 setSeniorQuantity(ticketTypePurchased.quantity)
@@ -282,11 +282,11 @@ const EditAdmissionPurchase = () => {
   const handleDayClick = async (day) => {
     const selected = new Date(currentYear, currentMonth, day);
     const year = selected.getFullYear()
-    console.log("YEAR", year)
+ 
     const month = selected.getMonth() + 1
-    console.log("MONTH:",month)
+   
     const date = selected.getDate()
-    console.log("DAte",date)
+    
 
     // see if it exists in state: 
     //! what if two users create a new instance? Check the backend just in case? and or have some handling in the front end where it handles this. But I think it might be okay becasue it will just overwrite the newest information I think. 
@@ -303,7 +303,7 @@ const EditAdmissionPurchase = () => {
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
       setMaxAdmin(500)
-      console.log("DAYYYYYY", selected.getDate())
+    
       const options = {'weekday':'long'}
       const admission = {
         day:selected,
@@ -313,9 +313,9 @@ const EditAdmissionPurchase = () => {
         max_admissions: maxAdmin,
         day_of_week: day.toLocaleDateString('en-US', options),
       }
-      console.log("BEFORE DISPATCHd")
+     
       const response = await dispatch(createAdmissionThunk(admission))
-      console.log(response, "GHERERERER")
+    
 
       setAdmissionId(response.id)
       
@@ -487,6 +487,10 @@ const EditAdmissionPurchase = () => {
     }
     // For this checkout, 
 
+    // console.log(originalTicketTypes, totalQuantity)
+    // console.log(5 in originalTicketTypes)
+
+
     // We need to input the updated admission information, and the ticket types. 
     // We want to save some time on fetches to the backend. 
 
@@ -517,7 +521,7 @@ const EditAdmissionPurchase = () => {
       // "Friday, August 23, 2024"
       // instead of 
       
-      console.log("Date that gets passed in", formattedDate)
+      
     //   const response = await dispatch(purchaseAdmissionsThunk(newPurchase, formattedDate))
    
 
@@ -525,7 +529,7 @@ const EditAdmissionPurchase = () => {
 
     let editResponse  = await dispatch(updateAdmissionPurchaseThunk(purchaseId,newPurchase))
 
-    console.log(editResponse, "EDIT REPSONSE")
+    console.log(originalTicketTypes)
 
     //* Now query for all the ticket types purchased that. 
     //* I only want to make calls to db if the user changed those specific instance. 
@@ -537,17 +541,20 @@ const EditAdmissionPurchase = () => {
       // AND if the adult ticket is not already in the originalTickets obj
       // * create a new ticketTypesPurchased. 
       // OR if the adult ticket does exist in the originalTickets obj, but it has a different value...
-      if(adultQuantity && (! 1 in originalTicketTypes)){
+
+      // * If the key is not in originalTicketTypes
+      // * Dispatch createaTicketType. 
+      if(adultQuantity && !(1 in originalTicketTypes)){
         let adult_ticket = {
-          purchase_id: id, 
+          purchase_id: purchaseId, 
           type_id: 1, 
           quantity: adultQuantity,
           
         }
         const response = await dispatch(createTicketTypePurchase(adult_ticket))
-      }else if(adultQuantity && originalTicketTypes[1] != adultQuantity){
+      }else if(adultQuantity && (originalTicketTypes[1] != adultQuantity)){
         let adult_ticket = {
-          purchase_id: id, 
+          purchase_id: purchaseId, 
           type_id: 1, 
           quantity: adultQuantity,
         }
@@ -555,22 +562,22 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(adult_ticket))
       }else if(!adultQuantity && originalTicketTypes[1]){
         // ! Delete the ticket instance. 
-        let purchase_id = id
+        let purchase_id = purchaseId
         let type_id = 1
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
-      if(seniorQuantity && (! 2 in originalTicketTypes)){
+      if(seniorQuantity && !(2 in originalTicketTypes)){
         let senior_ticket = {
-          purchase_id: id, 
+          purchase_id: purchaseId, 
           type_id: 2, 
           quantity: seniorQuantity,
           
         }
         const response = await dispatch(createTicketTypePurchase(senior_ticket))
-      }else if(seniorQuantity && originalTicketTypes[2] != seniorQuantity){
+      }else if(seniorQuantity && (originalTicketTypes[2] != seniorQuantity)){
         let senior_ticket = {
-          purchase_id: id, 
+          purchase_id: purchaseId, 
           type_id: 2, 
           quantity: seniorQuantity,
         }
@@ -583,16 +590,16 @@ const EditAdmissionPurchase = () => {
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
 
-      if(disQuantity && (! 3 in originalTicketTypes)){
+      if(disQuantity && !(3 in originalTicketTypes)){
         let disability_ticket = {
-          purchase_id: id, 
+          purchase_id: purchaseId, 
           type_id: 3, 
           quantity: disQuantity,
         }
         const response = await dispatch(createTicketTypePurchase(disability_ticket))
-      }else if(disQuantity && originalTicketTypes[3] != disQuantity){
+      }else if(disQuantity &&( originalTicketTypes[3] != disQuantity)){
         let disability_ticket = {
-          purchase_id: id, 
+          purchase_id: purchaseId, 
           type_id: 3, 
           quantity: disQuantity,
         }
@@ -600,21 +607,21 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(disability_ticket))
       }else if(!disQuantity && originalTicketTypes[3]){
         // ! Delete the ticket instance. 
-        let purchase_id = id
-        let type_id = 3
+        let purchase_id = purchaseId
+        let type_purchaseId = 3
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
-
+      console.log("Create studentTicket?", (studentQuantity && !(4 in originalTicketTypes))? "Yes" : "No")
       if(studentQuantity && (!4 in originalTicketTypes)){
         let student_ticket = {
-          purchase_id:id,
+          purchase_id:purchaseId,
           type_id:4,
           quantity: studentQuantity
         }
         const response = await dispatch(createTicketTypePurchase(student_ticket))
-      }else if(studentQuantity && originalTicketTypes[4]!= studentQuantity){
+      }else if(studentQuantity && originalTicketTypes[4] &&(originalTicketTypes[4]!= studentQuantity)){
         let student_ticket = {
-          purchase_id:id,
+          purchase_id:purchaseId,
           type_id:4,
           quantity: studentQuantity
         }
@@ -622,21 +629,21 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(student_ticket))
       }else if(!studentQuantity && originalTicketTypes[4]){
         // ! Delete the ticket instance. 
-        let purchase_id = id
+        let purchase_id =purchaseId
         let type_id = 4
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
-
-      if(childQuantity && (!5 in originalTicketTypes)){
+      console.log("Create childTicket?", (childQuantity && !(5 in originalTicketTypes))? "Yes" : "No")
+      if(childQuantity && !(5 in originalTicketTypes)){
        let child_ticket ={
-          purchase_id:id,
+          purchase_id:purchaseId,
           type_id:5,
           quantity:childQuantity
         }
-        const response = await dispatch(createTicketTypePurchase(child_ticket))
-      }else if (childQuantity && originalTicketTypes[5]!= childQuantity){
+        await dispatch(createTicketTypePurchase(child_ticket))
+      }else if (childQuantity && (originalTicketTypes[5]!= childQuantity)){
         let child_ticket ={
-          purchase_id:id,
+          purchase_id:purchaseId,
           type_id:5,
           quantity:childQuantity
         }
@@ -644,7 +651,7 @@ const EditAdmissionPurchase = () => {
         await dispatch(updateTicketTypesPurchasedThunk(child_ticket))
       }else if(!childQuantity && originalTicketTypes[5]){
         //! Delete ticketType instance
-        let purchase_id = id
+        let purchase_id = purchaseId
         let type_id = 5
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }

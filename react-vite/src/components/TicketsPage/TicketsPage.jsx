@@ -123,11 +123,11 @@ const TicketsPage = () => {
   const handleDayClick = async (day) => {
     const selected = new Date(currentYear, currentMonth, day);
     const year = selected.getFullYear()
-    console.log("YEAR", year)
+    // console.log("YEAR", year)
     const month = selected.getMonth() + 1
-    console.log("MONTH:",month)
+    // console.log("MONTH:",month)
     const date = selected.getDate()
-    console.log("DAte",date)
+    // console.log("DAte",date)
 
     // see if it exists in state: 
     //! what if two users create a new instance? Check the backend just in case? and or have some handling in the front end where it handles this. But I think it might be okay becasue it will just overwrite the newest information I think. 
@@ -143,7 +143,7 @@ const TicketsPage = () => {
       }
     }else if(!admissions[year] || !admissions[year][month] || !admissions[year][month][day] ){
       let day = selected
-      console.log("DAYYYYYY", selected.getDate())
+      // console.log("DAYYYYYY", selected.getDate())
       const options = {'weekday':'long'}
       const admission = {
         day:selected,
@@ -153,9 +153,9 @@ const TicketsPage = () => {
         max_admissions: maxAdmin,
         day_of_week: day.toLocaleDateString('en-US', options),
       }
-      console.log("BEFORE DISPATCHd")
+      // console.log("BEFORE DISPATCHd")
       const response = await dispatch(createAdmissionThunk(admission))
-      console.log(response, "GHERERERER")
+      // console.log(response, "GHERERERER")
 
       setAdmissionId(response.id)
       

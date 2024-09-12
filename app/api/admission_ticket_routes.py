@@ -61,14 +61,14 @@ def get_admissions():
 
 @admission_ticket_routes.route('/purchases/<int:purchase_id>/types/<int:id>', methods=['POST'])
 def ticket_type_purchase(purchase_id,id):
-    print("ISSUE WHEREEEEEEEEEEEEEEEEEEEEEEEEEEE")
+   
     # id is the ticketType id
 
     # purchase = AdmissionTicketPurchase.query.filter_by(id=purchase_id).first()
     #general information
 
     ticket = request.get_json()
-
+    print("TICKET HERE", ticket)
 
     new_ticket_type_purchase = TicketTypePurchased(
         type_id=id,
