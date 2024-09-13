@@ -67,13 +67,14 @@ const EditAdmissionPurchase = () => {
   const [purchaseId, setPurchaseId] = useState(id)
 
  
-
+  // Get all admissions dates
+  // Get the users admissions? For what
    useEffect(()=>{
         dispatch(getAdmissionsThunk())
         dispatch(getUserAdmissionsThunk())
     }, [dispatch])
 
-
+    // Time out to make sure that the purchase instance details exist from the backend
     useEffect(() => {
         let timeout;
 
@@ -91,6 +92,7 @@ const EditAdmissionPurchase = () => {
                 month: "long",
                 day: "numeric",
             };
+            // Set the state variables based on the data retrieved from db
             const year = admission.year
             setCurrentYear(year)
             setPurchaseId(purchase.id)
@@ -153,7 +155,7 @@ const EditAdmissionPurchase = () => {
         return () => clearTimeout(timeout);
     }, [purchase, admissions, dispatch]);
 
-
+    // Creates the Calendar 
     const generateCalendar = (year, month) => {
         const firstDayOfMonth = new Date(year, month, 1);
         const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -202,31 +204,9 @@ const EditAdmissionPurchase = () => {
     generateCalendar(currentYear, currentMonth);
     }, [currentYear, currentMonth, selectedDate]);
 
-
-
-
-  // Attempt at a more efficient solution
-//   useEffect(()=>{
-//     console.log(changed.includes(1))
-//     if(!changed.includes(1)){
-
-//         addToChanged(1)
-//         console.log(changed, "CHANGED")
-//     }
-
-//   },[adultQuantity])
-  
-// useEffect(()=>{
-//     console.log(changed.includes(2))
-//     if(!changed.includes(2)){
-
-//         addToChanged(2)
-//         console.log(changed, "CHANGED")
-//     }
-
-// },[seniorQuantity])
  
-
+// Running to set errors 
+//! Fix where the error shows
   useEffect(()=>{
     if(editError.error){
       setEditError({})
@@ -287,9 +267,6 @@ const EditAdmissionPurchase = () => {
    
     const date = selected.getDate()
     
-
-    // see if it exists in state: 
-    //! what if two users create a new instance? Check the backend just in case? and or have some handling in the front end where it handles this. But I think it might be okay becasue it will just overwrite the newest information I think. 
 
     if (admissions[year] && admissions[year][month] && admissions[year][month][date]){
       const max = admissions[year][month][date].max_admissions
@@ -473,10 +450,6 @@ const EditAdmissionPurchase = () => {
 
     // * If a user has not changed admission date or any ticket quantities, do not let the checkout feature go through. Show an error. 
 
-    // if any quantities differ, or if the date differs
-
-    // if all current quantities == the original quantities, =
-    // if the original quantities are the same, then throw the error. 
 
     if((adultQuantity== originalAdult && seniorQuantity == originalSenior && originalDis == disQuantity && studentQuantity == originalStudent && childQuantity == originalChild)){
       setEditError({"error": "Please update admission date or ticket quantities"})
@@ -485,25 +458,7 @@ const EditAdmissionPurchase = () => {
     }else{
       setEditError({})
     }
-    // For this checkout, 
 
-    // console.log(originalTicketTypes, totalQuantity)
-    // console.log(5 in originalTicketTypes)
-
-
-    // We need to input the updated admission information, and the ticket types. 
-    // We want to save some time on fetches to the backend. 
-
-    // We will have to edit the admission instance no matter what -- if the user makes changes to the ticket quantity or the admission date. 
-
-    // But, we don't want to have to rewrite a change that already was the same. I.e. if the user purchased one adult ticket but would like to add one senior ticket. 
-
-    // There would be no need to change the adult instance. 
-    // But we would add one senior ticket. 
-
-    // So we need a way to keep track of what tickettypes quantites have changed. And only dispatch changes to those ones. 
-
-    // need to query for the admission information
 
   // Format the date
   const parsedDate = new Date(selectedDate)
@@ -534,8 +489,6 @@ const EditAdmissionPurchase = () => {
     //* Now query for all the ticket types purchased that. 
     //* I only want to make calls to db if the user changed those specific instance. 
 
-
-      
 
       // if the adultQuantity exits
       // AND if the adult ticket is not already in the originalTickets obj
@@ -612,13 +565,15 @@ const EditAdmissionPurchase = () => {
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
       console.log("Create studentTicket?", (studentQuantity && !(4 in originalTicketTypes))? "Yes" : "No")
-      if(studentQuantity && (!4 in originalTicketTypes)){
+      if(studentQuantity && !(4 in originalTicketTypes)){
+        console.log("student Quantity:", studentQuantity)
         let student_ticket = {
           purchase_id:purchaseId,
           type_id:4,
           quantity: studentQuantity
         }
-        const response = await dispatch(createTicketTypePurchase(student_ticket))
+        await dispatch(createTicketTypePurchase(student_ticket))
+        console.log("Created Student Ticket Type")
       }else if(studentQuantity && originalTicketTypes[4] &&(originalTicketTypes[4]!= studentQuantity)){
         let student_ticket = {
           purchase_id:purchaseId,
