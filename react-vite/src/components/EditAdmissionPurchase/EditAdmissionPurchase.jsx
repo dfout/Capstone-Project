@@ -608,7 +608,7 @@ const EditAdmissionPurchase = () => {
       }else if(!disQuantity && originalTicketTypes[3]){
         // ! Delete the ticket instance. 
         let purchase_id = purchaseId
-        let type_purchaseId = 3
+        let type_id = 3
         await dispatch(deleteTicketTypesPurchasedThunk(type_id, purchase_id))
       }
       console.log("Create studentTicket?", (studentQuantity && !(4 in originalTicketTypes))? "Yes" : "No")

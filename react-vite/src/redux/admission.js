@@ -4,6 +4,7 @@ const PURCHASE_ADMISSION = 'admissions/purchase'
 const GET_ADMISSION = 'admission/get'
 const DELETE_PURCHASE = 'admission/delete'
 const CREATE_ADMISSION = 'admission/create'
+const CREATE_TICKET_TYPE  = 'purchase/ticket/type'
 
 
 const purchaseAdmission = (admissionPurchase) =>({
@@ -34,6 +35,11 @@ const deleteAdmissionPurchase = (id) =>({
 const createAdmission = (admission) =>({
     type:CREATE_ADMISSION,
     payload:admission
+})
+
+const createTicketType = (ticketType) =>({
+    type:CREATE_TICKET_TYPE,
+    payload: ticketType
 })
 
 export const getAdmissionsThunk = ()=> async (dispatch)=>{
@@ -109,7 +115,7 @@ export const createAdmissionThunk = (admission) => async(dispatch)=>{
     }
 }
 
-
+//! Update state please
 export const createTicketTypePurchase = (purchase)=> async(dispatch) =>{
     // console.log(purchase,"PURCHASE")
     const response = await fetch(`/api/admissions/purchases/${purchase.purchase_id}/types/${purchase.type_id}`,{method:'POST',
@@ -124,6 +130,7 @@ export const createTicketTypePurchase = (purchase)=> async(dispatch) =>{
     if(response.ok){
         const {TicketTypePurchase} = await response.json()
         // console.log("here")
+        dispatch(createTicketType(TicketTypePurchase))
         return TicketTypePurchase
     } else{
         const data = await response.json()
@@ -131,6 +138,7 @@ export const createTicketTypePurchase = (purchase)=> async(dispatch) =>{
     }
 }
 
+// ! Update State please 
 export const createTicketTypePurchaseOnEdit = (purchase) => async (dispatch) => {
     // console.log(purchase,"PURCHASE")
     const response = await fetch(`/api/users/purchases/${purchase.purchase_id}/edit/type/${purchase.type_id}`,{method:'POST',
@@ -184,6 +192,7 @@ switch(action.type){
         newState[action.payload.purchase] = action.payload
         return newState
     }
+
 
     default:
         return state

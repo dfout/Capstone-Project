@@ -1,6 +1,8 @@
 const GET_USER_ADMISSIONS = 'user/getAdmissions'
 const DELETE_PURCHASE = 'user/delete/purchase'
 const UPDATE_USER_ADMISSION = 'user/purchase/update'
+const CREATE_TICKET_TYPE  = 'purchase/ticket/type/create'
+const UPDATE_TICKET_TYPE = 'purchase/ticket/type/update'
 
 
 const getUserAdmissions = (admissions)=>({
@@ -25,6 +27,11 @@ const updateTicketTypePurchase = (purchase) =>({
     
 })
 
+const createTicketType = (ticketTypePurchase) => ({
+    type: CREATE_TICKET_TYPE, 
+    payload: ticketTypePurchase,
+})
+
 
 export const deleteTicketTypesPurchasedThunk = (type_id, purchase_id) => async(dispatch)=>{
     const response = await fetch(`/api/users/purchases/${purchase_id}/${type_id}`, {
@@ -39,6 +46,8 @@ export const deleteTicketTypesPurchasedThunk = (type_id, purchase_id) => async(d
     }
 }
 
+
+//! Update State please
 export const updateTicketTypesPurchasedThunk = (typeObj) => async(dispatch) =>{
     let {type_id, purchase_id} = typeObj;
     const response = await fetch(`/api/users/purchases/${purchase_id}/edit/type/${type_id}`, {
@@ -56,6 +65,8 @@ export const updateTicketTypesPurchasedThunk = (typeObj) => async(dispatch) =>{
     }
 }
 
+
+//! Update state please
 
 export const updateAdmissionPurchaseThunk = (purchase_id,purchaseObj) => async (dispatch)=>{
     const response = await fetch(`/api/users/purchases/${purchase_id}`, {
@@ -101,6 +112,51 @@ export const deleteAdmissionPurchaseThunk = (purchase) => async(dispatch)=>{
     }
 }
 
+// // ! Update State please 
+// export const editTicketType = (purchase) => async (dispatch) => {
+//     // console.log(purchase,"PURCHASE")
+//     const response = await fetch(`/api/users/purchases/${purchase.purchase_id}/edit/type/${purchase.type_id}`,{method:'POST',
+//         headers:{
+//             'Content-Type': 'application/json'
+//         },
+//         body:JSON.stringify(purchase)
+//     })
+
+//     if(response.ok){
+//         const {TicketTypePurchase} = await response.json()
+//         // console.log("here")
+//         await dispatch(createTicketType(TicketTypePurchase))
+//         return TicketTypePurchase
+//     } else{
+//         const data = await response.json()
+//         return data.errors
+//     }
+
+// }
+
+// //! Update state please
+// export const createTicketTypeThunk = (purchase)=> async(dispatch) =>{
+//     // console.log(purchase,"PURCHASE")
+//     const response = await fetch(`/api/admissions/purchases/${purchase.purchase_id}/types/${purchase.type_id}`,{method:'POST',
+//         headers:{
+//             'Content-Type': 'application/json'
+//         },
+//         body:JSON.stringify(purchase)
+//     })
+
+
+
+//     if(response.ok){
+//         const {TicketTypePurchase} = await response.json()
+//         // console.log("here")
+//         dispatch(createTicketType(TicketTypePurchase))
+//         return TicketTypePurchase
+//     } else{
+//         const data = await response.json()
+//         return data.errors
+//     }
+// }
+
 
 const initialState = {}
 
@@ -110,8 +166,8 @@ function purchaseReducer(state=initialState, action){
             const newState = {...state}
             action.payload.forEach((purchase)=>newState[purchase.id]=purchase)
             return newState
-
         }
+        // Need to update the purchase state with the new ticketType. 
         case DELETE_PURCHASE:{
             const newState={...state}
             delete newState[action.payload]
