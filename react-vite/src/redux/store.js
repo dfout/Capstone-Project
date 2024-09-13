@@ -15,6 +15,8 @@ import memberReducer from "./member";
 import ordersReducer from "./order";
 import admissionReducer from "./admission";
 import purchaseReducer from "./purchase";
+import eventsReducer from "./events";
+
 const rootReducer = combineReducers({
   session: sessionReducer,
   member: memberReducer,
@@ -25,8 +27,8 @@ const rootReducer = combineReducers({
   reviews:reviewsReducer,
   exhibitions: exhibitionReducer,
   admissions: admissionReducer,
-  purchases: purchaseReducer
-  
+  purchases: purchaseReducer,
+  events: eventsReducer, 
 
 });
 

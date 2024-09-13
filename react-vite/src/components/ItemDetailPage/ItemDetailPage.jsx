@@ -132,6 +132,9 @@ function ItemDetailPage() {
             <IoIosStar/>
             <span>{avgRating}</span>
             <span>${item.price.toFixed(2)}</span>
+            {sessionUser.isMember && (
+              <span style={{color: "blue"}}>Member Price: ${(item.price - (item.price * .10)).toFixed(2)}</span>
+            )}
             <p className="description">
               {isDescriptionExpanded
                 ? item.description

@@ -13,7 +13,7 @@ import Cart from '../components/Cart'
 import TicketsPage from '../components/TicketsPage/TicketsPage';
 import PurchasesPage from '../components/PurchasesPage/PurchasesPage';
 import EditAdmissionPurchase from '../components/EditAdmissionPurchase';
-
+import EventsPage from '../components/EventsPage';
 
 export const router = createBrowserRouter([
   {
@@ -74,6 +74,10 @@ export const router = createBrowserRouter([
       {
         path: 'user/purchases',
         element: <PurchasesPage />
+      },
+      {
+        path: '/events',
+        element: <EventsPage />
       },
     ],
   },

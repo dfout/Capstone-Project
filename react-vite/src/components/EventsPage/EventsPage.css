@@ -1,0 +1,46 @@
+
+
+
+.page-container{
+    padding:2% 5%;
+}
+
+
+.events-container{
+    padding-top:2%;
+    display:flex;
+    flex-direction: column;
+    gap:2rem;
+}
+
+
+.event-tile{
+    height: 8rem;
+    border: 1px solid lightgrey;
+    display:flex;
+    flex-direction:row;
+    /* justify-content: space-between; */
+}
+
+.image-container{
+    height:100%;
+    min-width: 150px;
+    border: 1px solid lightgrey;
+}
+
+.event-information{
+    display:flex;
+    flex-direction: column;
+   
+}
+
+
+.event-buttons{
+    margin-left:auto;
+    display:flex;
+    flex-direction:column;
+    /* align-items: center; */
+    justify-content: center;
+    gap: 1rem;
+
+}

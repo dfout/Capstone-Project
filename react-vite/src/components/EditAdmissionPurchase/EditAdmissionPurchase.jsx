@@ -809,12 +809,11 @@ const EditAdmissionPurchase = () => {
             </div>
           </div>
         </div>
-        {editError.error &&  (
-            <h4 style={{"color":"red"}}>{editError.error}</h4>
-        )}
+
       {checkoutModal && (
 
         <div className='modal-content checkout'>
+          
         {checkoutModal &&
         (adultQuantity ||
           studentQuantity ||
@@ -853,6 +852,9 @@ const EditAdmissionPurchase = () => {
               </div>
             )}
             <div className='checkout-info'>
+            {editError.error &&  (
+            <h4 style={{"color":"red"}}>{editError.error}</h4>
+        )}
             <span id='total'>Total: ${totalPrice}.00</span>
             {/* {member.MembershipType.id && (
               <span>Member Discount: </span>
